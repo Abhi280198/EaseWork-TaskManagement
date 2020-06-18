@@ -1,16 +1,65 @@
-<?php include_once("DbConnection.php");?>
+<?php include_once("DbConnection.php");
+
+     $Uid=$fname=$lname=$phone=$email=$password="";
+
+    $Userprofile_query="select * from tbluser where Uid='".$_SESSION['UserID']."'";
+    $Execute_Q=mysqli_query($con,$Userprofile_query) or die(mysqli_error($con));
+    $fetch=mysqli_fetch_array($Execute_Q);
+
+    $uid = $fetch['Uid'];
+    $fname = $fetch['Fname'];
+    $lname = $fetch['Lname'];       
+    $email = $fetch['Email'];
+    $mobile = $fetch['Mobile'];
+    $oldpass = $fetch['Password'];
+    $profilepic = $fetch['ProfilePic'];
+
+
+    if (isset($_REQUEST['Save'])) 
+    {
+        if(!empty($_FILES['userpic']['name']))
+        {
+            $userimg=$_FILES['userpic']['name'];
+            $tempuserimg=$_FILES['userpic']['tmp_name'];
+            $folder="images/profile/".$userimg;
+            move_uploaded_file($tempuserimg,$folder);
+        }
+        else
+        {
+            $userimg=$profilepic;
+        }
+
+        if ($_REQUEST['usernewpass']=="") 
+        {
+            
+            $Updateprofile = "update tbluser set Fname='".$_REQUEST['userfirstname']."',Lname='".$_REQUEST['userlastname']."',
+                        Email='".$_REQUEST['useremail']."', Mobile='".$_REQUEST['usermobile']."', ProfilePic='".$userimg."' where Uid='".$_SESSION['UserID']."'";
+            $Exe_update=mysqli_query($con,$Updateprofile)or die(mysqli_error($con));
+            header("location:profile.php?Uid=$uid");
+        }
+        /*else if($_REQUEST['usernewpass'].length>0 && $_REQUEST['usernewpass'].length<8)
+        {
+            echo("<script>alert('Weak PassWord..Enter more than 8 characters')</script>");
+            header("location:profile.php?Uid=$uid");
+        }*/
+        else{
+            $Updateprofile = "update tbluser set Fname='".$_REQUEST['userfirstname']."',Lname='".$_REQUEST['userlastname']."',
+                        Email='".$_REQUEST['useremail']."', Mobile='".$_REQUEST['usermobile']."',Password='".$_REQUEST['usernewpass']."', ProfilePic='".$userimg."' where Uid='".$_SESSION['UserID']."'";
+            $Exe_update=mysqli_query($con,$Updateprofile)or die(mysqli_error($con));
+            header("location:profile.php?Uid=$uid");
+        }
+       
+    }
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-
-<!-- Mirrored from demo.frontted.com/stackadmin/133/edit-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 May 2020 07:53:17 GMT -->
 <head>
     
     <title>EaseWork- Profile</title>
     <?php include_once('csslinks.php');?>
 
     <script type="text/javascript">
-        function validate(){
+        function profilevalidate(){
             // var desc = document.getElementById("desc2").value;
             var fname = document.getElementById("fname").value;
             var lname = document.getElementById("lname").value;
@@ -85,34 +134,18 @@
 
             }
 
-            if(newPass == ""){
-                document.getElementById('span_newPass').innerHTML =" ** Please fill the new PassWord";
+            /*if (newPass.length<=8) {
+                document.getElementById('span_newPass').innerHTML =" ** Weak Password...Enter more than 8 characters";
                 return false;
-            }
-
-            else{
-                document.getElementById('span_newPass').innerHTML ="";
-
-            }
-
-
-            if(conPass == ""){
-                document.getElementById('span_conPass').innerHTML =" ** Please fill the confirm PassWord";
-                return false;
-            }
-
-            else{
-                document.getElementById('span_conPass').innerHTML ="";
-
-            }
+            }*/
 
             if(newPass != conPass){
                  document.getElementById('span_conPass').innerHTML =" ** Password not matching";
                 return false;
             } 
 
-            window.location.href = 'index.php'; 
-            return false;
+            /*window.location.href = 'index.php'; */
+            return true;
 
         }
     </script>
@@ -163,61 +196,58 @@
                                 </div>
                                 <div class="col-lg-8 card-form__body card-body">
                                     
-                                    <form action="#">
+                                    <form action="" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
-                                        <label>Avatar</label>
-                                        <div class="dz-clickable media align-items-center" data-toggle="dropzone" data-dropzone-url="http://" data-dropzone-clickable=".dz-clickable" data-dropzone-files='["assets/images/account-add-photo.svg"]'>
-                                            <div class="dz-preview dz-file-preview dz-clickable mr-3">
-                                                <div class="avatar" style="width: 80px; height: 80px;">
-                                                    <img src="assets/images/account-add-photo.svg" class="avatar-img rounded" alt="..." data-dz-thumbnail>
+                                            <label>Avatar</label>
+                                            <div class="dz-clickable media align-items-center" data-toggle="dropzone" data-dropzone-url="http://" data-dropzone-clickable=".dz-clickable" data-dropzone-files='["assets/images/account-add-photo.svg"]'>
+                                                <div class="dz-preview dz-file-preview dz-clickable mr-3">
+                                                    <div class="avatar" style="width: 80px; height: 80px;">
+                                                        <?php
+                                                            if($profilepic=="" || !file_exists("images/profile/$profilepic"))
+                                                            {
+                                                                $profilepic="No.png";
+                                                            }
+                                                        ?>
+                                                        <a href="images/profile/<?php echo $profilepic;?>">
+                                                            <img src="images/profile/<?php echo $profilepic;?>" class="avatar-img rounded" alt="..." data-dz-thumbnail>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                   `                            <div class="media-body">
+                                                    <input type="file" name="userpic" class="btn btn-sm btn-primary dz-clickable" value="">
                                                 </div>
                                             </div>
-               `                             <div class="media-body">
-                                                <button class="btn btn-sm btn-primary dz-clickable">Choose photo</button>
-                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="desc2">Description</label>
-                                         
-                                        <input type="textarea" name="description" id="desc2" rows="4" class="form-control" placeholder="Description ...">
-                                        <span id="span_description" style="color: red"></span>
-                                    </div>
-
-                                     <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="fname">First name</label>
-                                                <input id="fname" type="text" class="form-control" placeholder="First name" >
-                                                <span id="span_firstname" style="color: red"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="lname">Last name</label>
-                                                <input id="lname" type="text" class="form-control" placeholder="Last name" >
-                                                <span id="span_lastname" style="color: red"></span>
-                                            </div>
-                                        </div>
-                                    </div>
                                     
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="Mobile">Mobile NO.</label>
-                                                <input id="Mobile_no" type="text" class="form-control" placeholder="Mobile NO." >
-                                                <span id="span_Mobile" style="color: red"></span>
+                                         <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="fname">First name</label>
+                                                    <input id="fname" name="userfirstname" type="text" class="form-control" placeholder="First name" value="<?php echo $fname;?>">
+                                                    <span id="span_firstname" style="color: red"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="lname">Last name</label>
+                                                    <input id="lname" type="text" class="form-control" placeholder="Last name" value="<?php echo $lname;?>" name="userlastname">
+                                                    <span id="span_lastname" style="color: red"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="Email">Email</label>
-                                                <input id="Email" type="text" class="form-control" placeholder="Email" >
-                                                <span id="span_email" style="color: red"></span>
-                                            </div>
+                                    
+                                        <div class="form-group">
+                                            <label for="Mobile">Mobile NO.</label>
+                                            <input id="Mobile_no" type="text" class="form-control" placeholder="Mobile NO." value="<?php echo $mobile;?>" name="usermobile">
+                                            <span id="span_Mobile" style="color: red"></span>
                                         </div>
-                                    </div>
+
+                                        <div class="form-group">
+                                            <label for="Email">Email</label>
+                                            <input id="Email" type="text" class="form-control" placeholder="Email" value="<?php echo $email;?>" readonly name="useremail">
+                                            <span id="span_email" style="color: red" ></span>
+                                        </div>
+
 
                                 </div>
                             </div>
@@ -232,25 +262,25 @@
                                 <div class="col-lg-8 card-form__body card-body">
                                     <div class="form-group">
                                         <label for="opass">Old Password</label>
-                                        <input style="width: 270px;" id="opass" type="password" class="form-control" placeholder="Old password" >
+                                        <input style="width: 270px;" id="opass" type="password" class="form-control" placeholder="Old password" value="<?php echo $oldpass;?>" name="useroldpass" readonly>
                                         <span id="span_oldPass" style="color: red"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="npass">New Password</label>
-                                        <input style="width: 270px;" id="npass" type="password" class="form-control" placeholder="New password" minlength="8">
+                                        <input style="width: 270px;" id="npass" type="password" name="usernewpass" class="form-control" placeholder="New password" minlength="8">
                                         <span id="span_newPass" style="color: red"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="cpass">Confirm Password</label>
-                                        <input style="width: 270px;" id="cpass" type="password" class="form-control" placeholder="Confirm password">
+                                        <input style="width: 270px;" id="cpass" type="password" class="form-control"name="userconfirmpass" placeholder="Confirm password">
                                         <span id="span_conPass" style="color: red"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="text-right mb-5">
-                            <a href="#" class="btn btn-success" onclick="validate()">Save</a>
+                        <div class="text-right mb-5"> 
+                            <button type="submit" name="Save" class="btn btn-success" onclick="return profilevalidate();">Save</button>
                         </div>
                     </div>
 

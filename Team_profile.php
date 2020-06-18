@@ -1,3 +1,38 @@
+<?php include_once("DbConnection.php");
+
+    $tid=$tname=$ttype=$description=$profilepic="";
+
+    $teamprofile_query="select * from tblteam where Tid=3";
+    $Execute_Q=mysqli_query($con,$teamprofile_query) or die(mysqli_error($con));
+    $fetch=mysqli_fetch_array($Execute_Q);
+
+    $tid = $fetch['Tid'];
+    $tname = $fetch['Tname'];
+    $ttype = $fetch['Ttype'];       
+    $description = $fetch['Description'];
+    $profilepic = $fetch['ProfilePic'];
+
+    if (isset($_REQUEST['buttonSave'])) 
+    {
+        if(!empty($_FILES['textpic']['name']))
+        {
+            $img2=$_FILES['textpic']['name'];
+            $tempimg=$_FILES['textpic']['tmp_name'];
+            $folder="images/teamprofile/".$img2;
+            move_uploaded_file($tempimg,$folder);
+        }
+        else
+        {
+            $img2=$profilepic;
+        }
+
+        $UpdateTeam = "update tblteam set Tname='".$_REQUEST['teamname']."',Ttype='".$_REQUEST['teamtype']."',
+                        Description='".$_REQUEST['teamdescription']."', ProfilePic='".$img2."' where Tid=3";
+        $Exe_update=mysqli_query($con,$UpdateTeam)or die(mysqli_error($con));
+        header("location:Team_profile.php?Tid=3");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,7 +44,7 @@
     <!-- start validation form -->
     <script type="text/javascript">
 
-        function validate()
+        function val()
         {
             // var desc = document.getElementById("desc2").value;
             var name = document.getElementById("name").value;
@@ -31,8 +66,8 @@
 
             }
 
-            window.location.href = 'Team_profile.php'; 
-            return false;
+            /*window.location.href = 'Team_profile.php'; */
+            return true;
 
         }
     </script>
@@ -59,11 +94,11 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0">
                                     <li class="breadcrumb-item"><a href="index.php"><i class="material-icons icon-20pt">home</i></a></li>
-                                    <li class="breadcrumb-item">Team</li>
-                                    <li class="breadcrumb-item active" aria-current="page">PROFILE</li>
+                                    <li class="breadcrumb-item"><a href="TeamPage.php">Team</a></li>
+                                    <li class="breadcrumb-item aria-current="page"><a href="Team_profile.php">PROFILE</a></li>
                                 </ol>
                             </nav>
-                            <h1 class="m-0">Team Profile</h1>
+                            <h2 class="m-0"><span style="color: #ff214f;">Team Profile</span></h2>
                         </div>
                     </div>
 
@@ -77,7 +112,7 @@
                                 </div>
 
                                 <div class="col-lg-8 card-form__body card-body">
-                                    <form action="#">
+                                    <form action="" method="post" enctype="multipart/form-data">
                                         <!-- Start Prrofile section-->
                                         <div class="col-lg-8 card-form__body card-body">
                                             
@@ -87,12 +122,20 @@
                                                 <div class="dz-clickable media align-items-center" data-toggle="dropzone" data-dropzone-url="http://" data-dropzone-clickable=".dz-clickable" data-dropzone-files='["assets/images/account-add-photo.svg"]'>
                                                     <div class="dz-preview dz-file-preview dz-clickable mr-3">
                                                         <div class="avatar" style="width: 80px; height: 80px;">
-                                                            <img src="assets/images/account-add-photo.svg" class="avatar-img rounded" alt="..." data-dz-thumbnail>
+                                                            <?php
+                                                                if($profilepic=="" || !file_exists("images/teamprofile/$profilepic"))
+                                                                {
+                                                                    $profilepic="teampro1.jpg";
+                                                                }
+                                                            ?>
+                                                            <a href="images/teamprofile/<?php echo $profilepic;?>">
+                                                                <img src="images/teamprofile/<?php echo $profilepic;?>" class="avatar-img rounded" alt="..." data-dz-thumbnail>
+                                                            </a>
                                                         </div>
                                                     </div>
 
-                                                    <div class="media-body">
-                                                        <button class="btn btn-sm btn-primary dz-clickable">Choose photo</button>
+                                                    <div class="media-body"><br><br>
+                                                        <input type="file" name="textpic" class="btn btn-sm btn-primary dz-clickable" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,7 +144,7 @@
                                             <!-- Start Team Name-->
                                             <div class="form-group">
                                                 <label for="fname">Name</label>
-                                                <input id="name" type="text" class="form-control" placeholder="Name" >
+                                                <input id="name" type="text" class="form-control" name="teamname" value="<?php echo $tname;?>" placeholder="Name" >
                                                 <span id="span_name" style="color: red"></span>
                                             </div>
                                             <!-- End Team Name-->
@@ -109,27 +152,21 @@
                                             <!-- Start Team Type-->
                                             <div class="form-group">
                                                 <label for="teamType">Type</label>
-                                                <select id="type" name="type" class="form-control">
-                                                    <option value="Education">Education</option>
-                                                    <option value="Personal">Personal</option>
-                                                    <option value="Event Management">Event Management</option>
-                                                    <option value="Project Management">Project Management</option>
-                                                    <option value="Others">Others</option>
+                                                <select id="type" name="teamtype" class="form-control">
+                                                    <option value="Education" <?php if($ttype=='Education') echo "selected";?> >Education</option>
+                                                    <option value="Personal" <?php if($ttype=='Personal') echo "selected";?> >Personal</option>
+                                                    <option value="Event Management" <?php if($ttype=='Event Management') echo "selected";?> >Event Management</option>
+                                                    <option value="Project Management" <?php if($ttype=='Project Management') echo "selected";?> >Project Management</option>
+                                                    <option value="Marketing" <?php if($ttype=='Marketing') echo "selected";?> >Marketing</option>
+                                                    <option value="Others" <?php if($ttype=='Others') echo "selected";?> >Others</option>
                                                 </select>
                                             </div>
                                             <!-- End Team Type -->
 
-                                            <!-- Start website-->
-                                            <div class="form-group">
-                                                <label for="website">Website(optional)</label>
-                                                <input id="websitee" type="text" class="form-control" placeholder="Website" >
-                                            </div>
-                                            <!-- End website -->
-
                                             <!-- Start Description-->
                                             <div class="form-group">
                                                 <label for="desc2">Description</label>
-                                                <textarea name="description" id="description" rows="4" class="form-control" placeholder="Description ..."></textarea>
+                                                <textarea name="teamdescription" id="description" rows="4" class="form-control" placeholder="Description ..." ><?php echo $description;?></textarea>
                                                 <span id="span_description" style="color: red"></span>
                                             </div>
                                             <!-- End Description-->
@@ -138,7 +175,7 @@
 
                                             <!-- Start button-->
                                             <div class="text-right mb-5">
-                                                <a href="#" class="btn btn-success" onclick="validate()">Save</a>
+                                                <button type="submit" name="buttonSave" class="btn btn-success" onclick="return val();">Save</button>
                                             </div>
                                             <!-- End Button-->
 
