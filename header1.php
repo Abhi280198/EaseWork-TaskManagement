@@ -93,7 +93,7 @@
         $BoardBackground = $_REQUEST['boardBackground'];
         /*$UserID=$_SESSION['UserID'];*/
 
-        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),null,null,$BoardBackground,1)";
+        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),null,null,'$BoardBackground',1)";
         $run_board = mysqli_query($con,$board_query);
 
         if($run_board){
