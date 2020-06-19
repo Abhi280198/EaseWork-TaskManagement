@@ -1,4 +1,3 @@
-<?php include_once("DbConnection.php"); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -60,8 +59,14 @@
                             <div class="col-lg-4 col-md-6 card-group-row__col">
                                 <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
                                     <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Individual Task</div>
-                                        <div class="text-amount">3</div>
+                                        <div class="card-header__title text-muted mb-2">Individual Board</div>
+                                        <?php
+                                            $IndividualCount="Select count(*) as individualcount from tblboard where Tid=1 AND Uid='".$_SESSION['UserID']."' AND IsActive=1";
+                                            $ExeIndividualCount=mysqli_query($con,$IndividualCount) or die(mysqli_error($con));
+                                            $FetchIndividualCount=mysqli_fetch_array($ExeIndividualCount);
+                                          
+                                        ?>
+                                        <div class="text-amount"><?php echo $FetchIndividualCount['individualcount'];?></div>
                                         <div class="text-stats text-success"><i class="material-icons"></i></div>
                                     </div>
                                     <div><i class="material-icons icon-muted icon-40pt ml-3"></i></div>
@@ -70,8 +75,14 @@
                             <div class="col-lg-4 col-md-6 card-group-row__col">
                                 <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
                                     <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Group Task</div>
-                                        <div class="text-amount">4</div>
+                                        <div class="card-header__title text-muted mb-2">Team Board</div>
+                                        <?php
+                                            $TeamCount="Select count(*) as teamtaskcount from tblboard where Uid='".$_SESSION['UserID']."' AND IsActive=1 AND Tid NOT IN (1)";
+                                            $ExeTeamCount=mysqli_query($con,$TeamCount) or die(mysqli_error($con));
+                                            $FetchTeamCount=mysqli_fetch_array($ExeTeamCount);
+                                          
+                                        ?>
+                                        <div class="text-amount"><?php echo $FetchTeamCount['teamtaskcount'];?></div>
                                         <div class="text-stats text-success"><i class="material-icons"></i></div>
                                     </div>
                                     <div><i class="material-icons icon-muted icon-40pt ml-3"></i></div>
@@ -80,8 +91,14 @@
                             <div class="col-lg-4 col-md-12 card-group-row__col">
                                 <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
                                     <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Completed Task</div>
-                                        <div class="text-amount">4</div>
+                                        <div class="card-header__title text-muted mb-2">Completed Board</div>
+                                        <?php
+                                            $CompleteCount="Select count(*) as completecount from tblboard where Uid='".$_SESSION['UserID']."' AND IsActive=0";
+                                            $ExeCompleteCount=mysqli_query($con,$CompleteCount) or die(mysqli_error($con));
+                                            $FetchCompleteCount=mysqli_fetch_array($ExeCompleteCount);
+                                          
+                                        ?>
+                                        <div class="text-amount"><?php echo $FetchCompleteCount['completecount'];?></div>
                                         <div class="text-stats text-danger"> <i class="material-icons"></i></div>
                                     </div>
                                     <div><i class="material-icons icon-muted icon-40pt ml-3"></i></div>

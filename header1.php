@@ -177,7 +177,7 @@
                                         <select name = "Boarddropdown">
                                             <!-- php code Team -->
                                             <?php 
-                                                $select_team="select * from tblteam where IsActive=1";
+                                                $select_team="select * from tblteam where IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
                                                 $Execute_select_team=mysqli_query($con,$select_team)or die(mysqli_error($con));
                                                 while($fetch_team=mysqli_fetch_array($Execute_select_team))
                                                 {
@@ -204,7 +204,7 @@
                                     
                                     <input name="boardBackground" value="" class="hidden" id="background_url" style="display: none;" />
 
-                                    <div style="position: relative;" class="my-3">
+                                    <div  class="my-3">
                                      <a href="#" style="display:block;text-align: right;" onclick="showBgPopover()" ><b>Add Background image</b></a> 
                                         
                                     <!-- start popover -->
@@ -264,6 +264,7 @@
                                                             
                                                             style = bg.currentStyle || window.getComputedStyle(bg, false),
                                                             bi = style.backgroundImage;
+                                                            console.log(bi);
                                                             imgUrl=bi.slice(bi.indexOf('image'),-2);
                                                             console.log(imgUrl);
                                                             var bgUrl=document.getElementById('background_url').value=imgUrl;

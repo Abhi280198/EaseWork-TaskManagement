@@ -230,16 +230,16 @@
         <!-- end contact form -->
 
         <!-- start social section -->
-        <p class="wow fadeIn"></p>
-        <p class="wow fadeIn"></p>
-        <p class="wow fadeIn"></p>
+        <p class="wow fadeIn">
+               <br>   <br>   <br>
+        </p>
         <!-- end social section -->
 
         <!-- start footer --> 
         <?php include_once("footer.php");?>
         <!-- end footer -->
 
-        <!-- javascript libraries -->
+        <!-- javascript libraries -->ss
         <?php include_once("loadJs.php");?>
 
     </body>

@@ -1,4 +1,4 @@
-
+<!-- START REGISTER DATABASE CONNECTION -->
 <?php 
 	include_once("DbConnection.php");
 	if(isset($_POST['submit']))
@@ -9,23 +9,26 @@
 		$pass=$_POST['pass'];
 		$phone=$_POST['mob'];
 
-		$query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive)values('$first','$last','$emailid','$pass', '$phone',now(),1)";
-		$run=mysqli_query($con,$query);
 
-		if($run){
+		$sel="SELECT * FROM tbluser 
+				WHERE Email='".$_REQUEST['email_id']."' or Mobile='".$_REQUEST['mob']."' ";
 
-		?>
-		    <!--echo"Data insert successfully...";-->
-		    <script type="text/javascript">alert("Data inserted successfully");</script>
+        $result=mysqli_query($con,$sel) or die(mysqli_error($con));
+        $row=mysqli_fetch_array($result);
 
-		<?php
-		}   
-		else{
-		echo "error".mysqli_error($con);   
-		}
+        if(mysqli_num_rows($result)>0)
+        {
+            echo '<script type="text/javascript" id="error">alert("Registration Unsuccessful... \n Email Address or Mobile number is already in use. \n Please Register Again..");</script>';
+        }
+        else
+        {
+           $query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive)values('$first','$last','$emailid','$pass', '$phone',now(),1)"; 
+           $run=mysqli_query($con,$query);
+           echo '<script type="text/javascript">alert("Data inserted successfully... Go to login Page...");</script>';
+        }
 	}
-
 ?>
+<!-- END REGISTER DATABASE CONNECTION -->
 
 <!DOCTYPE html>
 <html>

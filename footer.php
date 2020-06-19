@@ -35,7 +35,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="footer-widget-area padding-five-top padding-30px-bottom sm-padding-30px-top">
                 <div class="container">
                     <div class="row">
@@ -95,13 +94,13 @@
                             </div>
                             <p class="text-small width-90 sm-width-100">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="Index.php">Home</a>
+                                <a href="index_home.php?Uid=<?php echo $_SESSION['UserID']; ?>">Home</a>
                                 <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="TemplateIntro.php">Templates</a>
+                                <a href="TemplateIntro.php?Uid=<?php echo $_SESSION['UserID']; ?>">Templates</a>
                                 <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="About.php">About Us</a>
+                                <a href="About.php?Uid=<?php echo $_SESSION['UserID']; ?>">About Us</a>
                                 <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a href="Contact.php">Contact Us</a>
+                                <a href="Contact.php?Uid=<?php echo $_SESSION['UserID']; ?>">Contact Us</a>
                             </p>  
                         </div>
                         <!-- end links -->

@@ -1,8 +1,9 @@
 <?php include_once("DbConnection.php");
-
+    
+    $Tid=$_GET['Tid'];    
     $tid=$tname=$ttype=$description=$profilepic="";
 
-    $teamprofile_query="select * from tblteam where Tid=3";
+    $teamprofile_query="select * from tblteam where Tid=$Tid";
     $Execute_Q=mysqli_query($con,$teamprofile_query) or die(mysqli_error($con));
     $fetch=mysqli_fetch_array($Execute_Q);
 
@@ -27,9 +28,9 @@
         }
 
         $UpdateTeam = "update tblteam set Tname='".$_REQUEST['teamname']."',Ttype='".$_REQUEST['teamtype']."',
-                        Description='".$_REQUEST['teamdescription']."', ProfilePic='".$img2."' where Tid=3";
+                        Description='".$_REQUEST['teamdescription']."', ProfilePic='".$img2."' where Tid=$Tid";
         $Exe_update=mysqli_query($con,$UpdateTeam)or die(mysqli_error($con));
-        header("location:Team_profile.php?Tid=3");
+        header("location:Team_profile.php?Tid=$tid");
     }
 ?>
 

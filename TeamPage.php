@@ -1,3 +1,8 @@
+<?php 
+    include_once("DbConnection.php");
+    $Uid=$_GET['Uid'];
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -31,9 +36,16 @@
                             <div class="flex">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item"><a href="#"><i class="material-icons icon-20pt">home</i></a></li>
-                                        <li class="breadcrumb-item">Boards</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Teams</li>
+                                        <li class="breadcrumb-item">
+                                            <a href="index.php?Uid=<?php echo $_SESSION['UserID'];?>">
+                                                <i class="material-icons icon-20pt">home</i>
+                                            </a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#">Boards</a></li>
+                                        <li class="breadcrumb-item" aria-current="page">
+
+                                            <a href="TeamPage.php?Uid=<?php echo $_SESSION['UserID'];?>">Teams</a>
+                                        </li>
                                     </ol>
                                 </nav>
                                 <h1 class="m-0">Teams</h1>
@@ -46,7 +58,7 @@
                     <div class="container-fluid page__container">
 
                         <!--Start Recent Activity section-->
-                        <div class="mb-3"><strong class="text-dark-gray">Recently Viewed</strong></div>
+                        <!-- <div class="mb-3"><strong class="text-dark-gray">Recently Viewed</strong></div>
                         <div class="stories-cards mb-4">
                             <div class="card stories-card">
                                 <div class="stories-card__content d-flex align-items-center flex-wrap">
@@ -71,7 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!--End Recent Activity section-->
 
                         <br>
@@ -80,39 +92,50 @@
                         <div class="my-3"><strong class="text-dark-gray">Teams</strong>
                         </div>
                         <div class="row">
+                            <?php       
+                                $teamselectquery = "SELECT * FROM tblteam Where Uid=$Uid AND IsActive=1 AND Tid NOT IN (1)";  
+                                $result_team = mysqli_query($con,$teamselectquery);
+                                if($result_team->num_rows!=0)
+                                {  
+                                    while($row_team=$result_team->fetch_array())  
+                                    {
+                                        $tid=$row_team['Tid'];
+                                        $title=$row_team['Tname'];  
+                                        $profile=$row_team['ProfilePic'];
+                                        $isactive=$row_team['IsActive']; 
+
+                                        if($profile=="" || !file_exists("images/teamprofile/$profile"))
+                                        {
+                                            $profile="teampro1.jpg";
+                                        }                   
+                            ?>
 
                                 <div class="col-sm-6 col-md-4">
                                     <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_euan-carmichael-666378-unsplash.jpg" alt="" class="card-img">
+                                        <img src="images/teamprofile/<?php echo $profile; ?>" alt="" class="card-img">
                                         <div class="stories-card-popular__content">
                                             <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="Team_boards.php">Wedding Planning</a></h4>
+                                                <h4 class="card-title m-0">
+                                                    <a href="Team_boards.php?Tid=<?php echo $tid; ?>">
+                                                        <?php echo $title; ?>
+                                                    </a>
+                                                </h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            <?php 
+                                    }
+                                }else{
+                            ?>
+                                    <h4 class="card-title m-0">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        No Teams available. <a href="#" onclick="openteamForm()">Create Team.</a>
+                                    </h4>
+                            <?php
+                                }
+                            ?>
 
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_jared-rice-388260-unsplash.jpg" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="Team_boards.php">Different Classes</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_dex-ezekiel-761373-unsplash.jpg" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="Team_boards.php">New Year Party</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                         </div>
                         <!--End Boards section-->
 

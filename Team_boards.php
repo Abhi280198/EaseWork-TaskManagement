@@ -1,3 +1,7 @@
+<?php 
+    include_once("DbConnection.php");
+    $Tid=$_GET['Tid'];
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -31,14 +35,20 @@
                             <div class="flex">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item"><a href="#"><i class="material-icons icon-20pt">home</i></a></li>
-                                        <li class="breadcrumb-item">Team</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Boards</li>
+                                        <li class="breadcrumb-item">
+                                            <a href="index.php?Uid=<?php echo $_SESSION['UserID'];?>">
+                                                <i class="material-icons icon-20pt">home</i>
+                                            </a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#">Team</a></li>
+                                        <li class="breadcrumb-item" aria-current="page">
+                                            <a href="Team_boards.php?Tid=<?php echo $Tid;?>">Boards</a>
+                                        </li>
                                     </ol>
                                 </nav>
                                 <h1 class="m-0">Boards</h1>
                             </div>
-                            <a href="Template_dashboard.php" class="btn btn-success ml-3">Explore Templates</a>
+                            <a href="Template_dashboard.php?Uid=<?php echo $_SESSION['UserID'];?>" class="btn btn-success ml-3">Explore Templates</a>
                         </div>
                     </div>
                     <!--End Bold header section-->
@@ -49,7 +59,16 @@
                         <!--Start Team description section-->
                         <div class="mb-3"><strong class="text-dark-gray">Team Descrpition</strong></div>
                         <div class="stories-cards mb-4">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is printing and typesetting simply dummy text.</p>
+                            <?php
+
+                                $teamdescription_query="select * from tblteam where Tid=$Tid";
+                                $Execute_teamdescription=mysqli_query($con,$teamdescription_query) or die(mysqli_error($con));
+                                $fetch_teamdescription=mysqli_fetch_array($Execute_teamdescription);
+                                $description=$fetch_teamdescription['Description'];
+                                $tid=$fetch_teamdescription['Tid'];
+                            ?>
+
+                            <p><?php echo $description; ?></p>
                         </div>
                         <!--End Team description section-->
 
@@ -59,39 +78,51 @@
                         <div class="my-3"><strong class="text-dark-gray">Boards</strong>
                         </div>
                         <div class="row">
+                            <?php     
+                                $uid = $_SESSION['UserID'];  
+                                $query = "SELECT * FROM tblboard Where Tid=$Tid AND Uid=$uid";  
+                                $result = mysqli_query($con,$query);
+                                if($result->num_rows!=0)
+                                {  
+                                    while($row=$result->fetch_array())  
+                                    {
+                                        $bid=$row['Bid'];
+                                        $btitle=$row['Btitle'];  
+                                        $background=$row['Background'];
+                                        $isactive=$row['IsActive']; 
+
+                                        if($background=="" || !file_exists("$background"))
+                                        {
+                                            $background="images/backgrounddefault.jpg";
+                                        }                   
+                            ?>
 
                                 <div class="col-sm-6 col-md-4">
                                     <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_euan-carmichael-666378-unsplash.jpg" alt="" class="card-img">
+                                        <img src="<?php echo $background; ?>" alt="" class="card-img">
                                         <div class="stories-card-popular__content">
                                             <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="board.php">Tremblant In Canada</a></h4>
+                                                <h4 class="card-title m-0">
+                                                    <a href="board.php?Bid=<?php echo $bid; ?>">
+                                                        <?php echo $btitle; ?>
+                                                    </a>
+                                                </h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_jared-rice-388260-unsplash.jpg" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="#">Become A Travel Pro In One Easy Lesson</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="assets/images/stories/256_rsz_dex-ezekiel-761373-unsplash.jpg" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="#">A Guide To Rocky Mountain Vacations</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <?php 
+                                    }
+                                }else{
+                            ?>
+                                    <h4 class="card-title m-0">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        No Boards available for this team. <a href="#" onclick="openForm()">Create Board.</a>
+                                    </h4>
+                            <?php
+                                }
+                            ?>
                         </div>
                         <!--End Boards section-->
 

@@ -108,7 +108,7 @@
                                 if(isset($_SESSION['UserID']))
                                 {
                            ?>
-                                    <a href="index.php?UserID=<?php echo $_SESSION['UserID']; ?>" class="btn btn-extra-large btn-white text-large border-radius-4 lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Start your Work <i class="fas fa-arrow-right icon-very-small" aria-hidden="true"></i></a>
+                                    <a href="index.php?Uid=<?php echo $_SESSION['UserID']; ?>" class="btn btn-extra-large btn-white text-large border-radius-4 lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Start your Work <i class="fas fa-arrow-right icon-very-small" aria-hidden="true"></i></a>
                             <?php
                                 }
                                 else
@@ -337,7 +337,7 @@
                         <!-- start feature box item -->
                         <div class="col-12 col-lg-4 d-flex justify-content-center flex-column text-center text-lg-left md-margin-five-bottom sm-margin-ten-bottom last-paragraph-no-margin">
                             <span class="text-extra-large text-white-2 alt-font margin-15px-bottom d-block width-85 md-width-100">Explore Beautifully Designed Templates.</span>
-                            <a href="TemplateIntro.php" class="btn-info btn btn-small button border-radius-4 margin-5px-all lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Explore <i class="ti-arrow-right"></i></a>
+                            <a href="TemplateIntro.php?Uid=<?php echo $_SESSION['UserID']; ?>" class="btn-info btn btn-small button border-radius-4 margin-5px-all lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Explore <i class="ti-arrow-right"></i></a>
                         </div>
                         <!-- end feature box item -->
                         <!-- start feature box item -->
@@ -372,8 +372,9 @@
             <!-- end Explore template section -->
 
             <!-- start blank section -->
-            <section class="wow fadeIn">
-            </section>
+            <p class="wow fadeIn">
+                <br>   <br>   <br>
+            </p>
             <!-- end blank section -->
 
         </div>

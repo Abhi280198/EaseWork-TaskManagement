@@ -19,16 +19,16 @@
                                 <ul id="accordion" class="nav navbar-nav navbar-left no-margin alt-font text-normal" data-in="fadeIn" data-out="fadeOut">
                                     <!-- start menu item -->
                                     <li class="dropdown megamenu-fw">
-                                        <a href="Index_home.php">Home</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
+                                        <a href="Index_home.php?Uid=<?php echo $_SESSION['UserID'];?>">Home</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                     </li>
                                     <li class="dropdown simple-dropdown">
-                                        <a href="TemplateIntro.php">Templates</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
+                                        <a href="TemplateIntro.php?Uid=<?php echo $_SESSION['UserID'];?>">Templates</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                     </li>
                                     <li class="dropdown megamenu-fw">
-                                        <a href="About.php">About Us</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
+                                        <a href="About.php?Uid=<?php echo $_SESSION['UserID'];?>">About Us</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                     </li>
                                     <li class="dropdown simple-dropdown">
-                                        <a href="Contact.php" >Contact Us</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
+                                        <a href="Contact.php?Uid=<?php echo $_SESSION['UserID'];?>" >Contact Us</a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                     </li>
 
                                     <?php
@@ -40,7 +40,7 @@
                                             $fetch=mysqli_fetch_array($Execute_sel_User);
                                     ?>
                                     <li class="dropdown">
-                                        <a href="#" class="dropbtn">Hi,&nbsp;<?php echo $fetch['Fname']." ".$fetch['Lname']; ?></a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
+                                        <a href="#" class="dropbtn"><span style="color: #ff214f;">Hi,&nbsp;<?php echo $fetch['Fname']." ".$fetch['Lname']; ?></span></a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                         <div class="dropdown-content" >
                                             <a href="index.php?UserID=<?php echo $fetch['Uid']; ?>">&nbsp;&nbsp;Dashboard</a>
                                             <a href="profile.php?UserID=<?php echo $fetch['Uid']; ?>">&nbsp;&nbsp;Profile</a>

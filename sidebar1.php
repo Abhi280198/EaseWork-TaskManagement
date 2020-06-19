@@ -14,13 +14,12 @@
                                 }
                             ?>
                             <div class="d-flex align-items-center sidebar-p-a border-bottom sidebar-account">
-                                <a href="profile.php" class="flex d-flex align-items-center text-underline-0 text-body">
+                                <a href="profile.php?Uid=<?php echo $_SESSION['UserID'];?>" class="flex d-flex align-items-center text-underline-0 text-body">
                                     <span class="avatar mr-3">
                                         <img src="images/profile/<?php echo $imageName;?>" alt="avatar" class="avatar-img rounded-circle">
                                     </span>
                                     <span class="flex d-flex flex-column">
                                         <strong><?php echo $_SESSION['Firstname']." ".$_SESSION['Lastname'];?></strong>
-                                        <!-- <small class="text-muted text-uppercase"><?php echo $_SESSION['Emailid'];?></small> -->
                                     </span>
                                 </a>
                                 <div class="dropdown ml-auto">
@@ -33,7 +32,6 @@
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="index.php?Uid=<?php echo $_SESSION['UserID'];?>">Dashboard</a>
                                         <a class="dropdown-item" href="profile.php?Uid=<?php echo $_SESSION['UserID'];?>">My profile</a>
-                                       <!--  <a class="dropdown-item active" href="edit-account.html">Edit account</a> -->
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="logout.php">Logout</a>
                                     </div>
