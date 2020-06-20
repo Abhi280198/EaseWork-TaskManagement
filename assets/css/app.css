@@ -16245,7 +16245,7 @@ html,
 }
 
 [dir=ltr] .trello {
-  overflow: hidden;
+  overflow: visible;
 }
 [dir=ltr] .trello .mdk-drawer-layout,
 [dir=ltr] .trello .mdk-header-layout,
@@ -16269,7 +16269,7 @@ html,
   display: block;
   white-space: nowrap;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   height: 100%;
 }
@@ -16303,7 +16303,7 @@ html,
 }
 
 [dir=ltr] .app-chat {
-  overflow: hidden;
+  overflow: auto;
 }
 [dir=ltr] .app-chat .mdk-drawer-layout,
 [dir=ltr] .app-chat .mdk-header-layout,
@@ -16321,7 +16321,7 @@ html,
   flex: 1 1 0%;
   position: relative;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   z-index: 0;
 }
 

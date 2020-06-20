@@ -88,6 +88,11 @@
                         </div> 
                         <!-- end newsletter -->
 
+                    <?php
+                        if(isset($_SESSION['UserID']))
+                        {
+                    ?>
+
                         <!-- start links -->
                         <div class="col-lg-3 col-md-6 widget md-margin-5px-bottom text-center text-md-left">
                             <div class="widget-title alt-font text-small text-medium-gray text-uppercase margin-20px-bottom font-weight-600">Useful Links:
@@ -104,6 +109,33 @@
                             </p>  
                         </div>
                         <!-- end links -->
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+
+                        <!-- start links -->
+                        <div class="col-lg-3 col-md-6 widget md-margin-5px-bottom text-center text-md-left">
+                            <div class="widget-title alt-font text-small text-medium-gray text-uppercase margin-20px-bottom font-weight-600">Useful Links:
+                            </div>
+                            <p class="text-small width-90 sm-width-100">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="index_home.php">Home</a>
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="TemplateIntro.php">Templates</a>
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="About.php">About Us</a>
+                                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="Contact.php">Contact Us</a>
+                            </p>  
+                        </div>
+                        <!-- end links -->
+
+                    <?php
+                        }
+                    ?>
+
                     </div>
                 </div>
             </div>

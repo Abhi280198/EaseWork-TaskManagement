@@ -2,8 +2,6 @@
 <?php 
     include_once("DbConnection.php");
     $Uid=$_GET['Uid'];
-    $Tid=$_GET['Tid'];
-
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +37,14 @@
                             <div class="flex">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item"><a href="#"><i class="material-icons icon-20pt">home</i></a></li>
-                                        <li class="breadcrumb-item">Boards</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Completed</li>
+                                        <li class="breadcrumb-item">
+                                            <a href="index.php?Uid=<?php echo $_SESSION['UserID'];?>"><i class="material-icons icon-20pt">home</i></a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#">Boards</a></li>
+                                        <li class="breadcrumb-item" aria-current="page"><a href="Complete.php?Uid=<?php echo $_SESSION['UserID'];?>">Completed</a></li>
                                     </ol>
                                 </nav>
-                                <h1 class="m-0">Completed Boards</h1>
+                                <h2 class="m-0">Completed Boards</h2>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                             ?>
                                 <h4 class="card-title m-0">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    No Individual Completed Boards available. <!-- <a href="#" onclick="openForm()">Create Board.</a> -->
+                                    No Boards are Completed.
                                 </h4>
                             <?php
                                 }
@@ -104,6 +104,7 @@
 
                     </div>
                     <!--End Individual section-->
+                    <br>    
 
                      <!--Start Teams section-->
                     <div class="container-fluid page__container">
@@ -114,8 +115,7 @@
                         <div class="row">
 
                             <?php     
-                                $uid = $_SESSION['UserID'];  
-                                $qry = "SELECT * FROM tblboard Where Tid=$Tid AND Uid=$uid";  
+                                $qry = "SELECT * FROM tblboard Where Tid NOT IN (1) AND Uid=$Uid AND IsActive=0";  
                                 $rslt = mysqli_query($con,$qry);
                                 if($rslt->num_rows!=0)
                                 {  
@@ -124,12 +124,20 @@
                                         $bid=$row['Bid'];
                                         $btitle=$row['Btitle'];  
                                         $background=$row['Background'];
-                                        $isactive=$row['IsActive']; 
+                                        $isactive=$row['IsActive'];
+                                        $boardtid=$row['Tid']; 
 
                                         if($background=="" || !file_exists("$background"))
                                         {
                                             $background="images/backgrounddefault.jpg";
-                                        }                   
+                                        }   
+
+                                        $teamselect = "SELECT * FROM tblteam Where Tid= $boardtid";
+                                        $teamresult= mysqli_query($con,$teamselect)or die(mysqli_error($con));;
+                                        $teamrow=mysqli_fetch_array($teamresult);  
+
+                                        $teamid=$teamrow['Tid'];
+                                        $teamName=$teamrow['Tname'];              
                             ?>
 
                                 <div class="col-sm-6 col-md-4">
@@ -137,10 +145,10 @@
                                         <img src="<?php echo $background; ?>" alt="" class="card-img">
                                         <div class="stories-card-popular__content">
                                             <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="board.php?Bid=<?php echo $bid; ?>">
-                                                        <?php echo $btitle; ?>
-                                                    </a>
-                                                <small class="card-title m-0" style="color: white;">Team Name1</small>
+                                                <h4 class="card-title m-0">
+                                                    <a href="board.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a>
+                                                </h4>
+                                                <small class="card-title m-0" style="color: white;"><?php echo $teamName; ?></small>
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +160,7 @@
                             ?>
                                     <h4 class="card-title m-0">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        No Completed Team Boards available for this team. <!-- <a href="#" onclick="openForm()">Create Board.</a> -->
+                                        No Team Boards are completed. <!-- <a href="#" onclick="openForm()">Create Board.</a> -->
                                     </h4>
                             <?php
                                 }

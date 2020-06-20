@@ -68,9 +68,13 @@
                             <div class="flex">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item"><a href="index.php"><i class="material-icons icon-20pt">home</i></a></li>
-                                        <li class="breadcrumb-item">Templates</li>
-                                        <li class="breadcrumb-item active" aria-current="page">Personal</li>
+                                        <li class="breadcrumb-item">
+                                            <a href="index.php?Uid=<?php echo $_SESSION['UserID'];?>"><i class="material-icons icon-20pt">home</i></a>
+                                        </li>
+                                        <li class="breadcrumb-item"><a href="#">Template</a></li>
+                                        <li class="breadcrumb-item" aria-current="page">
+                                            <a href="dashboard_template_personal.php?Uid=<?php echo $_SESSION['UserID'];?>">Personal</a>
+                                        </li>
                                     </ol>
                                 </nav>
                                 <h1 class="m-0">Personal</h1>
@@ -97,7 +101,7 @@
                                         <div class="flex">
                                             <h2 class="m-0">Vacation Planning</h2>
                                         </div>
-                                        <a href="Template_dashboard.php" class="btn btn-success ml-3">View Template</a>
+                                        <a href="Personal_template.php?Uid=<?php echo $_SESSION['UserID'];?>" class="btn btn-success ml-3">View Template</a>
                                         <a href="#" class="btn btn-success ml-3" onclick="openTemplatePopup()" >Use Template</a>
                                     </div>
 

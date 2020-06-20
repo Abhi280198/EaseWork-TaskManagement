@@ -34,6 +34,10 @@
             <div class="container"> 
                 <div class="row">
 
+                <?php
+                    if(isset($_SESSION['UserID']))
+                    {
+                ?>
                     <!-- start education post-->
                     <div class="col-12 col-lg-4 col-md-6 grid-item margin-30px-bottom text-center text-md-left wow fadeInUp">
                         <div class="blog-post bg-light-gray inner-match-height">
@@ -63,7 +67,43 @@
                         </div>
                     </div>
                     <!-- end personal post-->
+                <?php
+                    }
+                    else
+                    {
+                ?>
+                    <!-- start education post-->
+                    <div class="col-12 col-lg-4 col-md-6 grid-item margin-30px-bottom text-center text-md-left wow fadeInUp">
+                        <div class="blog-post bg-light-gray inner-match-height">
+                            <div class="blog-post-images overflow-hidden position-relative">
+                                <a href="TemplateInfo_Education.php">
+                                    <img src="assets1/images/blog-img16.jpg" alt="">
+                                    <div class="blog-hover-icon"><span class="text-extra-large font-weight-300"></span></div>
+                                </a>
+                            </div>
+                            <br>
+                            <a href="TemplateInfo_Education.php" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">EDUCATION</a>
+                        </div>
+                    </div>
+                    <!-- end education post-->
 
+                    <!-- start personal post-->
+                    <div class="col-12 col-lg-4 col-md-6 grid-item margin-30px-bottom text-center text-md-left wow fadeInUp">
+                        <div class="blog-post bg-light-gray inner-match-height">
+                            <div class="blog-post-images overflow-hidden position-relative">
+                                <a href="TemplateInfo_Personal.php">
+                                    <img src="assets1/images/blog-img74.jpg" alt="">
+                                    <div class="blog-hover-icon"><span class="text-extra-large font-weight-300"></span></div>
+                                </a>
+                            </div>
+                            <br>
+                            <a href="TemplateInfo_Personal.php" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">PERSONAL</a>
+                        </div>
+                    </div>
+                    <!-- end personal post-->
+                <?php
+                    }
+                ?>
                     <!-- start comming soon post-->
                     <div class="col-12 col-lg-4 col-md-6 grid-item margin-30px-bottom text-center text-md-left wow fadeInUp">
                         <div class="blog-post bg-light-gray inner-match-height">

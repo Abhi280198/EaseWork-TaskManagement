@@ -260,7 +260,7 @@
 
 </head>
 
-<body class="layout-default">
+<body class="layout-default trello">
 
     <!-- popup -->
 
@@ -303,7 +303,7 @@
     <div class="preloader"></div>
 
     <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout">
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/blog-img78.jpg); background-repeat: repeat;">
 
        <!-- Header -->
             <?php include_once('header1.php'); ?>
@@ -311,7 +311,7 @@
 
 
         <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" style="background-image: url(images/blog-img78.jpg);">
+        <div class="mdk-header-layout__content">
 
 
             <!-- start create board link -->

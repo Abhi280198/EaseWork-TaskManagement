@@ -199,7 +199,7 @@
                             <h4 class="alt-font text-white-2">How it Works? </h4>
                             <h7 class="alt-font text-white-2"> We deliver easy and comfortable website for you.</h7>
                         </div>
-                    </div>
+                    </div><br><br><br><br><br>
                     <div class="parallax-feature-box-bottom z-index-5 d-flex flex-wrap justify-content-center w-100 left-0 wow fadeInUp">
                         <!-- start features box item -->
                         <div class="col-12 col-lg-3 col-md-6 md-margin-four-bottom sm-margin-eight-bottom wow fadeInUp">
@@ -337,7 +337,20 @@
                         <!-- start feature box item -->
                         <div class="col-12 col-lg-4 d-flex justify-content-center flex-column text-center text-lg-left md-margin-five-bottom sm-margin-ten-bottom last-paragraph-no-margin">
                             <span class="text-extra-large text-white-2 alt-font margin-15px-bottom d-block width-85 md-width-100">Explore Beautifully Designed Templates.</span>
+                        <?php
+                            if(isset($_SESSION['UserID']))
+                            {
+                        ?>
                             <a href="TemplateIntro.php?Uid=<?php echo $_SESSION['UserID']; ?>" class="btn-info btn btn-small button border-radius-4 margin-5px-all lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Explore <i class="ti-arrow-right"></i></a>
+                        <?php
+                            }
+                            else
+                            {
+                        ?>
+                            <a href="TemplateIntro.php" class="btn-info btn btn-small button border-radius-4 margin-5px-all lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Explore <i class="ti-arrow-right"></i></a>
+                        <?php
+                            }
+                        ?>
                         </div>
                         <!-- end feature box item -->
                         <!-- start feature box item -->

@@ -90,7 +90,7 @@
                                             </a>
                                         </li>
                                         <li class="sidebar-menu-item">
-                                            <a class="sidebar-menu-button" href="Complete.php">
+                                            <a class="sidebar-menu-button" href="Complete.php?Uid=<?php echo $_SESSION['UserID'];?>">
                                                 <span class="sidebar-menu-text">Completed </span>
                                             </a>
                                         </li>

@@ -262,10 +262,9 @@
 
 </head>
 
-<body class="layout-default">
+<body class="layout-default trello">
 
     <!-- popup -->
-
     <div class="form-popup" id="useTemplatePopup">
         <form action="/action_page.php" class="form-container">
             <div class="header">
@@ -299,14 +298,13 @@
             </center>
         </form>
     </div>
-
     <!--END popup -->
 
 
     <div class="preloader"></div>
 
     <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout">
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/backgrounddefault.jpg); background-repeat: repeat;">
 
        <!-- Header -->
             <?php include_once('header1.php'); ?>
@@ -314,7 +312,7 @@
 
         
         <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" style="background-image: url(images/backgrounddefault.jpg);">
+        <div class="mdk-header-layout__content" >
 
             <!-- start create board link -->
             <div class="w3-bar w3-black">
@@ -431,7 +429,7 @@
 
 
             <!-- start trello container after second header  -->
-            <div class="trello-container" >
+            <div class="trello-container">
                 <br><br>
                 <div class="trello-board container-fluid page__container">
 
@@ -681,7 +679,7 @@
 
                             <!-- Start Assignments card Section-->
                             <div class="card-body p-2">
-                                <div class="trello-board__tasks-list card-list" id="trello-tasks-4 ">
+                                <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
 
                                     <!-- Start Assignments card 1-->
                                     <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
