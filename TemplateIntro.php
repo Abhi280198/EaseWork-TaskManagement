@@ -44,7 +44,7 @@
                                 </a>
                             </div>
                             <br>
-                            <a href="TemplateInfo_Education.php" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">EDUCATION</a>
+                            <a href="TemplateInfo_Education.php?Uid=<?php echo $_SESSION['UserID'];?>" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">EDUCATION</a>
                         </div>
                     </div>
                     <!-- end education post-->
@@ -59,7 +59,7 @@
                                 </a>
                             </div>
                             <br>
-                            <a href="TemplateInfo_Personal.php" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">PERSONAL</a>
+                            <a href="TemplateInfo_Personal.php?Uid=<?php echo $_SESSION['UserID'];?>" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block lg-width-100 margin-15px-bottom" style="text-align: center; font-size: 20px;">PERSONAL</a>
                         </div>
                     </div>
                     <!-- end personal post-->
