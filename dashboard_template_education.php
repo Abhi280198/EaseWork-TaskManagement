@@ -1,5 +1,35 @@
 
-<?php include_once("DbConnection.php"); ?>
+<?php 
+    include_once("DbConnection.php");
+
+    if(isset($_REQUEST['UseTemplateSubmit'])){
+
+        $BoardName = $_REQUEST['title'];
+        $BoardTeamType = $_REQUEST['Team-dropdown'];
+        $BoardVisbility = $_REQUEST['Visibility-dropdown'];
+        $BoardBackground = "images/backgrounddefault.jpg";
+
+        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),1,null,'$BoardBackground',1)";
+        $run_board = mysqli_query($con,$board_query);
+
+        if($run_board){
+
+        ?>
+            <script type="text/javascript">
+                alert("Data inserted successfully");
+                window.location.href = 'Education_template.php';
+            </script>
+
+        <?php
+        }   
+        else{
+        echo "error".mysqli_error($con);   
+        }
+
+     }
+ ?>
+
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -14,23 +44,43 @@
      <!-- popup -->
 
     <div class="form-popup" id="useTemplatePopup">
-        <form action="/action_page.php" class="form-container">
+        <form  class="form-container">
             <div class="header">
             <h1>Use Template</h1>
                                         
             </div><br><br>
                                         
             <label for="title"><b>Title Name:</b></label>
-            <input type="text" placeholder="title" name="title" required><br><br>
+                <!-- php code title name -->
+                    <?php
+                        $select_title = "select * from tbltemplate where Tempid=1 ";
+                        $Execute_select_title = mysqli_query($con,$select_title)or die(mysqli_error($con));
+                        $fetch_title=mysqli_fetch_array($Execute_select_title);
+                        $title =  $fetch_title['TempName'];
+                    ?>
+
+                <!-- php code title name -->
+            <input type="text" placeholder="title" name="title" required value="<?php echo $title;?>"><br><br>
 
             <label for="title"><b>Team Name:</b></label>
-            <select name = "dropdown">
-            <option value = "No Team" selected>No Team</option>
-            <option value = "Team names">Team names</option>
+            <select name = "Team-dropdown">
+                <!-- php code Team -->
+                    <?php 
+                        $select_team="select * from tblteam where IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
+                        $Execute_select_team=mysqli_query($con,$select_team)or die(mysqli_error($con));
+                        while($fetch_team=mysqli_fetch_array($Execute_select_team))
+                    {
+                ?>
+                <!-- php code team -->
+            
+            <option value = "<?php echo $fetch_team['Tid'];?>"><?php echo $fetch_team['Tname'];?></option>
+            <?php
+                }
+            ?>
             </select>
             <br><br>
             <label for="title"><b>Visibility:</b></label>
-            <select name = "dropdown">
+            <select name = "Visibility-dropdown">
                 <option value = "Private" selected>Private</option>
                 <option value = "Team">Team</option>
                 <option value = "Public">Public</option>
@@ -38,7 +88,7 @@
             <br><br>
             <br><br>
             <div class="canclebtn">
-            <a href="board_link.php" type="button" class="btn cancel">Create</a>
+            <button  type="submit" name="UseTemplateSubmit" class="btn cancel">Create</button>
             <button type="button" class="btn cancel" onclick="closeTemplatePopup()" >Cancel</button>
             </div>
         </form>

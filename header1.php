@@ -209,7 +209,7 @@
                                         
                                     <!-- start popover -->
 
-                                                    <div class="main-popover" id="background-popover">
+                                                    <div class="main-popover"  id="background-popover">
                                                         <div class="main-container">
                                                             <span>Background</span>
                                                             <button type="button" class="closeButton" onclick="hideBgPopover()">Close</button> 
