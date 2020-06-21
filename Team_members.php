@@ -1,3 +1,8 @@
+<?php 
+    include_once("DbConnection.php");
+    // $Uid=$_GET['Uid'];
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -19,8 +24,6 @@
     <div class="mdk-header-layout js-mdk-header-layout">
 
         <!-- Header -->
-
-        <?php include_once('header1.php');?>
 
         <!-- // END Header -->
 

@@ -312,7 +312,7 @@
 
         
         <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" >
+        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
             <!-- start create board link -->
             <div class="w3-bar w3-black">
@@ -430,8 +430,8 @@
 
             <!-- start trello container after second header  -->
             <div class="trello-container">
-                <br><br>
-                <div class="trello-board container-fluid page__container">
+                
+                <div class="trello-board container-fluid page__container mt-5" >
 
                     <!-- Start Syllabus remaining list-->
                     <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>

@@ -16262,8 +16262,8 @@ html,
 [dir=ltr] .trello-container {
   flex: 1 1 0%;
   position: relative;
-  height: 100%;
-  overflow: hidden;
+ /* height: 100%;
+  overflow: hidden;*/
 }
 [dir=ltr] .trello-board {
   display: block;
@@ -16273,6 +16273,10 @@ html,
   -webkit-overflow-scrolling: touch;
   height: 100%;
 }
+.trello-board::-webkit-scrollbar {
+  display: none;
+}
+
 [dir=ltr] .trello-board__tasks {
   display: inline-flex;
   align-items: start;

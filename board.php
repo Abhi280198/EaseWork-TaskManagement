@@ -274,7 +274,7 @@
 
         
         <!-- Start container from second header -->
-        <div class="mdk-header-layout__content">
+        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
 
             <!-- start second header content -->
@@ -312,13 +312,16 @@
                                 </div>
                                 <hr style="border-top: 1px solid #bbb;">
                                   <br>
-                                <button class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" onclick="memberpage()">Members Details</button>
+                                <div>
 
-                                <script>
-                                    function memberpage() {
-                                      location.replace("Team_members.php")
-                                    }
-                                </script>
+                                    <a href="Team_members.php" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
+
+                                    <!-- <script>
+                                        function memberpage() {
+                                          location.replace("Team_members.php");
+                                        }
+                                    </script> -->
+                                </div>
 
                                 <hr style="border-top: 1px solid #bbb;">
                                 <div>
@@ -603,6 +606,8 @@
                         </div>
                     </div>
                     <!-- End Done list-->
+
+                    
 
                 </div>
             </div>
