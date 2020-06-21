@@ -100,7 +100,7 @@
 			<button type="submit" name="submit" value="submit" class="btn"  onclick="return validate();">Sign Up</button><br><br>
 		   <div id="container">
 			<!-- <a href="#" style="margin-right: 0px; font-size: 13px; font-family: Tahoma, Geneva, sans-serif;">Reset Password</a> --><br>
-			 <a href="reset_password.php" style="margin-right: 0px; font-size: 13px; font-family: Tahoma, Geneva, sans-serif;">Forgot Password</a>	
+			 <a href="ForgotPassword.php" style="margin-right: 0px; font-size: 13px; font-family: Tahoma, Geneva, sans-serif;">Forgot Password</a>	
 			</div><br> 
 			Don't have an account?<a href="register.php">&nbsp;Sign Up</a>
 		</form>

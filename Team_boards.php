@@ -80,7 +80,7 @@
                         <div class="row">
                             <?php     
                                 $uid = $_SESSION['UserID'];  
-                                $query = "SELECT * FROM tblboard Where Tid=$Tid AND Uid=$uid";  
+                                $query = "SELECT * FROM tblboard Where Tid=$Tid AND Uid=$uid AND IsActive=1";  
                                 $result = mysqli_query($con,$query);
                                 if($result->num_rows!=0)
                                 {  

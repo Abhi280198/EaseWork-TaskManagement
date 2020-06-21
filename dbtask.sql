@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2020 at 10:08 PM
+-- Generation Time: Jun 21, 2020 at 03:26 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -39,7 +39,16 @@ CREATE TABLE `tblboard` (
   `Background` varchar(100) DEFAULT NULL,
   `IsActive` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Error reading data for table dbtask.tblboard: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `dbtask`.`tblboard`' at line 1
+
+--
+-- Dumping data for table `tblboard`
+--
+
+INSERT INTO `tblboard` (`Bid`, `Btitle`, `Tid`, `Visibility`, `Uid`, `Date`, `Tempid`, `Description`, `Background`, `IsActive`) VALUES
+(1, 'Individual Board 1', 1, 'Private', 19, '2020-06-19', NULL, NULL, '', 1),
+(2, 'BackgroungBoard', 1, 'Private', 19, '2020-06-20', NULL, NULL, 'images/bg2.jpg', 1),
+(3, 'board 1-20', 4, 'Team', 20, '2020-06-20', NULL, NULL, 'images/bg1.jpg', 0),
+(4, 'individual 1-20', 1, 'Private', 20, '2020-06-20', NULL, NULL, 'images/bg6.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -86,30 +95,7 @@ CREATE TABLE `tblcontact` (
   `Subject` varchar(100) NOT NULL,
   `Description` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tblcontact`
---
-
-INSERT INTO `tblcontact` (`Cid`, `Name`, `Mobile`, `Email`, `Subject`, `Description`) VALUES
-(1, 'abhilasha', 2084905416, 'poojakusingh40@gmail.com', 'Task Info', 'How to allocate task before login'),
-(2, 'puja', 1684905416, 'pooja@gmail.com', 'Reply', 'I didn\'t get any reply'),
-(17, 'Riya jain', 2147483647, 'ee@gh.com', 'enquiry', 'how to add members?'),
-(18, 'Riya jain', 2147483647, 'ee@gh.com', 'enquiry', 'how to add members?'),
-(19, 'Riya jain', 2147483647, 'ee@gh.com', 'enquiry', 'how to add members?'),
-(20, 'Riya jain', 2147483647, 'ee@gh.com', 'enquiry', 'how to add members?'),
-(21, 'Riya jain', 2147483647, 'ee@gh.com', 'enquiry', 'how to add members?'),
-(22, 'abcd', 2147483647, 'abcd@gmail.com', 'abcdefg', 'abcdefghijklmnopqrstuvwxyz'),
-(23, 'abcd', 2147483647, 'abcd@gmail.com', 'abcdefg', 'abcdefghijklmnopqrstuvwxyz'),
-(24, 'skm', 2147483647, 'aaa@gmail.com', 'hwjo', 'nhgfdsr67t8y9uipk;lmn'),
-(25, 'skm', 2147483647, 'aaa@gmail.com', 'hwjo', 'nhgfdsr67t8y9uipk;lmn'),
-(26, 'xyz', 9947483647, 'xyz@gmail.com', 'gjkbjjkkk', 'hjksadlkmqwpok,.kpkp'),
-(27, 'xyz', 2341564328, 'xyz@gmail.com', 'gjkbjjkkk', 'hjksadlkmqwpok,.kpkp'),
-(28, 'xyz', 2341564328, 'xyz@gmail.com', 'gjkbjjkkk', 'hjksadlkmqwpok,.kpkp'),
-(29, 'Abhilasha', 6667777333, 'pooja@gmail.com', 'viuhjmgghhe', 'fnksdkNOJ'),
-(30, 'Abhilasha', 6667777333, 'pooja@gmail.com', 'viuhjmgghhe', 'fnksdkNOJ'),
-(31, 'Abhilasha', 9988776655, 'abcd@gmail.com', 'vbnnmm', 'n nm m ,bjkbjkknlk'),
-(32, 'Abhilasha', 7689567543, 'Poojakusingh40@gmail.com', 'Enquiry', 'How to use templates??');
+-- Error reading data for table dbtask.tblcontact: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `dbtask`.`tblcontact`' at line 1
 
 -- --------------------------------------------------------
 
@@ -174,8 +160,9 @@ CREATE TABLE `tblteam` (
 
 INSERT INTO `tblteam` (`Tid`, `Tname`, `Ttype`, `Description`, `Uid`, `Date`, `IsActive`, `ProfilePic`) VALUES
 (1, 'No Team', 'others', 'Used for Individual Board', 1, '2020-06-14', 1, NULL),
-(2, 'teamone', 'Marketing', 'team for develpoing', 1, '2020-06-15', 1, NULL),
-(3, 'Summer Internship project', 'Educational', 'Developing a website to present in college', 1, '2020-06-15', 1, NULL);
+(2, 'Teamone', 'Marketing', 'team for develpoing', 24, '2020-06-15', 1, NULL),
+(3, 'Summer Internship project', 'Education', 'Developing a website to present in college', 19, '2020-06-15', 1, '09_49_10_21_05_2019.jpg.png'),
+(4, 'Team testing', 'Event Management', 'testing for userid 20 in events', 20, '2020-06-20', 1, 'blog-img1.jpg');
 
 -- --------------------------------------------------------
 
@@ -191,6 +178,7 @@ CREATE TABLE `tblteammember` (
   `Date` date NOT NULL,
   `IsActive` tinyint(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Error reading data for table dbtask.tblteammember: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `dbtask`.`tblteammember`' at line 1
 
 -- --------------------------------------------------------
 
@@ -227,20 +215,10 @@ CREATE TABLE `tbluser` (
   `Mobile` bigint(20) NOT NULL,
   `Date` date NOT NULL,
   `IsActive` tinyint(7) NOT NULL,
-  `ProfilePic` varchar(100) DEFAULT NULL
+  `ProfilePic` varchar(100) DEFAULT NULL,
+  `Token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbluser`
---
-
-INSERT INTO `tbluser` (`Uid`, `Fname`, `Lname`, `Email`, `Password`, `Mobile`, `Date`, `IsActive`, `ProfilePic`) VALUES
-(10, 'Abhilasha', 'Kumari', 'pooja@gmail.com', 'pooja', 2147483647, '2020-06-13', 1, NULL),
-(15, 'abcd', 'efgh', 'abcd@gmail.com', 'abcdefgh', 2147483647, '2020-06-14', 1, NULL),
-(16, 'Abhilasha', 'Kumari', 'poojakusingh$0@gmail.com', 'pujasingh', 7684905416, '2020-06-14', 1, NULL),
-(17, 'Abhilasha', 'Kumari', 'poojakusingh$0@gmail.com', 'pujasingh', 7684905416, '2020-06-14', 1, NULL),
-(18, 'Abhilasha', 'Kumari', 'poojakusingh0@gmail.com', 'poojakusingh', 5566778899, '2020-06-14', 1, NULL),
-(19, 'Abhilasha', 'Kumari', 'poojakusingh35@gmail.com', 'pujasingh', 9437649345, '2020-06-14', 1, NULL);
+-- Error reading data for table dbtask.tbluser: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `dbtask`.`tbluser`' at line 1
 
 --
 -- Indexes for dumped tables
@@ -314,7 +292,7 @@ ALTER TABLE `tbluser`
 -- AUTO_INCREMENT for table `tblboard`
 --
 ALTER TABLE `tblboard`
-  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tblcard`
@@ -332,7 +310,7 @@ ALTER TABLE `tblchecklist`
 -- AUTO_INCREMENT for table `tblcontact`
 --
 ALTER TABLE `tblcontact`
-  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tbllist`
@@ -350,7 +328,7 @@ ALTER TABLE `tblmembercard`
 -- AUTO_INCREMENT for table `tblteam`
 --
 ALTER TABLE `tblteam`
-  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tblteammember`
@@ -368,7 +346,7 @@ ALTER TABLE `tbltemplate`
 -- AUTO_INCREMENT for table `tbluser`
 --
 ALTER TABLE `tbluser`
-  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

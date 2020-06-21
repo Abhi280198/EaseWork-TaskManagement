@@ -8,7 +8,7 @@
 		$emailid=$_POST['email_id'];
 		$pass=$_POST['pass'];
 		$phone=$_POST['mob'];
-
+		$token = bin2hex(random_bytes(15));
 
 		$sel="SELECT * FROM tbluser 
 				WHERE Email='".$_REQUEST['email_id']."' or Mobile='".$_REQUEST['mob']."' ";
@@ -22,7 +22,7 @@
         }
         else
         {
-           $query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive)values('$first','$last','$emailid','$pass', '$phone',now(),1)"; 
+           $query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive,Token)values('$first','$last','$emailid','$pass', '$phone',now(),1,'$token')"; 
            $run=mysqli_query($con,$query);
            echo '<script type="text/javascript">alert("Data inserted successfully... Go to login Page...");</script>';
         }
