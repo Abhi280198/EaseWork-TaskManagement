@@ -44,8 +44,8 @@
                                     <li class="dropdown">
                                         <a href="#" class="dropbtn"><span style="color: #ff214f;">Hi,&nbsp;<?php echo $fetch['Fname']." ".$fetch['Lname']; ?></span></a><i class="fas fa-angle-down dropdown-toggle" data-toggle="dropdown" aria-hidden="true"></i>
                                         <div class="dropdown-content" >
-                                            <a href="index.php?UserID=<?php echo $fetch['Uid']; ?>">&nbsp;&nbsp;Dashboard</a>
-                                            <a href="profile.php?UserID=<?php echo $fetch['Uid']; ?>">&nbsp;&nbsp;Profile</a>
+                                            <a href="index.php">&nbsp;&nbsp;Dashboard</a>
+                                            <a href="profile.php">&nbsp;&nbsp;Profile</a>
                                             <a href="logout.php">&nbsp;&nbsp;Logout</a>
                                         </div>
                                     </li>

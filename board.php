@@ -1,4 +1,7 @@
-<?php include_once("DbConnection.php");?>
+<?php 
+    include_once("DbConnection.php");
+    $bid=$_GET['Bid'];
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -56,7 +59,7 @@
                           <label class="w3-text-black"><b>Title</b></label>
                       </div>
                       <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="Title" type="text">
+                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="cardtitle" type="text">
                       </div>
                     </div>
                     <!-- End Card Name Input -->
@@ -69,7 +72,7 @@
                         <label class="w3-text-black"><b>Description</b></label>
                       </div>
                       <div class="col-75">
-                          <textarea name="description" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                          <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
                       </div>
                     </div>
                     <!-- End Description Input -->
@@ -83,7 +86,7 @@
                         </div>
                         <div class="col-75">
                             <div id="myDIV" class="header" style="" >
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
+                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
                             </div>
@@ -171,7 +174,7 @@
                             <label class="w3-text-black"><b>Members</b></label>
                         </div>
                         <div class="col-75">
-                            <select id="country" name="country" style="width:320px; height: 45px;">
+                            <select id="member" name="cardmember" style="width:320px; height: 45px;">
                               <option value="todo">To Do</option>
                               <option value="doing">Doing</option>
                               <option value="done">Done</option>
@@ -189,23 +192,11 @@
                         <label class="w3-text-black"><b>Labels</b></label>
                       </div>
                       <div class="col-75" >
-                        <select style="width:320px; height: 45px;">
-                          <option class="p-3 mb-2 bg-primary text-white">High Priority</option>
-                          <option class="p-3 mb-2 bg-secondary text-white">Solved</option>
-                          <option class="p-3 mb-2 bg-success text-white">Need Hep</option>
-                          <option class="p-3 mb-2 bg-danger text-white">Completed</option>
-                          <option class="p-3 mb-2 bg-warning text-dark">Warning</option>
-                        </select>
-                        <!--<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
-                            <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
-                            <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
-                            <div class="p-3 mb-2 bg-info text-white">.bg-info</div>
-                            <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
-                            <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
-                            <div class="p-3 mb-2 bg-white text-dark">.bg-white</div> -->                                                    
+                        <input class="w3-input w3-border" style="width: 250px; height: 40px; float: left;" placeholder="Enter label name" name="cardlabel" type="text">
+                        <input type="color" name="cardlabelcolor" style="float: right; margin-right: 30px; width: 100px; height: 40px; " value="Add">                                                
                       </div>
                     </div>
-                    <!-- End Label Input --> 
+                    <!-- End Label Input -->
 
                     <hr style="border-top: 1px solid #bbb;">
 
@@ -215,7 +206,7 @@
                         <label class="w3-text-black"><b>Due Date</b></label>
                       </div>
                       <div class="col-75">
-                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" style="width:320px; height: 45px;" class="w3-input w3-border">
+                        <input type="datetime-local" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
                       </div>
                     </div>
                     <!-- End Due Date Input --> 
@@ -228,7 +219,7 @@
                         <label class="w3-text-black"><b>Move</b></label>
                       </div>
                       <div class="col-75" >
-                        <select id="country" name="country" style="width:320px; height: 45px;">
+                        <select id="move" name="cardmove" style="width:320px; height: 45px;">
                           <option value="todo">To Do</option>
                           <option value="doing">Doing</option>
                           <option value="done">Done</option>
@@ -242,7 +233,7 @@
                     <!-- Start Button Input -->  
                     <div>
                         <center>
-                            <a href="#" class="btn btn-success" style="width:150px;">Save</a>
+                            <a href="#" name="addcard" class="btn btn-success" style="width:150px;">Save</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a href="#" class="btn btn-danger" onclick="cardcloseForm()" style="background-color: red; width:150px;" >Cancel</a>
                             <p></p>
@@ -281,12 +272,47 @@
             <div class="w3-bar w3-light-grey">
                 <p></p>
 
-                <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
-                    <center>
-                        <h5>Task Name</h5>
-                        <small><strong>Team Name</strong></small>
-                    </center>
-                </div>
+                <?php
+                    $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
+                    $result_data = mysqli_query($con,$boarddata);
+                    if($result_data->num_rows!=0)
+                    {  
+                        while($row_board=$result_data->fetch_array())  
+                        {
+                            $boardid=$row_board['Bid'];
+                            $btitle=$row_board['Btitle'];  
+                            $btid=$row_board['Tid'];
+                            $bbackground=$row_board['Background'];
+                            $isactive=$row_board['IsActive'];
+                            $tname=$row_board['Tname']; 
+
+                            if($bbackground=="" || !file_exists("$bbackground"))
+                            {
+                                $bbackground="boarddefault.jpg";
+                            }      
+
+                ?>
+
+                            <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
+                                <center>
+                                    <h5><?php echo $btitle; ?></h5>
+                                    <small><strong><?php echo $tname; ?></strong></small>
+                                </center>
+                            </div>
+
+                <?php 
+                        }
+                    }else{
+                ?>
+                        <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
+                            <center>
+                                <h5>Task Name</h5>
+                                <small><strong>Team Name</strong></small>
+                            </center>
+                        </div>    
+                <?php
+                    }
+                ?>
 
                 <div class="w3-dropdown-click w3-right" style="float: right;">
                     <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
