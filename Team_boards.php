@@ -64,7 +64,7 @@
                                 $teamdescription_query="select * from tblteam where Tid=$Tid";
                                 $Execute_teamdescription=mysqli_query($con,$teamdescription_query) or die(mysqli_error($con));
                                 $fetch_teamdescription=mysqli_fetch_array($Execute_teamdescription);
-                                $description=$fetch_teamdescription['Description'];
+                                $description=$fetch_teamdescription['TeamDescription'];
                                 $tid=$fetch_teamdescription['Tid'];
                             ?>
 

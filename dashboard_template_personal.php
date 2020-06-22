@@ -1,34 +1,6 @@
 
 <?php include_once("DbConnection.php"); ?>
 
-<?php
-if(isset($_REQUEST['submit'])){
-
-        $BoardName = $_REQUEST['title'];
-        $BoardTeamType = $_REQUEST['dropdown'];
-        $BoardVisbility = $_REQUEST['Visibility-dropdown'];
-        $BoardBackground = "images/blog-img78.jpg";
-
-        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),2,null,'$BoardBackground',1)";
-        $run_board = mysqli_query($con,$board_query);
-
-        if($run_board){
-
-        ?>
-            <script type="text/javascript">
-                alert("Data inserted successfully");
-                window.location.href = 'Personal_template.php';
-            </script>
-
-        <?php
-        }   
-        else{
-        echo "error".mysqli_error($con);   
-        }
-
-     }
-
-?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -59,20 +31,19 @@ if(isset($_REQUEST['submit'])){
                     ?>
 
                 <!-- php code title name -->
-            <input type="text" placeholder="title" name="title" value="<?php echo $title;?>" required><br><br>
+            <input type="text" placeholder="title" name="btitle" value="<?php echo $title;?>" required><br><br>
 
             <label for="title"><b>Team Name:</b></label>
             <select name = "dropdown">
             <!-- php code Team -->
-                    <?php 
+            <?php 
                         $select_team="select * from tblteam where IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
                         $Execute_select_team=mysqli_query($con,$select_team)or die(mysqli_error($con));
                         while($fetch_team=mysqli_fetch_array($Execute_select_team))
                     {
-                ?>
+            ?>
                 <!-- php code team -->
-            
-            <option value = "<?php echo $fetch_team['Tid'];?>"><?php echo $fetch_team['Tname'];?></option>
+                <option value = "<?php echo $fetch_team['Tid'];?>"><?php echo $fetch_team['Tname'];?></option>
             <?php
                 }
             ?>
@@ -87,8 +58,37 @@ if(isset($_REQUEST['submit'])){
             <br><br>
             <br><br>
             <div class="canclebtn">
-            <button type="submit" name="submit" class="btn cancel">Create</button>
-            <button type="button" class="btn cancel" onclick="closeTemplatePopup()" >Cancel</button>
+                <?php
+                    if(isset($_REQUEST['Personalsubmit'])){
+
+                            $BoardName = $_REQUEST['btitle'];
+                            $BoardTeamType = $_REQUEST['dropdown'];
+                            $BoardVisbility = $_REQUEST['Visibility-dropdown'];
+                            $BoardBackground = "images/blog-img78.jpg";
+
+                            $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),2,null,'$BoardBackground',1)";
+                            $run_board = mysqli_query($con,$board_query);
+
+                            if($run_board){
+
+                    ?>
+                                <script type="text/javascript">
+                                    alert("Data inserted successfully");
+                                    window.location.href = 'Personal_template.php';
+                                </script>
+
+                    <?php
+                            }   
+                            else{
+                            echo "error".mysqli_error($con);   
+                            }
+
+                         }
+
+                    ?>
+
+                <button type="submit" name="Personalsubmit" class="btn cancel">Create</button>
+                <button type="button" class="btn cancel" onclick="closeTemplatePopup()" >Cancel</button>
             </div>
         </form>
     </div>

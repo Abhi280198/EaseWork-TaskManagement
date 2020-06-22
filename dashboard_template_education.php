@@ -43,7 +43,7 @@
 
      <!-- popup -->
 
-    <div class="form-popup" id="useTemplatePopup">
+    <div class="form-popup" id="eduseTemplatePopup">
         <form  class="form-container">
             <div class="header">
             <h1>Use Template</h1>
@@ -155,11 +155,11 @@
                                     
                                     <script>
                                         function openTemplatePopup() {
-                                          document.getElementById("useTemplatePopup").style.display = "flex";
+                                          document.getElementById("eduseTemplatePopup").style.display = "flex";
                                         }
 
                                         function closeTemplatePopup() {
-                                          document.getElementById("useTemplatePopup").style.display = "none";
+                                          document.getElementById("eduseTemplatePopup").style.display = "none";
                                         }
                                     </script>
 

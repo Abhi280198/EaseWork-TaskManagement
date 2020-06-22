@@ -1,6 +1,18 @@
 <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+
+    if (isset($_REQUEST['completebutton'])) 
+    {
+        $Updateisactive = "UPDATE tblboard set IsActive=0 where Bid='$bid' ";
+        $Exe_updateisactive=mysqli_query($con,$Updateisactive)or die(mysqli_error($con));
+?>
+        <script type="text/javascript">
+                alert("Board Completed Successfully");
+                window.location.href = 'Complete.php';
+        </script>
+<?php
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -29,16 +41,41 @@
     <!-- start show menu description popup -->
     <div id="description" class="modal">
         <div class="modal-content" style="width: 50%; height: 300px;">
-            <form action="/action_page.php" class="form-container">
+            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
                 <div>
                     <label><b>Description :</b></label>
                     <br>
-                    <textarea name="description" id="description" rows="7" style="width: 100%;" placeholder="Description ..."></textarea>
+                    <textarea name="showmenudescription" id="description" rows="7" style="width: 100%;" placeholder="Description ..."></textarea>
                 </div><br>
                 <div class="canclebtn">
-                    <a href="board_link.php" type="button" class="btn cancel">Add</a>
+                    <button type="submit" name="showdescriptionadd" class="btn cancel">Add</button>&nbsp;&nbsp;&nbsp;
                     <button type="button" class="btn cancel" onclick="desclose()" >Cancel</button>
                 </div>
+            </form>
+        </div>
+    </div>
+    <!-- End show menu description popup -->
+
+    <!-- start show menu description popup -->
+    <?php
+        if (isset($_REQUEST['deleteYes'])) 
+        {
+            $uid=$_SESSION['UserID'];
+            $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
+            $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
+            header("location:index.php?Uid=$uid");
+        }
+    ?>
+    <div id="deleteboard" class="modal">
+        <div class="modal-content" style="width: 50%; height: 250px;">
+            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                <div>
+                    <h3><strong>Are you sure ?</strong></h3>
+                </div><br><br>
+                <center><div class="canclebtn">
+                    <button type="submit" name="deleteYes" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn cancel" onclick="deleteclose()" >No</button>
+                </div></center>
             </form>
         </div>
     </div>
@@ -189,12 +226,24 @@
                     <!-- Start Label Input --> 
                     <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
-                        <label class="w3-text-black"><b>Labels</b></label>
+                        <label class="w3-text-black"><b>Label Name</b></label>
                       </div>
                       <div class="col-75" >
-                        <input class="w3-input w3-border" style="width: 250px; height: 40px; float: left;" placeholder="Enter label name" name="cardlabel" type="text">
-                        <input type="color" name="cardlabelcolor" style="float: right; margin-right: 30px; width: 100px; height: 40px; " value="Add">                                                
+                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;">                                                
                       </div>
+                    </div>
+                    <!-- End Label Input -->
+
+                    <hr style="border-top: 1px solid #bbb;">
+
+                    <!-- Start Label Input --> 
+                    <div class="row" style="padding-left:50px;" >
+                        <div class="col-25">     
+                            <label class="w3-text-black"><b>Label Color</b></label>
+                        </div>
+                        <div class="col-75" style="background-color: white;">
+                            <input type="color" name="cardlabelcolor" style="width: 320px; height: 40px;" value="Add">                      
+                        </div>
                     </div>
                     <!-- End Label Input -->
 
@@ -256,8 +305,28 @@
 
     <div class="preloader"></div>
 
+    <?php
+        $backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+        $result_backgrounddata = mysqli_query($con,$backgrounddata);
+        if($result_backgrounddata->num_rows!=0)
+       {  
+            while($row_backgrounddata=$result_backgrounddata->fetch_array())  
+            {
+                $bbackground=$row_backgrounddata['Background'];
+
+                if($bbackground=="" || !file_exists("$bbackground"))
+                {
+                    $bbackground="images/T7MH5H.jpg";
+                }      
+
+    ?>
     <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout">
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
+
+     <?php 
+            }
+        }
+    ?>
 
        <!-- Header -->
             <?php include_once('header1.php'); ?>
@@ -267,132 +336,135 @@
         <!-- Start container from second header -->
         <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
+            <?php
+                $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
+                $result_data = mysqli_query($con,$boarddata);
+                if($result_data->num_rows!=0)
+                {  
+                    while($row_board=$result_data->fetch_array())  
+                    {
+                        $boardid=$row_board['Bid'];
+                        $btitle=$row_board['Btitle'];  
+                        $btid=$row_board['Tid'];
+                        $isactive=$row_board['IsActive'];
+                        $tname=$row_board['Tname'];
+                        $bdescription=$row_board['BoardDescription'];   
 
-            <!-- start second header content -->
-            <div class="w3-bar w3-light-grey">
-                <p></p>
+            ?>
 
-                <?php
-                    $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
-                    $result_data = mysqli_query($con,$boarddata);
-                    if($result_data->num_rows!=0)
-                    {  
-                        while($row_board=$result_data->fetch_array())  
-                        {
-                            $boardid=$row_board['Bid'];
-                            $btitle=$row_board['Btitle'];  
-                            $btid=$row_board['Tid'];
-                            $bbackground=$row_board['Background'];
-                            $isactive=$row_board['IsActive'];
-                            $tname=$row_board['Tname']; 
-
-                            if($bbackground=="" || !file_exists("$bbackground"))
-                            {
-                                $bbackground="boarddefault.jpg";
-                            }      
-
-                ?>
-
+                    <!-- start second header content -->
+                    <div class="w3-bar" style="background: rgb(120,120,120); ">
+                        <p></p>
                             <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                                 <center>
-                                    <h5><?php echo $btitle; ?></h5>
-                                    <small><strong><?php echo $tname; ?></strong></small>
+                                    <h5 style="color: white;"><?php echo $btitle; ?></h5>
+                                    <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
                                 </center>
                             </div>
 
-                <?php 
-                        }
-                    }else{
-                ?>
-                        <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
-                            <center>
-                                <h5>Task Name</h5>
-                                <small><strong>Team Name</strong></small>
-                            </center>
-                        </div>    
-                <?php
+                            <div class="w3-dropdown-click w3-right" style="float: right;">
+
+                                <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
+
+                                    <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
+                                        <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
+                                            
+                                            <div>
+                                                <label style="float: left;"> Description about board</label>
+                                                <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
+                                                <br><br><br>
+                                                <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled=""><?php echo $bdescription; ?></textarea>
+
+                                                <!-- Start card details popup fuction-->
+                                                <script>
+                                                    function desopen() {
+                                                      document.getElementById("description").style.display = "flex";
+                                                    }
+                                                    function desclose() {
+                                                      document.getElementById("description").style.display = "none";
+                                                    }
+                                                </script>
+                                                <!-- End card details popup fuction-->
+                                            </div>
+
+                                    <?php
+                                        if ($btid !=1) 
+                                        {
+                                    ?>
+                                            <hr style="border-top: 1px solid #bbb;"><br>
+                                            <div>
+                                                <a href="Team_members.php?Tid=<?php echo $btid;?>" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
+                                            </div>
+                                    <?php
+                                        }   
+                                    ?>
+                                            <hr style="border-top: 1px solid #bbb;">
+                                            <div>
+                                                <label style="float: left;">Wanna Close Board ?</label><br><br>
+                                            </div>
+                                    
+                                            <div>
+                                                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                    <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                    <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                                                <!-- Start card details popup fuction-->
+                                                <script>
+                                                    function deleteopen() {
+                                                      document.getElementById("deleteboard").style.display = "flex";
+                                                    }
+                                                    function deleteclose() {
+                                                      document.getElementById("deleteboard").style.display = "none";
+                                                    }
+                                                </script>
+                                                <!-- End card details popup fuction-->
+                                                </form>
+                                            </div>
+
+                                        </div></center>
+                                    </div>
+                            </div>
+
+                            &nbsp;
+
+                            <div class="dropdown w3-right">
+                                <div class="w3-dropdown-click w3-right">
+                                    <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
+                                        <option value="visibility" selected disabled >Visibility</option>
+                                        <option value="todo" >Private</option>
+                                        <option value="doing">Team</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                    <?php
+                        if ($btid !=1) 
+                        {
+                    ?>
+                            <div class="dropdown w3-right">
+                                <div class="w3-dropdown-click w3-right">
+                                    <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
+                                        <option value="visibility" selected disabled >Members List</option>
+                                        <option value="todo" disabled >Member1</option>
+                                        <option value="doing"disabled>Member2</option>
+                                        <option value="todo" disabled>Member3</option>
+                                        <option value="todo" disabled>Member4</option>
+                                        <option value="todo" disabled>Member5</option>
+                                    </select>
+                                </div>
+                            </div>
+                    <?php
+                        }   
+                    ?>             
+                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                    </div>
+                    <!-- End second Header Content -->
+
+            <?php 
                     }
-                ?>
-
-                <div class="w3-dropdown-click w3-right" style="float: right;">
-                    <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
-                        <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
-                            <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
-                                
-                                <div>
-                                    <label style="float: left;"> Description about board</label>
-                                    <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
-                                    <br><br><br>
-                                    <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled=""></textarea>
-
-                                    <!-- Start card details popup fuction-->
-                                    <script>
-                                        function desopen() {
-                                          document.getElementById("description").style.display = "flex";
-                                        }
-                                        function desclose() {
-                                          document.getElementById("description").style.display = "none";
-                                        }
-                                    </script>
-                                    <!-- End card details popup fuction-->
-                                </div>
-                                <hr style="border-top: 1px solid #bbb;">
-                                  <br>
-                                <div>
-
-                                    <a href="Team_members.php" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
-
-                                    <!-- <script>
-                                        function memberpage() {
-                                          location.replace("Team_members.php");
-                                        }
-                                    </script> -->
-                                </div>
-
-                                <hr style="border-top: 1px solid #bbb;">
-                                <div>
-                                    <label style="float: left;">Wanna Close Board ?</label><br><br>
-                                </div>
-                                <div>
-                                    <button class="w3-button w3-black w3-round">Complete Board</button>
-                                    <button class="w3-button w3-black w3-round">Delete Board</button>
-                                </div>
-
-                            </div></center>
-                        </div>
-                </div>
-
-                &nbsp;
-
-                <div class="dropdown w3-right">
-                    <div class="w3-dropdown-click w3-right">
-                        <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
-                            <option value="visibility" selected disabled >Visibility</option>
-                            <option value="todo" >Private</option>
-                            <option value="doing">Team</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="dropdown w3-right">
-                    <div class="w3-dropdown-click w3-right">
-                        <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
-                            <option value="visibility" selected disabled >Members List</option>
-                            <option value="todo" disabled >Member1</option>
-                            <option value="doing"disabled>Member2</option>
-                            <option value="todo" disabled>Member3</option>
-                            <option value="todo" disabled>Member4</option>
-                            <option value="todo" disabled>Member5</option>
-                        </select>
-                    </div>
-                </div>
-                              
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
-
-            </div>
-            <!-- End second Header Content -->
+                }
+            ?>
 
             <br><br>
 
