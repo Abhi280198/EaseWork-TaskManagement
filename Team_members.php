@@ -1,7 +1,68 @@
 <?php 
     include_once("DbConnection.php");
     // $Uid=$_GET['Uid'];
+    $Tid=$_GET['Tid'];
+
+    if(isset($_REQUEST['MemberDetailSubmit'])){
+
+        $Mem_Email = $_REQUEST['memberEmail'];
+        $BoardName = $_REQUEST['Member_dropdown'];
+
+        $SelectData="select * from tbluser where Email='$Mem_Email'";
+        $Execute_select_Data = mysqli_query($con,$SelectData)or die(mysqli_error($con));
+        $fetch_Data=mysqli_fetch_array($Execute_select_Data);
+        $UserID =  $fetch_Data['Uid'];
+        
+
+        $TeamMember_query="insert into tblteammember values(null,'$Tid','$UserID','$Mem_Email','$BoardName',now(),1)";
+        $run_TeamMember = mysqli_query($con,$TeamMember_query);
+
+        if($run_TeamMember){
+
+        ?>
+            <script type="text/javascript">
+                alert("Data inserted successfully");
+            </script>
+
+        <?php
+        }   
+        else{
+        echo "error".mysqli_error($con);   
+        }
+
+     }
 ?>
+
+<script type="text/javascript">
+    
+    function MemberEmailvalidate(){
+        var email = document.getElementById("team-member").value;
+        console.log(email);
+
+         if(email == ""){
+                document.getElementById('span_email').innerHTML =" ** Please fill the firstname";
+                return false;
+            }
+
+            else{
+                document.getElementById('span_email').innerHTML ="";
+
+            }
+
+            if(email.indexOf('@') <= 0){
+                document.getElementById('span_email').innerHTML =" ** @ Invalid Position";
+                return false;
+            }
+            if((email.charAt(email.length-4)!='.') && (email.charAt(email.length-3)!='.'))
+            {
+                document.getElementById('span_email').innerHTML =" ** . Invalid Position";
+                return false;
+            }
+
+        return true;
+
+    }
+</script>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -25,7 +86,7 @@
 
         <!-- Header -->
 
-        <?php include_once('header1.php');?>
+         <?php include_once('header1.php');?>        
 
         <!-- // END Header -->
 
@@ -49,19 +110,56 @@
                                 </nav>
                                 <h1 class="m-0">Team Members</h1>
                             </div>
-                            <input class="member-input" type="text" name="team member" placeholder="Enter members email">
-                            <select class="member-select" name = "dropdown">
-                                    <option value = "Board1" selected>Board1</option>
-                                    <option value = "Board2">Board2</option>
-                                    <option value = "Board3">Board3</option>
-                            </select>
-                            <a href="#" class="btn btn-success ml-3">Invite Team Members</a>
+                            <form method="post">
+                                <input class="member-input" type="text" name="memberEmail" id="team-member" placeholder="Enter members email" >
+                                <span id="span_email" style="color: red"></span>
+
+
+                                <select class="member-select" name = "Member_dropdown">
+                                    <!-- php code Team -->
+                                        <?php 
+                                            $select_board="select * from tblboard where Tid=$Tid AND IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
+                                            $Execute_select_board=mysqli_query($con,$select_board)or die(mysqli_error($con));
+                                            while($fetch_board=mysqli_fetch_array($Execute_select_board))
+                                        {
+                                        ?>
+                                    <!-- php code team -->
+                                        <option value = "<?php echo $fetch_board['Bid'];?>" selected><?php echo $fetch_board['Btitle'];?></option>
+                                        
+                                        <?php
+                                            }
+                                        ?>
+                                </select>
+                                <button type="submit" name="MemberDetailSubmit" onclick="return MemberEmailvalidate();" class="btn btn-success ml-3">Add Team Members</button>
+                            </form>
                         </div>
                     </div>
 
 
-                    <div class="container-fluid page__container">                  
+                    <div class="container-fluid page__container">   
 
+                        <!-- First div -->               
+                        <?php
+
+                            $Qry = "SELECT t.Uid,t.Bid,COUNT(t.Uid) AS 'BoardCount',u.Lname,u.ProfilePic,u.Fname,u.Email FROM tblteammember t, tbluser u where t.Uid=u.Uid AND t.Tid=$Tid GROUP BY t.Uid";
+                            $res=mysqli_query($con,$Qry);
+                            if($res->num_rows!=0){
+                                while($row=$res->fetch_array())  
+                                    {   
+                                        $Bid=$row['Bid'];
+                                        $Uid=$row['Uid'];
+                                        $FirstName=$row['Fname'];
+                                        $LastName=$row['Lname'];  
+                                        $Profile=$row['ProfilePic'];
+                                        $Email=$row['Email'];
+                                        $count=$row['BoardCount']; 
+
+                                        if($Profile=="" || !file_exists("images/profile/$Profile"))
+                                        {
+                                            $Profile="No.png";
+                                        }                   
+                            
+                            ?>
                         <div class="row align-items-center projects-item mb-1">
                             
                             <div class="col-sm">
@@ -74,13 +172,14 @@
                                                    
                                                     <a href="#" class="d-flex align-items-middle">
                                                         <span class="avatar avatar-xxs avatar-online mr-2">
-                                                            <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                            <img src="images/profile/<?php echo $Profile;?>" alt="Avatar" class="avatar-img rounded-circle">
                                                         </span>
-                                                        Sherri Cardenas
+                                                        <!-- Sherri Cardenas -->
+                                                        <?php echo $FirstName; ?><?php echo $LastName; ?>
                                                     </a>
                                                 </div>
                                                 <div class="d-flex align-items-center">
-                                                    <a href="#" class="text-body"><strong class="text-15pt mr-2">sherri@gmail.com</strong></a>
+                                                    <a href="#" class="text-body"><strong class="text-15pt mr-2"><?php echo $Email; ?></strong></a>
                                                     
                                                 </div>
                                             </div>
@@ -88,9 +187,10 @@
                                             
                                                 <div style="position: relative;" class="col-auto d-flex align-items-center">
 
-                                                    <a href="#" class="text-body" onclick="show()">On 1 Boards</a>
+                                                    <a href="#" class="text-body" onclick="show()">On <?php echo $count; ?> Boards</a>
 
                                                     <!-- start popover -->
+                                                    
 
                                                     <div class="main-popover" id="board-popup">
                                                         <div class="main-container">
@@ -99,7 +199,7 @@
                                                             <hr>
                                                         </div>
                                                         <div>
-                                                            <p>Sherri Cardenas is a member of following team boards:</p>
+                                                            <p><?php echo $FirstName; ?><?php echo $LastName; ?> is a member of following team boards:</p>
                                                         </div>
                                                         <ul class="popover-ul">
                                                             <div>
@@ -137,6 +237,7 @@
                                                         </ul>
 
                                                     </div>
+                                                    
 
                                                     <!-- END popover -->
                                                     <script>
@@ -150,161 +251,77 @@
                                                     </script>
 
                                                 </div>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center">
-                                                    
-                                                    <a href="#" class="text-body">Member</a>
-                                                </div>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center" style="min-width: 140px;">
-                                                    <a href="#" class="text-dark-gray">Remove</a>
-                                            
-                                                </div>       
-                                             
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+                                                <!-- ----------------Admin or member--------------------- -->
 
-                        <div class="row align-items-center projects-item mb-1">
-                            
-                            <div class="col-sm">
-                                <div class="card m-0">
-                                    <div class="px-4 py-3">
-                                        <div class="row align-items-center">
-                                            <div class="col" style="min-width: 300px">
-                                                
-                                                <div class="d-flex align-items-center">
-                                                   
-                                                    <a href="#" class="d-flex align-items-middle">
-                                                        <span class="avatar avatar-xxs avatar-online mr-2">
-                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                        </span>
-                                                         Jenell Matney
-                                                    </a>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <a href="#" class="text-body"><strong class="text-15pt mr-2">Jenell@gmail.com</strong></a>
-                                                    
-                                                </div>
-                                            </div>
+                                                <?php
 
-                                            
-                                                <div  class="col-auto d-flex align-items-center">
+                                                    $select_memTeamType="SELECT Uid FROM tblteam where Tid=$Tid AND Uid=$Uid";
+                                                    $Execute_select_memTeamType=mysqli_query($con,$select_memTeamType);
+                                                    if($Execute_select_memTeamType->num_rows!=0){
 
-                                                    <a href="#" class="text-body">On 2 Boards</a>
-                                                </div>
+                                                        // $row= $Execute_select_memTeamType->fetch_array();
+                                                        // $teamUid= $row['Uid'] ;
+                                                                                                       
+                                                        // if($Uid==$teamUid)
+                                                        // {
+                                                ?>
                                                 <div class="div-buttons" class="col-auto d-flex align-items-center">
                                                     
                                                     <a href="#" class="text-body">Admin</a>
                                                 </div>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center" style="min-width: 140px;">
-                                                    <a href="#" class="text-dark-gray">Remove</a>
-                                                    
-                                                </div>
-                                            
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row align-items-center projects-item mb-1">
-                            
-                            <div class="col-sm">
-                                <div class="card m-0">
-                                    <div class="px-4 py-3">
-                                        <div class="row align-items-center">
-                                            <div class="col" style="min-width: 300px">
                                                 
-                                                <div class="d-flex align-items-center">
-                                                   
-                                                    <a href="#" class="d-flex align-items-middle">
-                                                        <span class="avatar avatar-xxs avatar-online mr-2">
-                                                            <img src="assets/images/256_jeremy-banks-798787-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                        </span>
-                                                          Joseph Ferland
-                                                    </a>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <a href="#" class="text-body"><strong class="text-15pt mr-2">Joseph@gmail.com</strong></a>
-                                                    
-                                                </div>
-                                            </div>
+                                                <?php
+                                                    }
+                                                    else{
 
-                                           
-                                                <div  class="col-auto d-flex align-items-center">
-
-                                                    <a href="#" class="text-body">On 2 Boards</a>
-                                                </div>
+                                                ?>
                                                 <div class="div-buttons" class="col-auto d-flex align-items-center">
                                                     
                                                     <a href="#" class="text-body">Member</a>
                                                 </div>
+                                                <?Php
+                                                    }
+                                                ?>
+                                                <!-- ----------------Leave or Remove----------------- -->
+
+                                                <?php
+                                                
+                                                if($Uid==$_SESSION['UserID'])
+                                                {
+
+
+                                                ?>
                                                 <div class="div-buttons" class="col-auto d-flex align-items-center" style="min-width: 140px;">
                                                     <a href="#" class="text-dark-gray">Leave</a>
-                                                    
-                                                </div>
-
                                             
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row align-items-center projects-item mb-1">
-                            
-                            <div class="col-sm">
-                                <div class="card m-0">
-                                    <div class="px-4 py-3">
-                                        <div class="row align-items-center">
-                                            <div class="col" style="min-width: 300px">
-                                                
-                                                <div class="d-flex align-items-center">
-                                                   
-                                                    <a href="#" class="d-flex align-items-middle">
-                                                        <span class="avatar avatar-xxs avatar-online mr-2">
-                                                           <img src="assets/images/256_joao-silas-636453-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                        </span>
-                                                          Bryan Davis
-                                                    </a>
                                                 </div>
-                                                <div class="d-flex align-items-center">
-                                                    <a href="#" class="text-body"><strong class="text-15pt mr-2">bryan@gmail.com</strong></a>
-                                                    
-                                                </div>
-                                            </div>
-
-                                            
-
-                                                <div  class="col-auto d-flex align-items-center">
-
-                                                    <a href="#" class="text-body">On 1 Boards</a>
-                                                </div>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center">
-                                                    
-                                                    <a href="#" class="text-body">Member</a>
-                                                </div>
+                                                <?php
+                                                    }
+                                                    else{
+                                                ?>       
                                                 <div class="div-buttons" class="col-auto d-flex align-items-center" style="min-width: 140px;">
-                                                   
                                                     <a href="#" class="text-dark-gray">Remove</a>
-                                                    
+                                            
                                                 </div>
-
+                                                <?php
+                                                    }
+                                                ?>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
 
+                        <?php
+                                }
+                            }
+                        ?> 
+                        <!-- END First div -->
 
-
+                        
 
 
                     </div>
@@ -313,7 +330,10 @@
                 </div>
                 <!-- // END drawer-layout__content -->
 
+                <!--Start sidebar section-->
                 <?php include_once('sidebar_team.php');?>
+                <!--End sidebar section-->
+                
             </div>
             <!-- // END drawer-layout -->
 

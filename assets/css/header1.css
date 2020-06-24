@@ -78,7 +78,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
               border: none;
               cursor: pointer;
               width: 40%;
-              height: 30%;
+              /*height: 30%;*/
               margin-bottom:10px;
               opacity: 0.8;
               border-radius: 10px;

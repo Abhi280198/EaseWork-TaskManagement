@@ -311,7 +311,7 @@
 
 
         <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" >
+        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
 
             <!-- start create board link -->
