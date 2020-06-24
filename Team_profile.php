@@ -10,7 +10,7 @@
     $tid = $fetch['Tid'];
     $tname = $fetch['Tname'];
     $ttype = $fetch['Ttype'];       
-    $description = $fetch['Description'];
+    $description = $fetch['TeamDescription'];
     $profilepic = $fetch['ProfilePic'];
 
     if (isset($_REQUEST['buttonSave'])) 
@@ -28,7 +28,7 @@
         }
 
         $UpdateTeam = "update tblteam set Tname='".$_REQUEST['teamname']."',Ttype='".$_REQUEST['teamtype']."',
-                        Description='".$_REQUEST['teamdescription']."', ProfilePic='".$img2."' where Tid=$Tid";
+                        TeamDescription='".$_REQUEST['teamdescription']."', ProfilePic='".$img2."' where Tid=$Tid";
         $Exe_update=mysqli_query($con,$UpdateTeam)or die(mysqli_error($con));
         header("location:Team_profile.php?Tid=$tid");
     }
