@@ -805,13 +805,6 @@
     <!-- End Done card details popup -->
 
     <!-- start card details popup -->
-    <!-- <?php
-        $selecttodoquery1 = "SELECT * FROM tblcard Where Cardid=".$_SESSION['card'];  
-        $result_todo1 = mysqli_query($con,$selecttodoquery1);
-       $rescard= mysqli_fetch_assoc($result_todo1);
-
-
-    ?> -->
     <div id="TodoCardDetailsForm" class="modal" >
         <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
             <div class="modal-body">

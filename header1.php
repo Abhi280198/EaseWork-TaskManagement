@@ -62,21 +62,39 @@
         $teamType = $_REQUEST['teamDropdown'];
         $description = $_REQUEST['teamdescription'];
 
-        $query="insert into tblteam values(null,'$teamName','$teamType','$description','".$_SESSION['UserID']."',now(),1,null)";
-        $run = mysqli_query($con,$query);
+        $checkteam="SELECT * from tblteam where Tname='$teamName' AND Ttype='$teamType' AND Uid=".$_SESSION['UserID'];
+        $Check_teamData = mysqli_query($con,$checkteam)or die(mysqli_error($con));
+        if($Check_teamData->num_rows>0)
+        {
+            echo '<script type="text/javascript">alert("User Already Created This Team!!!");</script>';
+        }else
+        {
+            $query="insert into tblteam values(null,'$teamName','$teamType','$description','".$_SESSION['UserID']."',now(),1,null)";
+            $run_admin = mysqli_query($con,$query);
+            $abcd= mysqli_insert_id($con);
 
-        if($run){
-
+            if($run_admin)
+            {
+                if ($abcd) 
+                {
+                    $query1="insert into tblteammember values(null,'$abcd','".$_SESSION['UserID']."','".$_SESSION['Emailid']."',null,now(),1)";
+                    $run_adminuser = mysqli_query($con,$query1);
+                    if($run_adminuser)
+                    {
         ?>
-            <script type="text/javascript">
-                alert("Data inserted successfully");
-                window.location.href = 'index.php'; 
-            </script>
+                        <script type="text/javascript">
+                            alert("Data inserted successfully");
+                            window.location.href = 'index.php'; 
+                        </script>
 
         <?php
-        }   
-        else{
-        echo "error".mysqli_error($con);   
+                    }
+                }
+            }   
+            else
+            {
+                echo "error".mysqli_error($con);   
+            }
         }
     }
     /*End Create Team Insert Data*/

@@ -1,33 +1,44 @@
 <?php 
     include_once("DbConnection.php");
-    // $Uid=$_GET['Uid'];
     $Tid=$_GET['Tid'];
 
-    if(isset($_REQUEST['MemberDetailSubmit'])){
+
+    if(isset($_REQUEST['MemberDetailSubmit']))
+    {
 
         $Mem_Email = $_REQUEST['memberEmail'];
         $BoardName = $_REQUEST['Member_dropdown'];
 
-        $SelectData="select * from tbluser where Email='$Mem_Email'";
+        $SelectData="SELECT * from tbluser where Email='$Mem_Email' AND IsActive=1";
         $Execute_select_Data = mysqli_query($con,$SelectData)or die(mysqli_error($con));
-        $fetch_Data=mysqli_fetch_array($Execute_select_Data);
-        $UserID =  $fetch_Data['Uid'];
-        
+        if($Execute_select_Data->num_rows!=0)
+        {
+            $fetch_Data=mysqli_fetch_array($Execute_select_Data);
+            $UserID =  $fetch_Data['Uid'];
 
-        $TeamMember_query="insert into tblteammember values(null,'$Tid','$UserID','$Mem_Email','$BoardName',now(),1)";
-        $run_TeamMember = mysqli_query($con,$TeamMember_query);
+            $checkmember="SELECT * from tblteammember where Email='$Mem_Email' AND Bid='$BoardName'";
+            $Check_Data = mysqli_query($con,$checkmember)or die(mysqli_error($con));
+            if($Check_Data->num_rows>0)
+            {
+                echo '<script type="text/javascript">alert("User Already Exist in This Board!!!");</script>';
+            }else
+            {
+                $TeamMember_query="INSERT into tblteammember values(null,'$Tid','$UserID','$Mem_Email','$BoardName',now(),1)";
+                $run_TeamMember = mysqli_query($con,$TeamMember_query);
 
-        if($run_TeamMember){
-
-        ?>
-            <script type="text/javascript">
-                alert("Data inserted successfully");
-            </script>
-
-        <?php
-        }   
-        else{
-        echo "error".mysqli_error($con);   
+                if($run_TeamMember)
+                {
+                    header("location:Team_members.php?Tid=$Tid");
+                }   
+                else{
+                echo "error".mysqli_error($con);   
+                }
+                
+            }
+        }
+        else
+        {
+            echo '<script type="text/javascript">alert("User doesnot Exist!!!");</script>';
         }
 
      }
@@ -37,10 +48,11 @@
     
     function MemberEmailvalidate(){
         var email = document.getElementById("team-member").value;
+        var board = document.getElementById("memberDropdown").value;
         console.log(email);
 
-         if(email == ""){
-                document.getElementById('span_email').innerHTML =" ** Please fill the firstname";
+         	if(email == ""){
+                document.getElementById('span_email').innerHTML =" ** Please fill the email_id";
                 return false;
             }
 
@@ -59,6 +71,15 @@
                 return false;
             }
 
+            if(board == ""){
+                document.getElementById('span_board').innerHTML =" ** Please create the board";
+                return false;
+            }
+
+            else{
+                document.getElementById('span_email').innerHTML ="";
+
+            }
         return true;
 
     }
@@ -86,7 +107,7 @@
 
         <!-- Header -->
 
-         <?php include_once('header1.php');?>        
+        <?php include_once('header1.php');?>
 
         <!-- // END Header -->
 
@@ -112,29 +133,30 @@
                             </div>
                             <form method="post">
                                 <input class="member-input" type="text" name="memberEmail" id="team-member" placeholder="Enter members email" >
-                                <span id="span_email" style="color: red"></span>
 
-
-                                <select class="member-select" name = "Member_dropdown">
+                                <select class="member-select" id="memberDropdown" name = "Member_dropdown">
                                     <!-- php code Team -->
                                         <?php 
-                                            $select_board="select * from tblboard where Tid=$Tid AND IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
+                                            $select_board="SELECT * from tblboard where Tid=$Tid AND IsActive=1";
                                             $Execute_select_board=mysqli_query($con,$select_board)or die(mysqli_error($con));
                                             while($fetch_board=mysqli_fetch_array($Execute_select_board))
                                         {
                                         ?>
                                     <!-- php code team -->
-                                        <option value = "<?php echo $fetch_board['Bid'];?>" selected><?php echo $fetch_board['Btitle'];?></option>
+                                        	<option value = "<?php echo $fetch_board['Bid'];?>" selected><?php echo $fetch_board['Btitle'];?></option>
                                         
                                         <?php
                                             }
                                         ?>
                                 </select>
-                                <button type="submit" name="MemberDetailSubmit" onclick="return MemberEmailvalidate();" class="btn btn-success ml-3">Add Team Members</button>
+
+                                <button type="submit" name="MemberDetailSubmit" onclick="return MemberEmailvalidate();" class="btn btn-success ml-3">Add Team Members</button><br>
+
+                                <span id="span_email" style="color: red;"></span>
+                                <span id="span_board" style="color: red; margin-left: 180px;"></span>
                             </form>
                         </div>
                     </div>
-
 
                     <div class="container-fluid page__container">   
 
@@ -185,9 +207,22 @@
                                             </div>
                                             
                                             
-                                                <div style="position: relative;" class="col-auto d-flex align-items-center">
+                                                <div class="col-auto d-flex align-items-center">
 
+                                                <?php
+                                                    if ($Bid=="") 
+                                                    {
+                                                ?>
+                                                    <a href="#" class="text-body" onclick="show()">On <?php echo $count-1; ?> Boards</a>
+                                                <?php
+                                                    }
+                                                    else
+                                                    {
+                                                ?>
                                                     <a href="#" class="text-body" onclick="show()">On <?php echo $count; ?> Boards</a>
+                                                <?php
+                                                    }
+                                                ?>
 
                                                     <!-- start popover -->
                                                     
@@ -202,38 +237,36 @@
                                                             <p><?php echo $FirstName; ?><?php echo $LastName; ?> is a member of following team boards:</p>
                                                         </div>
                                                         <ul class="popover-ul">
+
+                                                        <?php
+                                                            $boarddisplay = "SELECT * FROM tblboard where Tid=$Tid AND Uid=$Uid";
+                                                            $resboard=mysqli_query($con,$boarddisplay);
+                                                            if($resboard->num_rows!=0)
+                                                            {
+                                                                while($rowresboard=$resboard->fetch_array())  
+                                                                {  
+                                                                    $backboard=$rowresboard['Background'];
+                                                                    if($backboard=="" || !file_exists("$backboard"))
+                                                                    {
+                                                                        $backboard="images/backgrounddefault.jpg";
+                                                                    } 
+                                                        ?>
                                                             <div>
                                                                 <li class="popover-ul-li">
                                                                     <a class="popover-a" href="#" style="text-decoration: none;">
                                                                         <div>
                                                                             <span class="avatar avatar-xxs avatar-online mr-2">
-                                                                                <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                                <img src="<?php echo $backboard;?>" alt="Avatar" class="avatar-img rounded-circle">
                                                                             </span>
-
-                                                                            <span >Design Project</span>
-                                                                            <span>(Member)</span>
-
-                                                                        </div>
-                                                                        
-                                                                     </a>
+                                                                            <span ><?php echo $rowresboard['Btitle']; ?></span>
+                                                                        </div>  
+                                                                    </a>
                                                                 </li>
                                                             </div>
-                                                            <div>
-                                                                <li class="popover-ul-li">
-                                                                    <a class="popover-a" href="#" style="text-decoration: none;" >
-                                                                        <div>
-                                                                            <span class="avatar avatar-xxs avatar-online mr-2">
-                                                                                <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                                            </span>
-
-                                                                            <span >Holiday</span>
-                                                                            <span>(Admin)</span>
-
-                                                                        </div>
-                                                                        
-                                                                     </a>
-                                                                </li>
-                                                            </div>
+                                                        <?php 
+                                                                }
+                                                            }
+                                                        ?>
                                                         </ul>
 
                                                     </div>
