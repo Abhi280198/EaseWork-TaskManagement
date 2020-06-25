@@ -93,7 +93,7 @@
                         </div>
                         <div class="row">
                             <?php       
-                                $teamselectquery = "SELECT * FROM tblteam Where Uid=$Uid AND IsActive=1 AND Tid NOT IN (1)";  
+                                $teamselectquery = "SELECT * FROM tblteam Where IsActive=1 AND Tid NOT IN (1) AND Tid IN (SELECT Tid FROM tblteammember WHERE Uid=$Uid)";
                                 $result_team = mysqli_query($con,$teamselectquery);
                                 if($result_team->num_rows!=0)
                                 {  

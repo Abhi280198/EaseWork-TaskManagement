@@ -37,8 +37,31 @@
             }
         }
         else
-        {
-            echo '<script type="text/javascript">alert("User doesnot Exist!!!");</script>';
+        {	
+
+        	$checkmember_notexist="SELECT * from tblteammember where Email='$Mem_Email' AND Bid='$BoardName'";
+            $Check_Data_notexist = mysqli_query($con,$checkmember_notexist)or die(mysqli_error($con));
+        	if($Check_Data_notexist->num_rows>0)
+            {
+                echo '<script type="text/javascript">alert("Invite Link Already sent!!!");</script>';
+            }else
+            {
+            	$subject = "Invitation Link For EaseWork Team";
+	            $body = "Hi, $Mem_Email. Click here to register a new account http://localhost/Task-Management/register.php";
+	            $headers = "From: poojakusingh35@gmail.com";
+	            mail($Mem_Email, $subject, $body, $headers);
+
+	        	$TeamMember_notexist="INSERT into tblteammember values(null,'$Tid',null,'$Mem_Email','$BoardName',now(),0)";
+	            $run_TeamMember_notexist = mysqli_query($con,$TeamMember_notexist);
+	            echo '<script type="text/javascript">alert("User doesnot Exist...Invitation Link Sent!!!");</script>';
+	            /*if($run_TeamMember_notexist)
+	            {
+	            	
+	            }   
+	            else{
+	                echo "error".mysqli_error($con);   
+	            }*/
+	        }
         }
 
      }
