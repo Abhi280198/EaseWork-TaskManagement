@@ -1293,7 +1293,8 @@
   
                                 ?>
                                     <!-- Start Todo card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="openTodoCardDetailsForm(<?php echo $cardid; ?>)">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="/*openTodoCardDetailsForm*//*(*//*<?php echo $cardid; ?>*/">
+                                        <a href="cards.php">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1336,6 +1337,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </a>
                                     </div>
                                     <!-- End Todo card 1-->
                                 <?php
@@ -1393,7 +1395,8 @@
                                 ?>
 
                                     <!-- Start Doing card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="openTodoCardDetailsForm()">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                        <a href="cards.php">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1436,6 +1439,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </a>
                                     </div>
                                     <!-- End Doing card 1-->
                                 <?php 
@@ -1493,7 +1497,8 @@
 
 
                                     <!-- Start Done card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="openTodoCardDetailsForm()">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                        <a href="cards.php">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1535,6 +1540,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </a>
                                     </div>
                                     <!-- End Done card 1-->
                                 <?php 
