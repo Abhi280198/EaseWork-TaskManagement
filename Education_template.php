@@ -352,34 +352,15 @@ include_once("DbConnection.php");
                 </script>
 
             </div>
-            <!-- end create board link --> 
-
-             <!-- Start DATABASE IN SECOND HEADER -->
-            <?php
-                $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
-                $result_data = mysqli_query($con,$boarddata);
-                if($result_data->num_rows!=0)
-                {  
-                    while($row_board=$result_data->fetch_array())  
-                    {
-                        $boardid=$row_board['Bid'];
-                        $btitle=$row_board['Btitle'];  
-                        $btid=$row_board['Tid'];
-                        $isactive=$row_board['IsActive'];
-                        $tname=$row_board['Tname'];
-                        $bdescription=$row_board['BoardDescription'];
-                        $bvisibilty=$row_board['Visibility']; 
-
-            ?>
-
+            
             <!-- start second header content -->
             <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
                 <p></p>
 
                 <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                     <center>
-                        <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                        <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
+                        <h5 style="color: white;">btitle</h5>
+                        <small style="color: white;"><strong>tname</strong></small>
                     </center>
                 </div>
 
@@ -393,7 +374,7 @@ include_once("DbConnection.php");
                                     <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
                                     <br><br><br>
                                     <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled="">
-                                       <?php echo $bdescription; ?>
+                                       description
                                     </textarea>
 
                                     <!-- Start card details popup fuction-->
@@ -468,10 +449,6 @@ include_once("DbConnection.php");
 
             </div>
             <!-- End second Header Content -->
-            <?php 
-                    }
-                }
-            ?>
            <!-- END DATABASE IN SECOND HEADER -->
 
             <!-- start trello container after second header  -->

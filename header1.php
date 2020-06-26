@@ -412,74 +412,33 @@
                             <!-- END JavaScript of CreateBoard -->
 
                             <li class="nav navbar-nav d-none d-sm-flex border-left navbar-height align-items-center" class="nav-item dropdown" >
-                                <a href="#notifications_menu" class="nav-link dropdown-toggle" data-toggle="dropdown" data-caret="false">
+                                <a href="notification.php" style="margin-left: 10px; margin-right: 10px;">
+
+                            <?php 
+                                $usernot=$_SESSION['Emailid'];
+
+                                $select_not="SELECT * from tblnotification WHERE NotificationEmail='$usernot' AND IsRead=1";
+                                $result_not=mysqli_query($con,$select_not) or die(mysqli_error($con));
+                                if($result_not->num_rows!=0)
+                                {
+                            ?>
                                     <i class="material-icons nav-icon navbar-notifications-indicator">notifications</i>
+
+                            <?php
+                                }
+                                else 
+                                {
+                            ?>
+                                                    <i class="material-icons nav-icon ">notifications</i>
+                            <?php        
+                                }
+                            ?>
+
                                 </a>
-                                <div id="notifications_menu" class="dropdown-menu dropdown-menu-right navbar-notifications-menu">
-                                    <div class="dropdown-item d-flex align-items-center py-2">
-                                        <span class="flex navbar-notifications-menu__title m-0">Notifications</span>
-                                        <a href="javascript:void(0)" class="text-muted"><small>Clear all</small></a>
-                                    </div>
-                                    <div class="navbar-notifications-menu__content" data-simplebar>
-                                        <div class="py-2">
-
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <div class="avatar avatar-sm" style="width: 32px; height: 32px;">
-                                                        <img src="assets/images/256_daniel-gaffey-1060698-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-                                                </div>
-                                                <div class="flex">
-                                                    <a href="#">A.Demian</a> left a comment on <a href="#">Stack</a><br>
-                                                    <small class="text-muted">1 minute ago</small>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <a href="#">
-                                                        <div class="avatar avatar-xs" style="width: 32px; height: 32px;">
-                                                            <span class="avatar-title bg-purple rounded-circle"><i class="material-icons icon-16pt">person_add</i></span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="flex">
-                                                    New user <a href="#">Peter Parker</a> signed up.<br>
-                                                    <small class="text-muted">1 hour ago</small>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-item d-flex">
-                                                <div class="mr-3">
-                                                    <a href="#">
-                                                        <div class="avatar avatar-xs" style="width: 32px; height: 32px;">
-                                                            <span class="avatar-title rounded-circle">JD</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="flex">
-                                                    <a href="#">Big Joe</a> <small class="text-muted">wrote:</small><br>
-                                                    <div>Hey, how are you? What about our next meeting</div>
-                                                    <small class="text-muted">2 minutes ago</small>
-                                                </div>
-                                            </div>
-
-                        
-                                        </div>
-                                    </div>
-                                    <a href="javascript:void(0);" class="dropdown-item text-center navbar-notifications-menu__footer">View All</a>
-                                </div>
-                            </li>
+                            </li> 
                         </ul>
 
                         <ul class="nav navbar-nav d-none d-sm-flex border-left navbar-height align-items-center">
-                            <!-- <?php
-                            
-                                /*if(isset($_SESSION['UserID']))
-                                {
-
-                                    $sel_User="select * from tblUser where UserID='".$_SESSION['UserID']."'";
-                                    $Execute_sel_User=mysqli_query($con,$sel_User) or die(mysqli_error($con));
-                                    $fetch=mysqli_fetch_array($Execute_sel_User);*/
-                            ?> -->
 
                                     <li class="nav-item dropdown">
                                         <?php

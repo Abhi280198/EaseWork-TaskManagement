@@ -26,6 +26,9 @@
                 $TeamMember_query="INSERT into tblteammember values(null,'$Tid','$UserID','$Mem_Email','$BoardName',now(),1)";
                 $run_TeamMember = mysqli_query($con,$TeamMember_query);
 
+                $notification="INSERT into tblnotification values(null,'$Mem_Email','$BoardName','$Tid',1,CURRENT_TIMESTAMP(),now())";
+                $run_notification = mysqli_query($con,$notification);
+
                 if($run_TeamMember)
                 {
                     header("location:Team_members.php?Tid=$Tid");
@@ -33,6 +36,7 @@
                 else{
                 echo "error".mysqli_error($con);   
                 }
+
                 
             }
         }
@@ -53,14 +57,12 @@
 
 	        	$TeamMember_notexist="INSERT into tblteammember values(null,'$Tid',null,'$Mem_Email','$BoardName',now(),0)";
 	            $run_TeamMember_notexist = mysqli_query($con,$TeamMember_notexist);
-	            echo '<script type="text/javascript">alert("User doesnot Exist...Invitation Link Sent!!!");</script>';
-	            /*if($run_TeamMember_notexist)
-	            {
-	            	
-	            }   
-	            else{
-	                echo "error".mysqli_error($con);   
-	            }*/
+	            
+                $notification="INSERT into tblnotification values(null,'$Mem_Email','$BoardName','$Tid',1,CURRENT_TIMESTAMP(),now())";
+                $run_notification = mysqli_query($con,$notification);
+
+                echo '<script type="text/javascript">alert("User doesnot Exist...Invitation Link Sent!!!");</script>';	            
+
 	        }
         }
 
