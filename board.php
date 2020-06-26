@@ -1,4 +1,4 @@
-<?php 
+ <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     /*Start database complete board button (SHOW MENU)*/
@@ -1224,7 +1224,7 @@
                         }   
                     ?> 
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->            
-                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                            <a href="calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                             <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                             <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                     </div>

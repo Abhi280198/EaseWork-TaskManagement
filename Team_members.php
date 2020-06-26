@@ -262,6 +262,8 @@
                                                         <ul class="popover-ul">
 
                                                         <?php
+                                                        if($Uid)
+                                                        {
                                                             $boarddisplay = "SELECT * FROM tblboard where Tid=$Tid AND Uid=$Uid";
                                                             $resboard=mysqli_query($con,$boarddisplay);
                                                             if($resboard->num_rows!=0)
@@ -289,6 +291,7 @@
                                                         <?php 
                                                                 }
                                                             }
+                                                        }
                                                         ?>
                                                         </ul>
 
