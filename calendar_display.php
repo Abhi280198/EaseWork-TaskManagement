@@ -4,7 +4,7 @@
     $json = array();
     $sqlQuery = "SELECT * FROM tblcalendar ORDER BY Calendarid";
 
-    $result = mysqli_query($conn, $sqlQuery);
+    $result = mysqli_query($con, $sqlQuery);
     $alldata = array();
     while ($row = mysqli_fetch_assoc($result)) 
     {
@@ -12,7 +12,7 @@
     }
     mysqli_free_result($result);
 
-    mysqli_close($conn);
+    mysqli_close($con);
     echo json_encode($alldata);
 ?>
 ?>

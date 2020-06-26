@@ -150,7 +150,7 @@
                                         <div class="flex">
                                             <h2 class="m-0">Vacation Planning</h2>
                                         </div>
-                                        <a href="Personal_template.php?Uid=<?php echo $_SESSION['UserID'];?>" class="btn btn-success ml-3">View Template</a>
+                                        <a href="Personal_template.php?Bid=0" class="btn btn-success ml-3">View Template</a>
                                         <a href="#" class="btn btn-success ml-3" onclick="openTemplatePopup()" >Use Template</a>
                                     </div>
 
