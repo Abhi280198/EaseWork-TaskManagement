@@ -352,6 +352,12 @@ include_once("DbConnection.php");
                 </script>
 
             </div>
+<<<<<<< HEAD
+=======
+            <!-- end create board link --> 
+
+             <!-- Start DATABASE IN SECOND HEADER -->
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
             
             <!-- start second header content -->
             <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
@@ -359,8 +365,13 @@ include_once("DbConnection.php");
 
                 <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                     <center>
+<<<<<<< HEAD
                         <h5 style="color: white;">btitle</h5>
                         <small style="color: white;"><strong>tname</strong></small>
+=======
+                        <h5 style="color: white;">title</h5>
+                        <small style="color: white;"><strong>teamname</strong></small>
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
                     </center>
                 </div>
 
@@ -449,6 +460,10 @@ include_once("DbConnection.php");
 
             </div>
             <!-- End second Header Content -->
+<<<<<<< HEAD
+=======
+          
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
            <!-- END DATABASE IN SECOND HEADER -->
 
             <!-- start trello container after second header  -->

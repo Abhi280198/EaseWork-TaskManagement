@@ -138,7 +138,7 @@
                                 <img src="assets/images/book1.jpg" alt="digital product" class="img-fluid">
                             </a>
                             <!--End Image section-->
-
+                                
                             <!--Start Descrition section-->
                             <div>
                                 <div class="container-fluid page__heading-container">
