@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-<?php include_once("DbConnection.php");?>
-    
-=======
 <?php
 include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
+
     /*Start database add board description button(SHOW MENU)*/
     if (isset($_REQUEST['showdescriptioneducation'])) 
     {
@@ -13,7 +10,6 @@ include_once("DbConnection.php");
         $update_education_description = "UPDATE tblboard set BoardDescription = '$board_description_education' where Bid='$bid' ";
         $Exe_update_education_description=mysqli_query($con,$update_education_description)or die(mysqli_error($con));
 ?>
-<<<<<<< HEAD
         <script type="text/javascript">
                     alert("Description added Successfully");
         </script>
@@ -57,7 +53,7 @@ include_once("DbConnection.php");
             $Syllabus1duedate = $_REQUEST['SyllabusRemainingduedate'];
             $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
 
-            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
+            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
                 $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
 
                 if($run_Syllabus1)
@@ -89,7 +85,7 @@ include_once("DbConnection.php");
             $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
             $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
 
-            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',2)";
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',2)";
                 $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
 
                 if($run_Syllabus2)
@@ -169,9 +165,6 @@ include_once("DbConnection.php");
 
 ?>
 
-=======
->>>>>>> b9d9e71b3f225533d5c7a1e6d4b20fe1a5916d62
->>>>>>> 4f9aff4e1a9e5ec78d0f6dd2c914826d350345f0
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -2050,7 +2043,4 @@ include_once("DbConnection.php");
     <?php include_once('scriptlinks.php');?>
 
 </body>
-
-
-<!-- Mirrored from demo.frontted.com/stackadmin/133/app-trello.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 May 2020 07:53:33 GMT -->
 </html>

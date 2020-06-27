@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2020 at 04:03 PM
+-- Generation Time: Jun 27, 2020 at 06:50 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -45,7 +45,10 @@ CREATE TABLE `tblboard` (
 --
 
 INSERT INTO `tblboard` (`Bid`, `Btitle`, `Tid`, `Visibility`, `Uid`, `Date`, `Tempid`, `BoardDescription`, `Background`, `IsActive`) VALUES
-(20, 'Board One ', 39, 'Team', 27, '2020-06-26', NULL, NULL, 'images/bg4.jpg', 1);
+(22, 'board notification', 42, 'Team', 27, '2020-06-26', NULL, NULL, '', 1),
+(23, 'board notification2', 42, 'Team', 27, '2020-06-26', NULL, NULL, '', 1),
+(24, 'board3', 42, 'Team', 27, '2020-06-27', NULL, NULL, '', 1),
+(25, 'Class Management-board', 42, 'Private', 26, '2020-06-27', 1, 'new board of class management template\r\n                        ', 'images/bg1.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -70,7 +73,8 @@ INSERT INTO `tblcalendar` (`Calendarid`, `CalendarTitle`, `CalendarStart`, `Cale
 (1, 'HeadStart', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
 (2, 'heading', '2020-06-04 00:00:00', '2020-06-05 00:00:00', 1, 20),
 (3, 'abcd', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
-(4, 'new task', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20);
+(4, 'new task', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
+(5, 'new event', '2020-06-17 00:00:00', '2020-06-18 00:00:00', 1, 27);
 
 -- --------------------------------------------------------
 
@@ -90,6 +94,17 @@ CREATE TABLE `tblcard` (
   `Bid` int(11) NOT NULL,
   `IsActive` tinyint(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tblcard`
+--
+
+INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `CreationDate`, `Description`, `Listid`, `Bid`, `IsActive`) VALUES
+(12, 'Syllabus1', 'important', '#ff0000', '0000-00-00', '2020-06-27', 'chapter 3,4', 4, 25, 1),
+(13, 'Syllabus 2', 'complicated', '#ff8800', '0000-00-00', '2020-06-27', 'chap 5', 5, 25, 2),
+(14, 'Syllabus 3', 'Success', '#1be90c', '2020-06-30', '2020-06-27', 'chap 1', 6, 25, 3),
+(15, 'Assignment 1', 'Assigned', '#011e1d', '2020-07-11', '2020-06-27', 'new assignment', 7, 25, 4),
+(16, 'Chapter 5', 'read at home', '#fcdb03', '0000-00-00', '2020-06-27', '', 4, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -180,9 +195,36 @@ INSERT INTO `tbllist` (`Listid`, `ListName`) VALUES
 
 CREATE TABLE `tblmembercard` (
   `Mcardid` int(11) NOT NULL,
-  `Tmid` int(11) NOT NULL,
+  `Uid` int(11) NOT NULL,
   `Cardid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblnotification`
+--
+
+CREATE TABLE `tblnotification` (
+  `Notificationid` int(11) NOT NULL,
+  `NotificationEmail` varchar(100) NOT NULL,
+  `Bid` int(11) NOT NULL,
+  `Tid` int(11) NOT NULL,
+  `IsRead` tinyint(7) NOT NULL,
+  `Time` time NOT NULL,
+  `Date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tblnotification`
+--
+
+INSERT INTO `tblnotification` (`Notificationid`, `NotificationEmail`, `Bid`, `Tid`, `IsRead`, `Time`, `Date`) VALUES
+(3, 'poojakusingh40@gmail.com', 22, 42, 0, '12:00:00', '2020-06-27'),
+(4, 'poojakusingh40@gmail.com', 23, 42, 0, '00:40:00', '2020-06-27'),
+(5, 'poojakusingh40@gmail.com', 24, 42, 0, '00:28:32', '2020-06-27'),
+(6, 'jigneshmahadik777@gmail.com', 23, 42, 0, '00:49:14', '2020-06-27'),
+(7, 'jigneshmahadik777@gmail.com', 25, 42, 0, '12:13:28', '2020-06-27');
 
 -- --------------------------------------------------------
 
@@ -206,9 +248,8 @@ CREATE TABLE `tblteam` (
 --
 
 INSERT INTO `tblteam` (`Tid`, `Tname`, `Ttype`, `TeamDescription`, `Uid`, `Date`, `IsActive`, `ProfilePic`) VALUES
-(1, 'No Team', 'others', 'Used for Individual Board', 1, '2020-06-14', 1, NULL),
-(39, 'Team Testing', 'Education', 'new team to check the errors', 27, '2020-06-26', 1, 'about-img10.jpg'),
-(40, 'Team Two Testing', 'Education', 'one more team to test', 27, '2020-06-26', 1, 'blog-img3.jpg');
+(1, 'No Team', 'others', 'For individual Boards', 1, '2020-06-01', 1, NULL),
+(42, 'team notification', 'others', 'abcd', 27, '2020-06-26', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -231,10 +272,12 @@ CREATE TABLE `tblteammember` (
 --
 
 INSERT INTO `tblteammember` (`Tmid`, `Tid`, `Uid`, `Email`, `Bid`, `Date`, `IsActive`) VALUES
-(30, 39, 27, 'poojakusingh40@gmail.com', NULL, '2020-06-26', 1),
-(31, 39, 26, 'jigneshmahadik777@gmail.com', 20, '2020-06-26', 1),
-(32, 40, 27, 'poojakusingh40@gmail.com', NULL, '2020-06-26', 1),
-(33, 39, NULL, 'riya.jain9497@gmail.com', 20, '2020-06-26', 0);
+(37, 42, 27, 'poojakusingh40@gmail.com', NULL, '2020-06-26', 1),
+(38, 42, 27, 'poojakusingh40@gmail.com', 22, '2020-06-26', 1),
+(39, 42, 27, 'poojakusingh40@gmail.com', 23, '2020-06-26', 1),
+(40, 42, 27, 'poojakusingh40@gmail.com', 24, '2020-06-27', 1),
+(41, 42, 26, 'jigneshmahadik777@gmail.com', 23, '2020-06-27', 1),
+(42, 42, 26, 'jigneshmahadik777@gmail.com', 25, '2020-06-27', 1);
 
 -- --------------------------------------------------------
 
@@ -280,7 +323,7 @@ CREATE TABLE `tbluser` (
 --
 
 INSERT INTO `tbluser` (`Uid`, `Fname`, `Lname`, `Email`, `Password`, `Mobile`, `Date`, `IsActive`, `ProfilePic`, `Token`) VALUES
-(26, 'Jigneshkumar', 'Mahadik', 'jigneshmahadik777@gmail.com', 'jignesh', 9967543621, '2020-06-25', 1, NULL, '40f77517b570558baf1f2dd1de2a8f'),
+(26, 'Jigneshkumar', 'Mahadik', 'jigneshmahadik777@gmail.com', 'jignesh', 9967543621, '2020-06-25', 1, 'avtar-15.jpg', '40f77517b570558baf1f2dd1de2a8f'),
 (27, 'Abhilasha', 'Kumari', 'poojakusingh40@gmail.com', 'pujasingh', 7684905416, '2020-06-26', 1, 'avtar-14.jpg', '8ac545db3046f5e19985388adb9104');
 
 --
@@ -330,6 +373,12 @@ ALTER TABLE `tblmembercard`
   ADD PRIMARY KEY (`Mcardid`);
 
 --
+-- Indexes for table `tblnotification`
+--
+ALTER TABLE `tblnotification`
+  ADD PRIMARY KEY (`Notificationid`);
+
+--
 -- Indexes for table `tblteam`
 --
 ALTER TABLE `tblteam`
@@ -361,19 +410,19 @@ ALTER TABLE `tbluser`
 -- AUTO_INCREMENT for table `tblboard`
 --
 ALTER TABLE `tblboard`
-  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tblcalendar`
 --
 ALTER TABLE `tblcalendar`
-  MODIFY `Calendarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Calendarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tblcard`
 --
 ALTER TABLE `tblcard`
-  MODIFY `Cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tblchecklist`
@@ -400,16 +449,22 @@ ALTER TABLE `tblmembercard`
   MODIFY `Mcardid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tblnotification`
+--
+ALTER TABLE `tblnotification`
+  MODIFY `Notificationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `tblteam`
 --
 ALTER TABLE `tblteam`
-  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `tblteammember`
 --
 ALTER TABLE `tblteammember`
-  MODIFY `Tmid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `Tmid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `tbltemplate`
