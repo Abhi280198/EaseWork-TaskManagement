@@ -22,8 +22,29 @@
         }
         else
         {
-           $query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive,Token)values('$first','$last','$emailid','$pass', '$phone',now(),1,'$token')"; 
-           $run=mysqli_query($con,$query);
+           	$query="insert into tbluser(Fname,Lname,Email,Password,Mobile,Date,IsActive,Token)values('$first','$last','$emailid','$pass', '$phone',now(),1,'$token')"; 
+           	$runuser=mysqli_query($con,$query);
+           	$user_lastid= mysqli_insert_id($con);
+
+            if($runuser)
+            {
+                    $select_lastuser= "SELECT * FROM tbluser WHERE Uid=(SELECT LAST_INSERT_ID())";
+                    $result_lastuser=mysqli_query($con,$select_lastuser) or die(mysqli_error($con));
+                    $row_lastuser=mysqli_fetch_array($result_lastuser);
+
+			        if(mysqli_num_rows($result_lastuser)==1)
+			        {
+			            $user_email=$row_lastuser['Email'];
+			            $user_uid=$row_lastuser['Uid'];
+
+			            $update_teammember="UPDATE tblteammember set Uid='$user_uid', IsActive=1 where Email='$user_email' ";
+       					$teammember_update=mysqli_query($con,$update_teammember)or die(mysqli_error($con));
+			        }
+            }   
+            else
+            {
+                echo "error".mysqli_error($con);   
+            }
            echo '<script type="text/javascript">alert("Data inserted successfully... Go to login Page...");</script>';
         }
 	}

@@ -26,6 +26,9 @@
                 $TeamMember_query="INSERT into tblteammember values(null,'$Tid','$UserID','$Mem_Email','$BoardName',now(),1)";
                 $run_TeamMember = mysqli_query($con,$TeamMember_query);
 
+                $notification="INSERT into tblnotification values(null,'$Mem_Email','$BoardName','$Tid',1,CURRENT_TIMESTAMP(),now())";
+                $run_notification = mysqli_query($con,$notification);
+
                 if($run_TeamMember)
                 {
                     header("location:Team_members.php?Tid=$Tid");
@@ -33,12 +36,34 @@
                 else{
                 echo "error".mysqli_error($con);   
                 }
+
                 
             }
         }
         else
-        {
-            echo '<script type="text/javascript">alert("User doesnot Exist!!!");</script>';
+        {	
+
+        	$checkmember_notexist="SELECT * from tblteammember where Email='$Mem_Email' AND Bid='$BoardName'";
+            $Check_Data_notexist = mysqli_query($con,$checkmember_notexist)or die(mysqli_error($con));
+        	if($Check_Data_notexist->num_rows>0)
+            {
+                echo '<script type="text/javascript">alert("Invite Link Already sent!!!");</script>';
+            }else
+            {
+            	$subject = "Invitation Link For EaseWork Team";
+	            $body = "Hi, $Mem_Email. Click here to register a new account http://localhost/Task-Management/register.php";
+	            $headers = "From: poojakusingh35@gmail.com";
+	            mail($Mem_Email, $subject, $body, $headers);
+
+	        	$TeamMember_notexist="INSERT into tblteammember values(null,'$Tid',null,'$Mem_Email','$BoardName',now(),0)";
+	            $run_TeamMember_notexist = mysqli_query($con,$TeamMember_notexist);
+	            
+                $notification="INSERT into tblnotification values(null,'$Mem_Email','$BoardName','$Tid',1,CURRENT_TIMESTAMP(),now())";
+                $run_notification = mysqli_query($con,$notification);
+
+                echo '<script type="text/javascript">alert("User doesnot Exist...Invitation Link Sent!!!");</script>';	            
+
+	        }
         }
 
      }
@@ -239,6 +264,8 @@
                                                         <ul class="popover-ul">
 
                                                         <?php
+                                                        if($Uid)
+                                                        {
                                                             $boarddisplay = "SELECT * FROM tblboard where Tid=$Tid AND Uid=$Uid";
                                                             $resboard=mysqli_query($con,$boarddisplay);
                                                             if($resboard->num_rows!=0)
@@ -266,6 +293,7 @@
                                                         <?php 
                                                                 }
                                                             }
+                                                        }
                                                         ?>
                                                         </ul>
 

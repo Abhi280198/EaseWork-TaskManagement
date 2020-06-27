@@ -1,4 +1,3 @@
-
 <?php 
     include_once("DbConnection.php");
 
@@ -139,7 +138,7 @@
                                 <img src="assets/images/book1.jpg" alt="digital product" class="img-fluid">
                             </a>
                             <!--End Image section-->
-
+                                
                             <!--Start Descrition section-->
                             <div>
                                 <div class="container-fluid page__heading-container">
@@ -147,7 +146,7 @@
                                         <div class="flex">
                                             <h2 class="m-0">Class Management</h2>
                                         </div>
-                                        <a href="Education_template.php?Uid=<?php echo $_SESSION['UserID'];?>" class="btn btn-success ml-3">View Template</a>
+                                        <a href="Education_template.php?Bid=0" class="btn btn-success ml-3">View Template</a>
                                         <a href="#" class="btn btn-success ml-3" onclick="openTemplatePopup()">Use Template</a>
                                     </div>
 

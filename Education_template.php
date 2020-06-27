@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 <?php include_once("DbConnection.php");?>
     
+=======
+<?php
+include_once("DbConnection.php");
+    $bid=$_GET['Bid'];
+?>
+>>>>>>> b9d9e71b3f225533d5c7a1e6d4b20fe1a5916d62
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -36,13 +43,29 @@
                     </textarea>
                 </div><br>
                 <div class="canclebtn">
-                    <a href="board_link.php" type="button" class="btn cancel">Add</a>
+                    <button type="submit" name="showdescriptionadd" class="btn cancel">Add</button>
                     <button type="button" class="btn cancel" onclick="desclose()" >Cancel</button>
                 </div>
             </form>
         </div>
     </div>
     <!-- End show menu description popup -->
+
+     <!-- start show menu delete popup -->
+    <div id="deleteboard" class="modal">
+        <div class="modal-content" style="width: 50%; height: 250px;">
+            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                <div>
+                    <h3><strong>Are you sure ?</strong></h3>
+                </div><br><br>
+                <center><div class="canclebtn">
+                    <button type="submit" name="deleteYes" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn cancel" onclick="deleteclose()" >No</button>
+                </div></center>
+            </form>
+        </div>
+    </div>
+    <!-- End show menu delete popup -->
 
     <!-- start card details popup -->
     <div id="cardDetails" class="modal" >
@@ -334,18 +357,26 @@
                 </script>
 
             </div>
+<<<<<<< HEAD
+=======
             <!-- end create board link --> 
 
-
-
+             <!-- Start DATABASE IN SECOND HEADER -->
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
+            
             <!-- start second header content -->
             <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
                 <p></p>
 
                 <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                     <center>
-                        <h5>Task Name</h5>
-                        <small><strong>Team Name</strong></small>
+<<<<<<< HEAD
+                        <h5 style="color: white;">btitle</h5>
+                        <small style="color: white;"><strong>tname</strong></small>
+=======
+                        <h5 style="color: white;">title</h5>
+                        <small style="color: white;"><strong>teamname</strong></small>
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
                     </center>
                 </div>
 
@@ -359,7 +390,7 @@
                                     <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
                                     <br><br><br>
                                     <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled="">
-                                       Organize you lesson plans and manage your planning workload! This template makes it easy to see what needs to be done, and quickly access everything you need before a class. Best for solo-planning or teaching content that doesn't repeat.
+                                       description
                                     </textarea>
 
                                     <!-- Start card details popup fuction-->
@@ -373,24 +404,31 @@
                                     </script>
                                     <!-- End card details popup fuction-->
                                 </div>
-                                <hr style="border-top: 1px solid #bbb;">
-                                  <br>
-                                <button class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" onclick="memberpage()">Members Details</button>
 
-                                <script>
-                                    function memberpage() {
-                                      location.replace("Team_members.php")
-                                    }
-                                </script>
+                            
 
                                 <hr style="border-top: 1px solid #bbb;">
                                 <div>
                                     <label style="float: left;">Wanna Close Board ?</label><br><br>
                                 </div>
-                                <div>
-                                    <button class="w3-button w3-black w3-round">Complete Board</button>
-                                    <button class="w3-button w3-black w3-round">Delete Board</button>
-                                </div>
+                                <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                                            <div>
+                                                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                    <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                    <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                                                <!-- Start card details popup fuction-->
+                                                <script>
+                                                    function deleteopen() {
+                                                      document.getElementById("deleteboard").style.display = "flex";
+                                                    }
+                                                    function deleteclose() {
+                                                      document.getElementById("deleteboard").style.display = "none";
+                                                    }
+                                                </script>
+                                                <!-- End card details popup fuction-->
+                                                </form>
+                                            </div>
+                                <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
 
                             </div></center>
                         </div>
@@ -427,7 +465,11 @@
 
             </div>
             <!-- End second Header Content -->
-
+<<<<<<< HEAD
+=======
+          
+>>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
+           <!-- END DATABASE IN SECOND HEADER -->
 
             <!-- start trello container after second header  -->
             <div class="trello-container">
@@ -529,7 +571,7 @@
 
                         </div>
                     </div>
-                    <!-- End Todo list-->
+                    <!-- End Syllabus remaining list-->
 
                     <!-- Start Syllabus to be covered today list-->
                     <div class="trello-board__tasks">
