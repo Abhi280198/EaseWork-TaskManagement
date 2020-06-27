@@ -1,174 +1,297 @@
 <?php
 include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+    $uid=$_SESSION['UserID'];
+    /*Start database add board description button(SHOW MENU)*/
+    if (isset($_REQUEST['showdescriptioneducation'])) 
+    {
+        $board_description_education = $_REQUEST['educationdescription'];
+        $update_education_description = "UPDATE tblboard set BoardDescription = '$board_description_education' where Bid='$bid' ";
+        $Exe_update_education_description=mysqli_query($con,$update_education_description)or die(mysqli_error($con));
 ?>
+        <script type="text/javascript">
+                    alert("Description added Successfully");
+        </script>
+<?php
+    }
+    /*End database add board description button(SHOW MENU)*/ 
+
+    /*Start database complete board button (SHOW MENU)*/
+    if (isset($_REQUEST['educationcompletebutton'])) 
+    {
+        $Updateisactive_education = "UPDATE tblboard set IsActive=0 where Bid='$bid' ";
+        $Exe_updateisactive_education=mysqli_query($con,$Updateisactive_education)or die(mysqli_error($con));  
+        header("location:Complete.php?Uid=$uid");
+    }
+    /*End database complete board button(SHOW MENU)*/ 
+
+    /*Start database delete board button(SHOW MENU)*/
+    if (isset($_REQUEST['EducationdeleteYes'])) 
+    {
+        $delete_board_education = "DELETE FROM tblboard WHERE Bid='$bid'";
+        $Exe_delete_education_board=mysqli_query($con,$delete_board_education)or die(mysqli_error($con));
+        header("location:index.php?Uid=$uid");
+    } 
+    /*End database delete board button(SHOW MENU)*/
+
+    /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Remaining  LIST)*/
+    if (isset($_REQUEST['SyllabusRemainingList'])) 
+    {
+        if ($_REQUEST['SyllabusRemainingTitle']=="") 
+        {
+            echo '<script type="text/javascript">alert("Card Name cannot be Empty!!!");</script>';
+        }
+        else
+        {
+            $Syllabus1description= $Syllabus1label =$Syllabus1labelcolor =$Syllabus1duedate="";
+
+            $Syllabus1title = $_REQUEST['SyllabusRemainingTitle'];
+            $Syllabus1description = $_REQUEST['SyllabusRemainingdescription'];
+            $Syllabus1label= $_REQUEST['SyllabusRemaininglabel'];
+            $Syllabus1labelcolor = $_REQUEST['SyllabusRemaininglabelcolor'];
+            $Syllabus1duedate = $_REQUEST['SyllabusRemainingduedate'];
+            $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
+
+            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
+                $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
+
+                if($run_Syllabus1)
+                {
+                    header("location:Education_template.php?Bid=$bid");
+                }
+                else{
+                    echo "error".mysqli_error($con);   
+                } 
+        } 
+    }
+    /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Remaining LIST)*/
+
+    /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Today  LIST)*/
+    if (isset($_REQUEST['SyllabusTodayList'])) 
+    {
+        if ($_REQUEST['SyllabusTodayTitle']=="") 
+        {
+            echo '<script type="text/javascript">alert("Card Name cannot be Empty!!!");</script>';
+        }
+        else
+        {
+            $Syllabus2description= $Syllabus2label =$Syllabus2labelcolor =$Syllabus2duedate="";
+
+            $Syllabus2title = $_REQUEST['SyllabusTodayTitle'];
+            $Syllabus2description = $_REQUEST['SyllabusTodaydescription'];
+            $Syllabus2label= $_REQUEST['SyllabusTodaylabel'];
+            $Syllabus2labelcolor = $_REQUEST['SyllabusTodaylabelcolor'];
+            $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
+            $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
+
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',2)";
+                $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
+
+                if($run_Syllabus2)
+                {
+                    header("location:Education_template.php?Bid=$bid");
+                }
+                else{
+                    echo "error".mysqli_error($con);   
+                } 
+        } 
+    }
+    /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Today LIST)*/
+
+    /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
+    if (isset($_REQUEST['SyllabusCoveredList'])) 
+    {
+        if ($_REQUEST['SyllabusCoveredTitle']=="") 
+        {
+            echo '<script type="text/javascript">alert("Card Name cannot be Empty!!!");</script>';
+        }
+        else
+        {
+            $Syllabus3description= $Syllabus3label =$Syllabus3labelcolor =$Syllabus3duedate="";
+
+            $Syllabus3title = $_REQUEST['SyllabusCoveredTitle'];
+            $Syllabus3description = $_REQUEST['SyllabusCovereddescription'];
+            $Syllabus3label= $_REQUEST['SyllabusCoveredlabel'];
+            $Syllabus3labelcolor = $_REQUEST['SyllabusCoveredlabelcolor'];
+            $Syllabus3duedate = $_REQUEST['SyllabusCoveredduedate'];
+            $Syllabus3member = $_REQUEST['SyllabusCoveredMember'];
+
+            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',3)";
+                $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
+
+                if($run_Syllabus3)
+                {
+                    header("location:Education_template.php?Bid=$bid");
+                }
+                else{
+                    echo "error".mysqli_error($con);   
+                } 
+        } 
+    }
+    /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
+
+    /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
+    if (isset($_REQUEST['SyllabusAssignmentList'])) 
+    {
+        if ($_REQUEST['SyllabusAssignmentTitle']=="") 
+        {
+            echo '<script type="text/javascript">alert("Card Name cannot be Empty!!!");</script>';
+        }
+        else
+        {
+            $Syllabus4description= $Syllabus4label =$Syllabus4labelcolor =$Syllabus4duedate="";
+
+            $Syllabus4title = $_REQUEST['SyllabusAssignmentTitle'];
+            $Syllabus4description = $_REQUEST['SyllabusAssignmentdescription'];
+            $Syllabus4label= $_REQUEST['SyllabusAssignmentlabel'];
+            $Syllabus4labelcolor = $_REQUEST['SyllabusAssignmentlabelcolor'];
+            $Syllabus4duedate = $_REQUEST['SyllabusAssignmentduedate'];
+            $Syllabus4member = $_REQUEST['SyllabusAssignmentMember'];
+
+            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',4)";
+                $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
+
+                if($run_Syllabus4)
+                {
+                    header("location:Education_template.php?Bid=$bid");
+                }
+                else{
+                    echo "error".mysqli_error($con);   
+                } 
+        } 
+    }
+    /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
+
     <title>Easework- Education Template</title>
     <?php include_once('csslinks.php');?>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link type="text/css" href="assets/css/board.css" rel="stylesheet">
 
     <!-- start show menu button script -->
-    <script>
-        function myFunction() 
-        {
-          var x = document.getElementById("demo");
-          if (x.className.indexOf("w3-show") == -1) 
-          {
-            x.className += " w3-show";
-          } else { 
-            x.className = x.className.replace(" w3-show", "");
-          }
-        }
-    </script>
+        <script>
+            function myEducationFunction() 
+            {
+              var x = document.getElementById("demo");
+              if (x.className.indexOf("w3-show") == -1) 
+              {
+                x.className += " w3-show";
+              } else { 
+                x.className = x.className.replace(" w3-show", "");
+              }
+            }
+        </script>
     <!-- end show menu button script -->
 
     <!-- start show menu description popup -->
-    <div id="description" class="modal">
-        <div class="modal-content" style="width: 50%; height: 300px;">
-            <form action="/action_page.php" class="form-container">
-                <div>
-                    <label><b>Description :</b></label>
-                    <br>
-                    <textarea name="description" id="description" rows="7" style="width: 100%;" placeholder="Description ...">
-                        
-                    </textarea>
-                </div><br>
-                <div class="canclebtn">
-                    <button type="submit" name="showdescriptionadd" class="btn cancel">Add</button>
-                    <button type="button" class="btn cancel" onclick="desclose()" >Cancel</button>
-                </div>
-            </form>
+        <div id="Educationdescription" class="modal">
+            <div class="modal-content" style="width: 50%; height: 300px;">
+                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                    <div>
+                        <label><b>Description :</b></label>
+                        <br>
+                        <textarea name="educationdescription" id="description" rows="7" style="width: 100%;" placeholder="Description ...">
+                            
+                        </textarea>
+                    </div><br>
+                    <div class="canclebtn">
+                        <button type="submit" name="showdescriptioneducation" class="btn cancel">Add</button>
+                        <button type="button" class="btn cancel" onclick="desEducationclose()" >Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
     <!-- End show menu description popup -->
 
-     <!-- start show menu delete popup -->
-    <div id="deleteboard" class="modal">
-        <div class="modal-content" style="width: 50%; height: 250px;">
-            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                <div>
-                    <h3><strong>Are you sure ?</strong></h3>
-                </div><br><br>
-                <center><div class="canclebtn">
-                    <button type="submit" name="deleteYes" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn cancel" onclick="deleteclose()" >No</button>
-                </div></center>
-            </form>
+    <!-- start show menu delete popup -->
+        <div id="Educationdeleteboard" class="modal">
+            <div class="modal-content" style="width: 50%; height: 250px;">
+                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                    <div>
+                        <h3><strong>Are you sure ?</strong></h3>
+                    </div><br><br>
+                    <center><div class="canclebtn">
+                        <button type="submit" name="EducationdeleteYes" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn cancel" onclick="Educationdeleteclose()" >No</button>
+                    </div></center>
+                </form>
+            </div>
         </div>
-    </div>
     <!-- End show menu delete popup -->
 
-    <!-- start card details popup -->
-    <div id="cardDetails" class="modal" >
-        <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
+    <!-- start Syllabus Remaining details popup -->
+        <div id="SyllabusRemainingDetails" class="modal" >
+            <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
 
-            <div class="modal-body">
-                <!-- Start Form Details -->  
-                <h5 style="text-align: center;" class="w3-text-blue">CARD DETAILS</h5>
+                <div class="modal-body">
+                    <!-- Start Form Details -->  
+                    <h5 style="text-align: center;" class="w3-text-blue">Syllabus Remaining- CARD DETAILS</h5>
 
-                <form class="w3-container w3-card-4"action="/action_page.php" style="padding-top: 20px;">
-                    <!-- Start Card Name Input -->
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">   
-                          <label class="w3-text-black"><b>Title</b></label>
-                      </div>
-                      <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="Title" type="text">
-                      </div>
-                    </div>
-                    <!-- End Card Name Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Description Input -->
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Description</b></label>
-                      </div>
-                      <div class="col-75">
-                          <textarea name="description" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
-                      </div>
-                    </div>
-                    <!-- End Description Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Checklist Input -->
-                    <div class="row" style="padding-left:50px;" >  
-                        <div class="col-25">  
-                            <label class="w3-text-black"><b>Checklist</b></label>
+                    <form class="w3-container w3-card-4" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
+                        <!-- Start Card Name Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">   
+                              <label class="w3-text-black"><b>Title</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="SyllabusRemainingTitle" type="text">
+                          </div>
                         </div>
-                        <div class="col-75">
-                            <div id="myDIV" class="header" style="" >
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
+                        <!-- End Card Name Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Description Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Description</b></label>
+                          </div>
+                          <div class="col-75">
+                              <textarea name="SyllabusRemainingdescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                          </div>
+                        </div>
+                        <!-- End Description Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Checklist Input -->
+                        <div class="row" style="padding-left:50px;" >  
+                            <div class="col-25">  
+                                <label class="w3-text-black"><b>Checklist</b></label>
                             </div>
+                            <div class="col-75">
+                                <div id="myDIV" class="header" style="" >
+                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
+                                </div>
 
-                            <ul id="myUL">
-                               <!-- <li id="ul-container"></li>  -->
-                            </ul>
+                                <ul id="myUL">
+                                   <!-- <li id="ul-container"></li>  -->
+                                </ul>
 
-                            <script>
-                                // Create a "close" button and append it to each list item
-                                var myNodelist = document.getElementsByTagName("LI");
-                                var i;
-                                for (i = 0; i < myNodelist.length; i++) 
-                                {
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    myNodelist[i].appendChild(span);
-                                }
-
-                                // Click on a close button to hide the current list item
-                                var close = document.getElementsByClassName("close");
-                                var i;
-                                for (i = 0; i < close.length; i++) 
-                                {
-                                    close[i].onclick = function() 
+                                <script>
+                                    // Create a "close" button and append it to each list item
+                                    var myNodelist = document.getElementsByTagName("LI");
+                                    var i;
+                                    for (i = 0; i < myNodelist.length; i++) 
                                     {
-                                        var div = this.parentElement;
-                                        div.style.display = "none";
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        myNodelist[i].appendChild(span);
                                     }
-                                }
 
-                                // Add a "checked" symbol when clicking on a list item
-                                var list = document.querySelector('ul');
-                                list.addEventListener('click', function(ev)
-                                {
-                                    if (ev.target.tagName === 'LI') 
-                                    {
-                                        ev.target.classList.toggle('checked');
-                                    }
-                                }, false);
-
-                                // Create a new list item when clicking on the "Add" button
-                                function newElement() 
-                                {
-                                    var li = document.createElement("li");
-                                    var inputValue = document.getElementById("myInput").value;
-                                    var t = document.createTextNode(inputValue);
-                                    li.appendChild(t);
-                                    if (inputValue === '') 
-                                    {
-                                        alert("You must write something!");
-                                    } else {
-                                        document.getElementById("myUL").appendChild(li);
-                                    }
-                                    document.getElementById("myInput").value = "";
-
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    li.appendChild(span);
-
+                                    // Click on a close button to hide the current list item
+                                    var close = document.getElementsByClassName("close");
+                                    var i;
                                     for (i = 0; i < close.length; i++) 
                                     {
                                         close[i].onclick = function() 
@@ -177,623 +300,1740 @@ include_once("DbConnection.php");
                                             div.style.display = "none";
                                         }
                                     }
+
+                                    // Add a "checked" symbol when clicking on a list item
+                                    var list = document.querySelector('ul');
+                                    list.addEventListener('click', function(ev)
+                                    {
+                                        if (ev.target.tagName === 'LI') 
+                                        {
+                                            ev.target.classList.toggle('checked');
+                                        }
+                                    }, false);
+
+                                    // Create a new list item when clicking on the "Add" button
+                                    function newElement() 
+                                    {
+                                        var li = document.createElement("li");
+                                        var inputValue = document.getElementById("myInput").value;
+                                        var t = document.createTextNode(inputValue);
+                                        li.appendChild(t);
+                                        if (inputValue === '') 
+                                        {
+                                            alert("You must write something!");
+                                        } else {
+                                            document.getElementById("myUL").appendChild(li);
+                                        }
+                                        document.getElementById("myInput").value = "";
+
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        li.appendChild(span);
+
+                                        for (i = 0; i < close.length; i++) 
+                                        {
+                                            close[i].onclick = function() 
+                                            {
+                                                var div = this.parentElement;
+                                                div.style.display = "none";
+                                            }
+                                        }
+                                    }
+                                </script>
+
+                            </div>
+                        </div>
+                        <!--End Checklist Input -->
+
+                        <?php
+
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
+                                        <hr style="border-top: 1px solid #bbb;">
+
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="SyllabusRemainingMember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
                                 }
-                            </script>
+                            }
+                        ?>
+                        
+                        <hr style="border-top: 1px solid #bbb;">
 
+                        <!-- Start Label Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Label Name</b></label>
+                          </div>
+                          <div class="col-75" >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="SyllabusRemaininglabel" type="text" style="width: 320px; height: 40px;">                                                
+                          </div>
                         </div>
-                    </div>
-                    <!--End Checklist Input -->
+                        <!-- End Label Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                        <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Member List Input -->                                                     
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Members</b></label>
+                        <!-- Start Label color Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                            <div class="col-25">     
+                                <label class="w3-text-black"><b>Label Color</b></label>
+                            </div>
+                            <div class="col-75" style="background-color: white;">
+                                <input type="color" name="SyllabusRemaininglabelcolor" style="width: 320px; height: 40px;">                      
+                            </div>
                         </div>
-                        <div class="col-75">
-                            <select id="country" name="country" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
+                        <!-- End Label color Input -->
 
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Due Date Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Due Date</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input type="date" id="birthdaytime" name="SyllabusRemainingduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
+                          </div>
                         </div>
-                    </div>
-                    <!-- End Member List Input --> 
-                    
-                    <hr style="border-top: 1px solid #bbb;">
+                        <!-- End Due Date Input --> 
 
-                    <!-- Start Label Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Labels</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select style="width:320px; height: 45px;">
-                          <option class="p-3 mb-2 bg-primary text-white">High Priority</option>
-                          <option class="p-3 mb-2 bg-secondary text-white">Solved</option>
-                          <option class="p-3 mb-2 bg-success text-white">Need Hep</option>
-                          <option class="p-3 mb-2 bg-danger text-white">Completed</option>
-                          <option class="p-3 mb-2 bg-warning text-dark">Warning</option>
-                        </select>
-                        <!--<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
-                            <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
-                            <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
-                            <div class="p-3 mb-2 bg-info text-white">.bg-info</div>
-                            <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
-                            <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
-                            <div class="p-3 mb-2 bg-white text-dark">.bg-white</div> -->                                                    
-                      </div>
-                    </div>
-                    <!-- End Label Input --> 
+                        <hr style="border-top: 1px solid #bbb;">
 
-                    <hr style="border-top: 1px solid #bbb;">
+                        <!-- Start Button Input -->  
+                        <div>
+                            <center>
+                                <button type="submit" class="btn btn-success" name="SyllabusRemainingList" style="width:150px;">Save</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-danger" onclick="SyllabusRemainingCloseForm()" style="background-color: red; width:150px;" >Cancel</a>
+                                <p></p>
+                            </center>
+                        </div>
+                        <!-- End Button Input -->
+                  
+                    </form>
+                  <!--End Form Details -->
+                </div> 
 
-                    <!-- Start Due Date Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Due Date</b></label>
-                      </div>
-                      <div class="col-75">
-                        <input type="datetime-local" id="birthdaytime" name="birthdaytime" style="width:320px; height: 45px;" class="w3-input w3-border">
-                      </div>
-                    </div>
-                    <!-- End Due Date Input --> 
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Move to  Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Move</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select id="country" name="country" style="width:320px; height: 45px;">
-                          <option value="todo">To Do</option>
-                          <option value="doing">Doing</option>
-                          <option value="done">Done</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- End Move to Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Button Input -->  
-                    <div>
-                        <center>
-                            <a href="#" class="btn btn-success" style="width:150px;">Save</a>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger" onclick="cardcloseForm()" style="background-color: red; width:150px;" >Cancel</a>
-                            <p></p>
-                        </center>
-                    </div>
-                    <!-- End Button Input -->
-              
-                </form>
-              <!--End Form Details -->
-            </div> 
-
+            </div>
         </div>
-    </div>
-    <!-- start card details popup -->
+    <!-- start Syllabus Remaining details popup -->
+
+    <!-- start Syllabus Today details popup -->
+        <div id="SyllabusTodayDetails" class="modal" >
+            <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
+
+                <div class="modal-body">
+                    <!-- Start Form Details -->  
+                    <h5 style="text-align: center;" class="w3-text-blue">Syllabus Today- CARD DETAILS</h5>
+
+                    <form class="w3-container w3-card-4" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
+                        <!-- Start Card Name Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">   
+                              <label class="w3-text-black"><b>Title</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="SyllabusTodayTitle" type="text">
+                          </div>
+                        </div>
+                        <!-- End Card Name Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Description Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Description</b></label>
+                          </div>
+                          <div class="col-75">
+                              <textarea name="SyllabusTodaydescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                          </div>
+                        </div>
+                        <!-- End Description Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Checklist Input -->
+                        <div class="row" style="padding-left:50px;" >  
+                            <div class="col-25">  
+                                <label class="w3-text-black"><b>Checklist</b></label>
+                            </div>
+                            <div class="col-75">
+                                <div id="myDIV" class="header" style="" >
+                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
+                                </div>
+
+                                <ul id="myUL">
+                                   <!-- <li id="ul-container"></li>  -->
+                                </ul>
+
+                                <script>
+                                    // Create a "close" button and append it to each list item
+                                    var myNodelist = document.getElementsByTagName("LI");
+                                    var i;
+                                    for (i = 0; i < myNodelist.length; i++) 
+                                    {
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        myNodelist[i].appendChild(span);
+                                    }
+
+                                    // Click on a close button to hide the current list item
+                                    var close = document.getElementsByClassName("close");
+                                    var i;
+                                    for (i = 0; i < close.length; i++) 
+                                    {
+                                        close[i].onclick = function() 
+                                        {
+                                            var div = this.parentElement;
+                                            div.style.display = "none";
+                                        }
+                                    }
+
+                                    // Add a "checked" symbol when clicking on a list item
+                                    var list = document.querySelector('ul');
+                                    list.addEventListener('click', function(ev)
+                                    {
+                                        if (ev.target.tagName === 'LI') 
+                                        {
+                                            ev.target.classList.toggle('checked');
+                                        }
+                                    }, false);
+
+                                    // Create a new list item when clicking on the "Add" button
+                                    function newElement() 
+                                    {
+                                        var li = document.createElement("li");
+                                        var inputValue = document.getElementById("myInput").value;
+                                        var t = document.createTextNode(inputValue);
+                                        li.appendChild(t);
+                                        if (inputValue === '') 
+                                        {
+                                            alert("You must write something!");
+                                        } else {
+                                            document.getElementById("myUL").appendChild(li);
+                                        }
+                                        document.getElementById("myInput").value = "";
+
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        li.appendChild(span);
+
+                                        for (i = 0; i < close.length; i++) 
+                                        {
+                                            close[i].onclick = function() 
+                                            {
+                                                var div = this.parentElement;
+                                                div.style.display = "none";
+                                            }
+                                        }
+                                    }
+                                </script>
+
+                            </div>
+                        </div>
+                        <!--End Checklist Input -->
+
+                        <?php
+
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
+                                        <hr style="border-top: 1px solid #bbb;">
+
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="SyllabusTodayMember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
+                        
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Label Name</b></label>
+                          </div>
+                          <div class="col-75" >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="SyllabusTodaylabel" type="text" style="width: 320px; height: 40px;">                                                
+                          </div>
+                        </div>
+                        <!-- End Label Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label color Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                            <div class="col-25">     
+                                <label class="w3-text-black"><b>Label Color</b></label>
+                            </div>
+                            <div class="col-75" style="background-color: white;">
+                                <input type="color" name="SyllabusTodaylabelcolor" style="width: 320px; height: 40px;">                      
+                            </div>
+                        </div>
+                        <!-- End Label color Input -->
+
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Due Date Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Due Date</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input type="date" id="birthdaytime" name="SyllabusTodayduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
+                          </div>
+                        </div>
+                        <!-- End Due Date Input --> 
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Button Input -->  
+                        <div>
+                            <center>
+                                <button type="submit" class="btn btn-success" name="SyllabusTodayList" style="width:150px;">Save</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-danger" onclick="SyllabusTodayCloseForm()" style="background-color: red; width:150px;" >Cancel</a>
+                                <p></p>
+                            </center>
+                        </div>
+                        <!-- End Button Input -->
+                  
+                    </form>
+                  <!--End Form Details -->
+                </div> 
+
+            </div>
+        </div>
+    <!-- start Syllabus Today details popup -->
+
+    <!-- start Syllabus Covered details popup -->
+        <div id="SyllabusCoveredDetails" class="modal" >
+            <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
+
+                <div class="modal-body">
+                    <!-- Start Form Details -->  
+                    <h5 style="text-align: center;" class="w3-text-blue">Syllabus Today- CARD DETAILS</h5>
+
+                    <form class="w3-container w3-card-4" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
+                        <!-- Start Card Name Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">   
+                              <label class="w3-text-black"><b>Title</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="SyllabusCoveredTitle" type="text">
+                          </div>
+                        </div>
+                        <!-- End Card Name Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Description Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Description</b></label>
+                          </div>
+                          <div class="col-75">
+                              <textarea name="SyllabusCovereddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                          </div>
+                        </div>
+                        <!-- End Description Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Checklist Input -->
+                        <div class="row" style="padding-left:50px;" >  
+                            <div class="col-25">  
+                                <label class="w3-text-black"><b>Checklist</b></label>
+                            </div>
+                            <div class="col-75">
+                                <div id="myDIV" class="header" style="" >
+                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
+                                </div>
+
+                                <ul id="myUL">
+                                   <!-- <li id="ul-container"></li>  -->
+                                </ul>
+
+                                <script>
+                                    // Create a "close" button and append it to each list item
+                                    var myNodelist = document.getElementsByTagName("LI");
+                                    var i;
+                                    for (i = 0; i < myNodelist.length; i++) 
+                                    {
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        myNodelist[i].appendChild(span);
+                                    }
+
+                                    // Click on a close button to hide the current list item
+                                    var close = document.getElementsByClassName("close");
+                                    var i;
+                                    for (i = 0; i < close.length; i++) 
+                                    {
+                                        close[i].onclick = function() 
+                                        {
+                                            var div = this.parentElement;
+                                            div.style.display = "none";
+                                        }
+                                    }
+
+                                    // Add a "checked" symbol when clicking on a list item
+                                    var list = document.querySelector('ul');
+                                    list.addEventListener('click', function(ev)
+                                    {
+                                        if (ev.target.tagName === 'LI') 
+                                        {
+                                            ev.target.classList.toggle('checked');
+                                        }
+                                    }, false);
+
+                                    // Create a new list item when clicking on the "Add" button
+                                    function newElement() 
+                                    {
+                                        var li = document.createElement("li");
+                                        var inputValue = document.getElementById("myInput").value;
+                                        var t = document.createTextNode(inputValue);
+                                        li.appendChild(t);
+                                        if (inputValue === '') 
+                                        {
+                                            alert("You must write something!");
+                                        } else {
+                                            document.getElementById("myUL").appendChild(li);
+                                        }
+                                        document.getElementById("myInput").value = "";
+
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        li.appendChild(span);
+
+                                        for (i = 0; i < close.length; i++) 
+                                        {
+                                            close[i].onclick = function() 
+                                            {
+                                                var div = this.parentElement;
+                                                div.style.display = "none";
+                                            }
+                                        }
+                                    }
+                                </script>
+
+                            </div>
+                        </div>
+                        <!--End Checklist Input -->
+
+                        <?php
+
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
+                                        <hr style="border-top: 1px solid #bbb;">
+
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="SyllabuCoveredMember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
+                        
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Label Name</b></label>
+                          </div>
+                          <div class="col-75" >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="SyllabusCoveredlabel" type="text" style="width: 320px; height: 40px;">                                                
+                          </div>
+                        </div>
+                        <!-- End Label Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label color Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                            <div class="col-25">     
+                                <label class="w3-text-black"><b>Label Color</b></label>
+                            </div>
+                            <div class="col-75" style="background-color: white;">
+                                <input type="color" name="SyllabusCoveredlabelcolor" style="width: 320px; height: 40px;">                      
+                            </div>
+                        </div>
+                        <!-- End Label color Input -->
+
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Due Date Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Due Date</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input type="date" id="birthdaytime" name="SyllabusCoveredduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
+                          </div>
+                        </div>
+                        <!-- End Due Date Input --> 
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Button Input -->  
+                        <div>
+                            <center>
+                                <button type="submit" class="btn btn-success" name="SyllabusCoveredList" style="width:150px;">Save</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-danger" onclick="SyllabusCoveredCloseForm()" style="background-color: red; width:150px;" >Cancel</a>
+                                <p></p>
+                            </center>
+                        </div>
+                        <!-- End Button Input -->
+                  
+                    </form>
+                  <!--End Form Details -->
+                </div> 
+
+            </div>
+        </div>
+    <!-- start Syllabus Covered details popup -->
+
+    <!-- start Assignments details popup -->
+        <div id="AssignmentsDetails" class="modal" >
+            <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
+
+                <div class="modal-body">
+                    <!-- Start Form Details -->  
+                    <h5 style="text-align: center;" class="w3-text-blue">Assignment- CARD DETAILS</h5>
+
+                    <form class="w3-container w3-card-4" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
+                        <!-- Start Card Name Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">   
+                              <label class="w3-text-black"><b>Title</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="SyllabusAssignmentTitle" type="text">
+                          </div>
+                        </div>
+                        <!-- End Card Name Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Description Input -->
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Description</b></label>
+                          </div>
+                          <div class="col-75">
+                              <textarea name="SyllabusAssignmentdescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                          </div>
+                        </div>
+                        <!-- End Description Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Checklist Input -->
+                        <div class="row" style="padding-left:50px;" >  
+                            <div class="col-25">  
+                                <label class="w3-text-black"><b>Checklist</b></label>
+                            </div>
+                            <div class="col-75">
+                                <div id="myDIV" class="header" style="" >
+                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
+                                </div>
+
+                                <ul id="myUL">
+                                   <!-- <li id="ul-container"></li>  -->
+                                </ul>
+
+                                <script>
+                                    // Create a "close" button and append it to each list item
+                                    var myNodelist = document.getElementsByTagName("LI");
+                                    var i;
+                                    for (i = 0; i < myNodelist.length; i++) 
+                                    {
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        myNodelist[i].appendChild(span);
+                                    }
+
+                                    // Click on a close button to hide the current list item
+                                    var close = document.getElementsByClassName("close");
+                                    var i;
+                                    for (i = 0; i < close.length; i++) 
+                                    {
+                                        close[i].onclick = function() 
+                                        {
+                                            var div = this.parentElement;
+                                            div.style.display = "none";
+                                        }
+                                    }
+
+                                    // Add a "checked" symbol when clicking on a list item
+                                    var list = document.querySelector('ul');
+                                    list.addEventListener('click', function(ev)
+                                    {
+                                        if (ev.target.tagName === 'LI') 
+                                        {
+                                            ev.target.classList.toggle('checked');
+                                        }
+                                    }, false);
+
+                                    // Create a new list item when clicking on the "Add" button
+                                    function newElement() 
+                                    {
+                                        var li = document.createElement("li");
+                                        var inputValue = document.getElementById("myInput").value;
+                                        var t = document.createTextNode(inputValue);
+                                        li.appendChild(t);
+                                        if (inputValue === '') 
+                                        {
+                                            alert("You must write something!");
+                                        } else {
+                                            document.getElementById("myUL").appendChild(li);
+                                        }
+                                        document.getElementById("myInput").value = "";
+
+                                        var span = document.createElement("SPAN");
+                                        var txt = document.createTextNode("\u00D7");
+                                        span.className = "close";
+                                        span.appendChild(txt);
+                                        li.appendChild(span);
+
+                                        for (i = 0; i < close.length; i++) 
+                                        {
+                                            close[i].onclick = function() 
+                                            {
+                                                var div = this.parentElement;
+                                                div.style.display = "none";
+                                            }
+                                        }
+                                    }
+                                </script>
+
+                            </div>
+                        </div>
+                        <!--End Checklist Input -->
+
+                        <?php
+
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
+                                        <hr style="border-top: 1px solid #bbb;">
+
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="SyllabuAssignmentMember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
+                        
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Label Name</b></label>
+                          </div>
+                          <div class="col-75" >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="SyllabusAssignmentlabel" type="text" style="width: 320px; height: 40px;">                                                
+                          </div>
+                        </div>
+                        <!-- End Label Input -->
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Label color Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                            <div class="col-25">     
+                                <label class="w3-text-black"><b>Label Color</b></label>
+                            </div>
+                            <div class="col-75" style="background-color: white;">
+                                <input type="color" name="SyllabusAssignmentlabelcolor" style="width: 320px; height: 40px;">                      
+                            </div>
+                        </div>
+                        <!-- End Label color Input -->
+
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Due Date Input --> 
+                        <div class="row" style="padding-left:50px;" >
+                          <div class="col-25">     
+                            <label class="w3-text-black"><b>Due Date</b></label>
+                          </div>
+                          <div class="col-75">
+                            <input type="date" id="birthdaytime" name="SyllabusAssignmentduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
+                          </div>
+                        </div>
+                        <!-- End Due Date Input --> 
+
+                        <hr style="border-top: 1px solid #bbb;">
+
+                        <!-- Start Button Input -->  
+                        <div>
+                            <center>
+                                <button type="submit" class="btn btn-success" name="SyllabusAssignmentList" style="width:150px;">Save</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="#" class="btn btn-danger" onclick="AssignmentsCloseForm()" style="background-color: red; width:150px;" >Cancel</a>
+                                <p></p>
+                            </center>
+                        </div>
+                        <!-- End Button Input -->
+                  
+                    </form>
+                  <!--End Form Details -->
+                </div> 
+
+            </div>
+        </div>
+    <!-- start Assignments details popup -->
 
 </head>
 
 <body class="layout-default trello">
 
-    <!-- popup -->
-    <div class="form-popup" id="useTemplatePopup">
-        <form action="/action_page.php" class="form-container">
-            <div class="header">
-            <h3>Create Board from this Template </h3>
-                                        
-            </div><br>
-            <div style="margin-left: 30px;">                          
-            <label for="title"><b>Title Name:</b></label>
-            <input type="text" placeholder="title" name="title" required><br><br>
-
-            <label for="title"><b>Team Name:</b></label>
-            <select name = "dropdown">
-            <option value = "No Team" selected>No Team</option>
-            <option value = "Team names">Team names</option>
-            </select>
-            <br><br>
-            <label for="title"><b>Visibility:</b></label>
-            <select name = "dropdown">
-                <option value = "Private" selected>Private</option>
-                <option value = "Team">Team</option>
-                <option value = "Public">Public</option>
-            </select>
-            </div>
-            <br><br>
-            <center>
-                <div class="canclebtn">
-                <a href="board_link.php" type="button" class="btn cancel">Create</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn cancel" onclick="closeTemplatePopup()" >Cancel</button>
-                </div>
-            </center>
-        </form>
-    </div>
-    <!--END popup -->
-
-
     <div class="preloader"></div>
 
-    <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/backgrounddefault.jpg); background-repeat: repeat;">
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
+    <!--start whole page-->
+    <?php
+        if ($bid==0) 
+        {
+    ?>
+            <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/backgrounddefault.jpg); background-repeat: repeat;">
+    <?php  
+        }
+        else
+        {
+            $backeducation = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+            $result_backeducation = mysqli_query($con,$backeducation);
+            if($result_backeducation->num_rows!=0)
+            {  
+                while($row_backeducation=$result_backeducation->fetch_array())  
+                {
+                    $educationbackground=$row_backeducation['Background'];
+
+                    if($educationbackground=="" || !file_exists("$educationbackground"))
+                    {
+                        $educationbackground="images/backgrounddefault.jpg";
+                    }      
+
+    ?>
+                        <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $educationbackground; ?>); background-repeat: repeat;">
+    <?php
+                }
+            }
+        }
+    ?>
+    
+<!---------------------------------------------------------------------------------------------------------------------------------------
+                                            Start Header Easework
+---------------------------------------------------------------------------------------------------------------------------------------->
+       
        <!-- Header -->
             <?php include_once('header1.php'); ?>
         <!--END Header -->
 
-        
-        <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<!---------------------------------------------------------------------------------------------------------------------------------------
+                                            End Header Easework
+---------------------------------------------------------------------------------------------------------------------------------------->
 
-            <!-- start create board link -->
-            <div class="w3-bar w3-black">
-                <div class="w3-bar-item" style="margin-left: 400px;">This is a Class Management Template.</div>
-                <div class="w3-bar-item"></div>
-                <a href="#" class="w3-bar-item w3-green" onclick="openTemplatePopup()">Create board from Template</a>
 
-                <script>
-                    function openTemplatePopup() 
-                    {
-                        document.getElementById("useTemplatePopup").style.display = "flex";
-                    }
+    <?php
+        if ($bid==0) 
+        {
+    ?>
 
-                    function closeTemplatePopup() 
-                    {
-                        document.getElementById("useTemplatePopup").style.display = "none";
-                    }
-                </script>
+<!---------------------------------------------------------------------------------------------------------------------------------------
+                                            If Board Id is 0  
+---------------------------------------------------------------------------------------------------------------------------------------->
+       
+            <!-- Start container of Board id is 0 from second header -->
+            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                
+                <!-- start second header content -->
+                <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
+                    <p></p>
+                    <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
+                        <center>
+                            <h5 style="color: white;">Class Management</h5>
+                            <small style="color: white;"><strong>Team Name</strong></small>
+                        </center>
+                    </div>
+
+                    <div class="w3-dropdown-click w3-right" style="float: right;">
+                        <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
+                            <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
+                                <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
+                                    
+                                    <div>
+                                        <label style="float: left;"> Description about board</label>
+                                        <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
+                                        <br><br><br>
+                                        <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled="">
+                                        </textarea>
+                                    </div>
+                                    <hr style="border-top: 1px solid #bbb;"><br>
+                                    <div>
+                                        <a href="#" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
+                                    </div>
+                                    <hr style="border-top: 1px solid #bbb;">
+                                    <div>
+                                        <label style="float: left;">Wanna Close Board ?</label><br><br>
+                                    </div>
+                                    <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                                                <div>
+                                                    <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                        <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                        <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                                                    <!-- Start card details popup fuction-->
+                                                    </form>
+                                                </div>
+                                    <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+
+                                </div></center>
+                            </div>
+                    </div>
+
+                    &nbsp;
+
+                    <div class="dropdown w3-right">
+                        <div class="w3-dropdown-click w3-right">
+                            <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
+                                <option value="visibility" selected disabled >Visibility</option>
+                                <option value="todo" >Private</option>
+                                <option value="doing">Team</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="dropdown w3-right">
+                        <div class="w3-dropdown-click w3-right">
+                            <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
+                                <option value="visibility" selected disabled >Members List</option>
+                                <option value="todo" disabled >Member1</option>
+                                <option value="doing"disabled>Member2</option>
+                                <option value="todo" disabled>Member3</option>
+                                <option value="todo" disabled>Member4</option>
+                                <option value="todo" disabled>Member5</option>
+                            </select>
+                        </div>
+                    </div>
+                                  
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                </div>
+                <!-- End second Header Content -->
+
+                <!-- start trello container after second header  -->
+                <div class="trello-container">
+                    <div class="trello-board container-fluid page__container mt-5" >
+
+                        <!-- Start Syllabus remaining list-->
+                        <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus remaining</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus remaining card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-1" >
+
+                                        <!-- Start Syllabus remaining card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Chapter-4</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Syllabus remaining card 1-->
+                                    
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Syllabus remaining card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End Syllabus remaining list-->
+
+                        <!-- Start Syllabus to be covered today list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus to be covered today</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus to be covered today card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-2">
+
+                                        <!-- Start Syllabus to be covered today card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Chapter-3</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Syllabus to be covered today card 1-->
+                                        
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Syllabus to be covered today card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End Syllabus to be covered today list-->
+                        
+                        <!-- Start Syllabus Covered list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus Covered</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus Covered card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-3">
+
+                                        <!-- Start Syllabus Covered card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Chapter-1</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Syllabus Covered card 1-->
+
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Syllabus Covered card Section-->
+                            
+                            </div>
+                        </div>
+                        <!-- End Syllabus Covered list-->
+
+                        <!-- Start Assignments list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Assignments</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Assignments card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
+
+                                        <!-- Start Assignments card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Chapter-1:Assign 1</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Assignments card 1-->
+
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Assignments card Section-->
+                            
+                            </div>
+                        </div>
+                        <!-- End Assignments list-->
+
+                    </div>
+                </div>
+                <!-- // END trello container after second header -->
 
             </div>
-<<<<<<< HEAD
-=======
-            <!-- end create board link --> 
+            <!-- end container of Board id is 0 from second header -->
 
-             <!-- Start DATABASE IN SECOND HEADER -->
->>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
-            
-            <!-- start second header content -->
-            <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
-                <p></p>
+    <?php
+        }
+        else
+        {
+    ?>
 
-                <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
-                    <center>
-<<<<<<< HEAD
-                        <h5 style="color: white;">btitle</h5>
-                        <small style="color: white;"><strong>tname</strong></small>
-=======
-                        <h5 style="color: white;">title</h5>
-                        <small style="color: white;"><strong>teamname</strong></small>
->>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
-                    </center>
-                </div>
+<!---------------------------------------------------------------------------------------------------------------------------------------
+                                            If Board Id is not 0 
+---------------------------------------------------------------------------------------------------------------------------------------->
 
-                <div class="w3-dropdown-click w3-right" style="float: right;">
-                    <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
-                        <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
-                            <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
-                                
-                                <div>
-                                    <label style="float: left;"> Description about board</label>
-                                    <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
-                                    <br><br><br>
-                                    <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled="">
-                                       description
-                                    </textarea>
+             <!-- Start Board id is not 0 from second header -->
+            <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
-                                    <!-- Start card details popup fuction-->
-                                    <script>
-                                        function desopen() {
-                                          document.getElementById("description").style.display = "flex";
+                <!-- Start DATABASE IN SECOND HEADER -->
+                <?php
+                    $education_boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
+                    $result_education_boarddata = mysqli_query($con,$education_boarddata);
+                    if($result_education_boarddata->num_rows!=0)
+                    {  
+                        while($row_education_boarddata=$result_education_boarddata->fetch_array())  
+                        {
+                            $boardid=$row_education_boarddata['Bid'];
+                            $btitle=$row_education_boarddata['Btitle'];  
+                            $btid=$row_education_boarddata['Tid'];
+                            $isactive=$row_education_boarddata['IsActive'];
+                            $tname=$row_education_boarddata['Tname'];
+                            $bdescription=$row_education_boarddata['BoardDescription'];
+                            $bvisibilty=$row_education_boarddata['Visibility']; 
+
+                ?>
+                    
+                    <!-- start second header content -->
+                    <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
+                        <p></p>
+                        <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
+                            <center>
+                                <h5 style="color: white;"><?php echo $btitle; ?></h5>
+                                <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
+                            </center>
+                        </div>
+
+                        <div class="w3-dropdown-click w3-right" style="float: right;">
+                            <button class="w3-button " onclick="myEducationFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
+                                <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
+                                    <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
+                                        
+                                        <div>
+                                            <label style="float: left;"> Description about board</label>
+                                            <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desEducationopen()">Add</button>
+                                            <br><br><br>
+                                            <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled=""><?php echo $bdescription; ?></textarea>
+
+                                            <!-- Start card details popup fuction-->
+                                            <script>
+                                                function desEducationopen() {
+                                                  document.getElementById("Educationdescription").style.display = "flex";
+                                                }
+                                                function desEducationclose() {
+                                                  document.getElementById("Educationdescription").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- End card details popup fuction-->
+                                        </div>
+
+                                <?php
+                                    if ($btid !=1) 
+                                    {
+                                ?>
+                                        <hr style="border-top: 1px solid #bbb;"><br>
+                                        <div>
+                                            <a href="Team_members.php?Tid=<?php echo $btid;?>" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
+                                        </div>
+                                <?php
+                                    }
+                                ?>
+                                        <hr style="border-top: 1px solid #bbb;">
+                                        <div>
+                                            <label style="float: left;">Wanna Close Board ?</label><br><br>
+                                        </div>
+                                        <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                                                    <div>
+                                                        <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                            <button type="submit" name="educationcompletebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                            <button type="button" name="educationdeletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="Educationdeleteopen()">Delete Board</button>
+                                                        <!-- Start card details popup fuction-->
+                                                        <script>
+                                                            function Educationdeleteopen() {
+                                                              document.getElementById("Educationdeleteboard").style.display = "flex";
+                                                            }
+                                                            function Educationdeleteclose() {
+                                                              document.getElementById("Educationdeleteboard").style.display = "none";
+                                                            }
+                                                        </script>
+                                                        <!-- End card details popup fuction-->
+                                                        </form>
+                                                    </div>
+                                        <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+
+                                    </div></center>
+                                </div>
+                        </div>
+
+                        &nbsp;
+
+                        <div class="dropdown w3-right">
+                            <div class="w3-dropdown-click w3-right">
+                                <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
+                                <?php
+                                    if ($bvisibilty="Private") 
+                                    {
+                                ?>
+                                        <option value="Private" selected disabled >Private</option>
+                                        <option value="Team" >Team</option>
+                                        <option value="Public">Public</option>
+                                <?php   
+                                    }
+                                    else if ($bvisibilty="Team") 
+                                    {
+                                ?>
+                                        <option value="Team" selected disabled >Team</option>
+                                        <option value="Private" >Private</option>
+                                        <option value="Public">Public</option>
+                                <?php
+                                    }
+                                    else if ($bvisibilty="Public") 
+                                    {
+                                ?>
+                                        <option value="Public" selected disabled >Public</option>
+                                        <option value="Private" >Private</option>
+                                        <option value="Team">Team</option>
+                                <?php
+                                    }
+                                    else
+                                    {
+                                ?>      
+                                        <option value="Visibility" selected disabled >Visibility</option>
+                                        <option value="Private" >Private</option>
+                                        <option value="Team">Team</option>
+                                        <option value="Public">Public</option>
+                                <?php
+                                    }
+                                ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <?php
+                            if ($btid !=1) 
+                            {
+                        ?>
+                                <div class="dropdown w3-right">
+                                    <div class="w3-dropdown-click w3-right">
+                                        <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
+                                            <option value="Members" selected disabled >Members List</option>
+                                            <?php        
+                                                $educationmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                $result_educationmember = mysqli_query($con,$educationmember);
+                                                if($result_educationmember->num_rows!=0)
+                                                {  
+                                                    while($row_educationmember=$result_educationmember->fetch_array())  
+                                                    {
+                                                        $member=$row_educationmember['Uid'];
+                                                        $fname=$row_educationmember['Fname'];
+                                                        $lname=$row_educationmember['Lname'];
+                                            ?>
+                                                        <option value="<?php echo $member;?>" disabled ><?php echo $fname." ".$lname;?></option>
+                                            <?php
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        ?>
+                                      
+                        <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                        <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                        <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                    </div>
+                    <!-- End second Header Content -->
+
+                <?php 
+                        }
+                    }
+                ?>
+                <!-- End DATABASE IN SECOND HEADER -->
+
+                <!-- start trello container after second header  -->
+                <div class="trello-container">
+                    <div class="trello-board container-fluid page__container mt-5" >
+
+                        <!-- Start Syllabus remaining list-->
+                        <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus remaining</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus remaining card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-1" >
+
+                                    <?php
+                                        $selectremainquery = "SELECT * FROM tblcard Where Listid=4 AND Bid='$bid'";  
+                                        $result_remain = mysqli_query($con,$selectremainquery);
+                                        if($result_remain->num_rows!=0)
+                                        {  
+                                            while($row_remain=$result_remain->fetch_array())  
+                                            {
+                                                $cardname=$row_remain['CardName'];
+                                                $cardlabel=$row_remain['Label'];  
+                                                $cardlabelcolor=$row_remain['LabelColor'];
+                                                $cardduedate=$row_remain['DueDate']; 
+                                                $cardid=$row_remain['Cardid'];  
+                                    ?>
+
+                                                <!-- Start Syllabus remaining card 1-->
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                    <div class="p-3">
+                                                        <p class="m-0 d-flex align-items-center">
+                                                            <strong><?php echo $cardname;?></strong> 
+                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                    <?php echo $cardlabel;?>
+                                                                </span>                                               
+                                                        </p>
+                                                        <br>
+                                                        <p class="d-flex align-items-center mb-2">
+                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                        </p>
+
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                                    <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Syllabus remaining card 1-->
+                                    <?php
+                                            }
                                         }
-                                        function desclose() {
-                                          document.getElementById("description").style.display = "none";
+                                    ?>
+                                    
+                                    </div>
+                                    <a href="#" class="btn btn-light btn-block mt-2" onclick="SyllabusRemainingOpenForm()">Add Card</a>
+                                    <!-- Start Syllabus Remaining popup fuction-->
+                                    <script>
+                                        function SyllabusRemainingOpenForm() {
+                                          document.getElementById("SyllabusRemainingDetails").style.display = "flex";
+                                        }
+                                        function SyllabusRemainingCloseForm() {
+                                          document.getElementById("SyllabusRemainingDetails").style.display = "none";
                                         }
                                     </script>
-                                    <!-- End card details popup fuction-->
-                                </div>
+                                    <!-- End Syllabus Remaining popup fuction-->
 
+                                </div>
+                                <!-- End Syllabus remaining card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End Syllabus remaining list-->
+
+                        <!-- Start Syllabus to be covered today list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus to be covered today</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus to be covered today card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-2">
+
+                                    <?php
+                                        $selecttodayquery = "SELECT * FROM tblcard Where Listid=5 AND Bid='$bid'";  
+                                        $result_today = mysqli_query($con,$selecttodayquery);
+                                        if($result_today->num_rows!=0)
+                                        {  
+                                            while($row_today=$result_today->fetch_array())  
+                                            {
+                                                $cardname=$row_today['CardName'];
+                                                $cardlabel=$row_today['Label'];  
+                                                $cardlabelcolor=$row_today['LabelColor'];
+                                                $cardduedate=$row_today['DueDate']; 
+                                                $cardid=$row_today['Cardid'];  
+                                    ?>
+
+
+                                        <!-- Start Syllabus to be covered today card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                    <div class="p-3">
+                                                        <p class="m-0 d-flex align-items-center">
+                                                            <strong><?php echo $cardname;?></strong> 
+                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                    <?php echo $cardlabel;?>
+                                                                </span>                                               
+                                                        </p>
+                                                        <br>
+                                                        <p class="d-flex align-items-center mb-2">
+                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                        </p>
+
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                                    <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <!-- End Syllabus to be covered today card 1-->
+
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                        
+                                    </div>
+                                    <a href="#" class="btn btn-light btn-block mt-2" onclick="SyllabusTodayOpenForm()">Add Card</a>
+
+                                    <!-- Start Syllabus to be covered popup fuction-->
+                                    <script>
+                                        function SyllabusTodayOpenForm() {
+                                          document.getElementById("SyllabusTodayDetails").style.display = "flex";
+                                        }
+                                        function SyllabusTodayCloseForm() {
+                                          document.getElementById("SyllabusTodayDetails").style.display = "none";
+                                        }
+                                    </script>
+                                    <!-- End Syllabus to be covered fuction-->
+
+                                </div>
+                                <!-- End Syllabus to be covered today card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End Syllabus to be covered today list-->
+                        
+                        <!-- Start Syllabus Covered list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Syllabus Covered</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Syllabus Covered card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-3">
+                                    <?php
+                                        $selectcoveredquery = "SELECT * FROM tblcard Where Listid=6 AND Bid='$bid'";  
+                                        $result_covered = mysqli_query($con,$selectcoveredquery);
+                                        if($result_covered->num_rows!=0)
+                                        {  
+                                            while($row_covered=$result_covered->fetch_array())  
+                                            {
+                                                $cardname=$row_covered['CardName'];
+                                                $cardlabel=$row_covered['Label'];  
+                                                $cardlabelcolor=$row_covered['LabelColor'];
+                                                $cardduedate=$row_covered['DueDate']; 
+                                                $cardid=$row_covered['Cardid'];  
+                                    ?>
+
+
+                                                <!-- Start Syllabus covered card 1-->
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                            <div class="p-3">
+                                                                <p class="m-0 d-flex align-items-center">
+                                                                    <strong><?php echo $cardname;?></strong> 
+                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                            <?php echo $cardlabel;?>
+                                                                        </span>                                               
+                                                                </p>
+                                                                <br>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                                </p>
+
+                                                                <div class="media align-items-center" style="float: right;">
+                                                                    <div class=" mr-2 avatar-group" >
+                                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                <!-- End Syllabus covered card 1-->
+
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                        
+                                    </div>
+                                    <a href="#" class="btn btn-light btn-block mt-2" onclick="SyllabusCoveredOpenForm()">Add Card</a>
+
+                                    <!-- Start Syllabus to be covered popup fuction-->
+                                    <script>
+                                        function SyllabusCoveredOpenForm() {
+                                          document.getElementById("SyllabusCoveredDetails").style.display = "flex";
+                                        }
+                                        function SyllabusCoveredCloseForm() {
+                                          document.getElementById("SyllabusCoveredDetails").style.display = "none";
+                                        }
+                                    </script>
+                                    <!-- End Syllabus to be covered fuction-->
+                                </div>
+                                <!-- End Syllabus Covered card Section-->
                             
-
-                                <hr style="border-top: 1px solid #bbb;">
-                                <div>
-                                    <label style="float: left;">Wanna Close Board ?</label><br><br>
-                                </div>
-                                <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
-                                            <div>
-                                                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                                                    <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
-                                                    <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
-                                                <!-- Start card details popup fuction-->
-                                                <script>
-                                                    function deleteopen() {
-                                                      document.getElementById("deleteboard").style.display = "flex";
-                                                    }
-                                                    function deleteclose() {
-                                                      document.getElementById("deleteboard").style.display = "none";
-                                                    }
-                                                </script>
-                                                <!-- End card details popup fuction-->
-                                                </form>
-                                            </div>
-                                <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
-
-                            </div></center>
+                            </div>
                         </div>
-                </div>
+                        <!-- End Syllabus Covered list-->
 
-                &nbsp;
+                        <!-- Start Assignments list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
 
-                <div class="dropdown w3-right">
-                    <div class="w3-dropdown-click w3-right">
-                        <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
-                            <option value="visibility" selected disabled >Visibility</option>
-                            <option value="todo" >Private</option>
-                            <option value="doing">Team</option>
-                        </select>
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Assignments</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Assignments card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
+
+                                        <?php
+                                        $selectAssignmentsquery = "SELECT * FROM tblcard Where Listid=7 AND Bid='$bid'";  
+                                        $result_Assignments = mysqli_query($con,$selectAssignmentsquery);
+                                        if($result_Assignments->num_rows!=0)
+                                        {  
+                                            while($row_Assignments=$result_Assignments->fetch_array())  
+                                            {
+                                                $cardname=$row_Assignments['CardName'];
+                                                $cardlabel=$row_Assignments['Label'];  
+                                                $cardlabelcolor=$row_Assignments['LabelColor'];
+                                                $cardduedate=$row_Assignments['DueDate']; 
+                                                $cardid=$row_Assignments['Cardid'];  
+                                    ?>
+
+
+                                                <!-- Start Syllabus Assignments card 1-->
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                            <div class="p-3">
+                                                                <p class="m-0 d-flex align-items-center">
+                                                                    <strong><?php echo $cardname;?></strong> 
+                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                            <?php echo $cardlabel;?>
+                                                                        </span>                                               
+                                                                </p>
+                                                                <br>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                                </p>
+
+                                                                <div class="media align-items-center" style="float: right;">
+                                                                    <div class=" mr-2 avatar-group" >
+                                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                <!-- End Syllabus Assignments card 1-->
+
+                                    <?php
+                                            }
+                                        }
+                                    ?>
+                                        
+                                    </div>
+                                    <a href="#" class="btn btn-light btn-block mt-2" onclick="AssignmentsOpenForm()">Add Card</a>
+
+                                    <!-- Start Assignments popup fuction-->
+                                    <script>
+                                        function AssignmentsOpenForm() {
+                                          document.getElementById("AssignmentsDetails").style.display = "flex";
+                                        }
+                                        function AssignmentsCloseForm() {
+                                          document.getElementById("AssignmentsDetails").style.display = "none";
+                                        }
+                                    </script>
+                                    <!-- End Syllabus to be Assignments fuction-->
+                                </div>
+                                <!-- End Assignments card Section-->
+                            
+                            </div>
+                        </div>
+                        <!-- End Assignments list-->
+
                     </div>
                 </div>
-
-                <div class="dropdown w3-right">
-                    <div class="w3-dropdown-click w3-right">
-                        <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
-                            <option value="visibility" selected disabled >Members List</option>
-                            <option value="todo" disabled >Member1</option>
-                            <option value="doing"disabled>Member2</option>
-                            <option value="todo" disabled>Member3</option>
-                            <option value="todo" disabled>Member4</option>
-                            <option value="todo" disabled>Member5</option>
-                        </select>
-                    </div>
-                </div>
-                              
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                <!-- // END trello container after second header -->
 
             </div>
-            <!-- End second Header Content -->
-<<<<<<< HEAD
-=======
-          
->>>>>>> 8ba3645f8a3f27cf941a392ffbec865862ad81a6
-           <!-- END DATABASE IN SECOND HEADER -->
+            <!-- end of Board id is not 0 from second header -->
 
-            <!-- start trello container after second header  -->
-            <div class="trello-container">
-                
-                <div class="trello-board container-fluid page__container mt-5" >
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
-                    <!-- Start Syllabus remaining list-->
-                    <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
-                        
-                        <div class="card bg-light border">
-
-                            <!-- Start list name-->
-                            <div class="card-header card-header-sm bg-white">
-                                <h4 class="card-header__title">Syllabus remaining</h4>
-                            </div>
-                            <!-- End list name-->
-
-                            <!-- Start Syllabus remaining card Section-->
-                            <div class="card-body p-2">
-                                <div class="trello-board__tasks-list card-list" id="trello-tasks-1" >
-
-                                    <!-- Start Syllabus remaining card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-4</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Syllabus remaining card 1-->
-
-                                    <!-- Start Syllabus remaining card 2-->
-                                    <div class="trello-board__tasks-item card shadow-none border" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-5</strong>
-                                                <span class="badge badge-success ml-auto">Label</span>
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Syllabus remaining card 2-->
-                                
-                                </div>
-
-                                <a href="#" class="btn btn-light btn-block mt-2" onclick="cardopenForm()">Add Card</a>
-
-                                <!-- Start card details popup fuction-->
-                                <script>
-                                    function cardopenForm() {
-                                      document.getElementById("cardDetails").style.display = "flex";
-                                    }
-                                    function cardcloseForm() {
-                                      document.getElementById("cardDetails").style.display = "none";
-                                    }
-                                </script>
-                                <!-- End card details popup fuction-->
-
-                            </div>
-                            <!-- End Syllabus remaining card Section-->
-
-                        </div>
-                    </div>
-                    <!-- End Syllabus remaining list-->
-
-                    <!-- Start Syllabus to be covered today list-->
-                    <div class="trello-board__tasks">
-                        <div class="card bg-light border">
-
-                            <!-- Start list name-->
-                            <div class="card-header card-header-sm bg-white">
-                                <h4 class="card-header__title">Syllabus to be covered today</h4>
-                            </div>
-                            <!-- End list name-->
-
-                            <!-- Start Syllabus to be covered today card Section-->
-                            <div class="card-body p-2">
-                                <div class="trello-board__tasks-list card-list" id="trello-tasks-2">
-
-                                    <!-- Start Syllabus to be covered today card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-3</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Syllabus to be covered today card 1-->
-
-                                    
-                                </div>
-                                <a href="#" class="btn btn-light btn-block mt-2" onclick="cardopenForm()">Add Card</a>
-                            </div>
-                            <!-- End Syllabus to be covered today card Section-->
-
-                        </div>
-                    </div>
-                    <!-- End Syllabus to be covered today list-->
-                    
-                    <!-- Start Syllabus Covered list-->
-                    <div class="trello-board__tasks">
-                        <div class="card bg-light border">
-
-                            <!-- Start list name-->
-                            <div class="card-header card-header-sm bg-white">
-                                <h4 class="card-header__title">Syllabus Covered</h4>
-                            </div>
-                            <!-- End list name-->
-
-                            <!-- Start Syllabus Covered card Section-->
-                            <div class="card-body p-2">
-                                <div class="trello-board__tasks-list card-list" id="trello-tasks-3">
-
-                                    <!-- Start Syllabus Covered card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-1</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Syllabus Covered card 1-->
-
-                                     <!-- Start Syllabus Covered card 2-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-2</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Syllabus Covered card -->
-
-                                </div>
-                                <a href="#" class="btn btn-light btn-block mt-2" onclick="cardopenForm()">Add Card</a>
-                            </div>
-                            <!-- End Syllabus Covered card Section-->
-                        
-                        </div>
-                    </div>
-                    <!-- End Syllabus Covered list-->
-
-                    <!-- Start Assignments list-->
-                    <div class="trello-board__tasks">
-                        <div class="card bg-light border">
-
-                            <!-- Start list name-->
-                            <div class="card-header card-header-sm bg-white">
-                                <h4 class="card-header__title">Assignments</h4>
-                            </div>
-                            <!-- End list name-->
-
-                            <!-- Start Assignments card Section-->
-                            <div class="card-body p-2">
-                                <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
-
-                                    <!-- Start Assignments card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-1:Assign 1</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Assignments card 1-->
-
-                                     <!-- Start Assignments card 2-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
-                                        <div class="p-3">
-                                            <p class="m-0 d-flex align-items-center">
-                                                <strong>Chapter-2:Assign 4</strong> 
-                                                <span class="badge badge-success ml-auto">Label</span>                                               
-                                            </p>
-                                            <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End Assignments card -->
-
-                                </div>
-                                <a href="#" class="btn btn-light btn-block mt-2" onclick="cardopenForm()">Add Card</a>
-                            </div>
-                            <!-- End Assignments card Section-->
-                        
-                        </div>
-                    </div>
-                    <!-- End Assignments list-->
-
-                </div>
-            </div>
-            <!-- // END trello container after second header -->
-
-        </div>
-        <!-- end container from second header -->
+    <?php
+        }
+    ?>
 
     </div>
     <!-- // END whole page -->

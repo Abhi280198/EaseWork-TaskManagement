@@ -1,6 +1,7 @@
  <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
     {
@@ -134,16 +135,6 @@
         }   
     } 
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (DONE LIST)*/
-
-    /*Start database delete board button(SHOW MENU)*/
-    /*if (isset($_REQUEST['carddetails'])) 
-    {
-        $uid=$_SESSION['UserID'];
-        $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
-        $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
-        header("location:index.php?Uid=$uid");
-    } */
-    /*End database delete board button(SHOW MENU)*/
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">

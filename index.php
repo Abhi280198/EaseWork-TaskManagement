@@ -77,7 +77,7 @@
                                     <div class="flex">
                                         <div class="card-header__title text-muted mb-2">Team Board</div>
                                         <?php
-                                            $TeamCount="Select count(*) as teamtaskcount from tblboard where Uid='".$_SESSION['UserID']."' AND IsActive=1 AND Tid NOT IN (1)";
+                                            $TeamCount="SELECT count(*) as teamtaskcount from tblteammember where Bid NOT IN (0) AND IsActive=1 AND Tid NOT IN (1) AND Uid='".$_SESSION['UserID']."' ";
                                             $ExeTeamCount=mysqli_query($con,$TeamCount) or die(mysqli_error($con));
                                             $FetchTeamCount=mysqli_fetch_array($ExeTeamCount);
                                           
