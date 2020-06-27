@@ -1,7 +1,12 @@
  <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+<<<<<<< HEAD
 
+=======
+   /*$listid =$_SESSION["Listid"];*/
+    
+>>>>>>> 4f9aff4e1a9e5ec78d0f6dd2c914826d350345f0
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
     {
@@ -49,14 +54,15 @@
         }
         else
         {
-            $todo_card_description= $todo_card_label =$todo_card_labelcolor =$todo_card_duedate="";
+            /*$tocardid=*/$todo_card_description= $todo_card_label =$todo_card_labelcolor =$todo_card_duedate="";
 
+        
             $todo_card_title = $_REQUEST['todocardtitle'];
             $todo_card_description = $_REQUEST['todocarddescription'];
             $todo_card_label = $_REQUEST['todocardlabel'];
             $todo_card_labelcolor = $_REQUEST['todocardlabelcolor'];
             $todo_card_duedate = $_REQUEST['todocardduedate'];
-
+            /*$todolistid=$_FETCH['Listid'];*/
             if (condition) {
                 # code...
             }
@@ -203,7 +209,6 @@
                 <h5 style="text-align: center;" class="w3-text-blue">CARD DETAILS - TODO LIST</h5>
 
                 <form class="w3-container w3-card-4"action="" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
-
                     <!-- Start Card Name Input -->
                     <div class="row" style="padding-left:50px;" >
                       <div class="col-25">   
@@ -392,7 +397,7 @@
 
         </div>
     </div>
-    <!-- start Todo card details popup -->
+    <!-- end Todo card details popup -->
 
     <!-- start Doing card details popup -->
     <div id="cardDoingDetails" class="modal" >
@@ -796,220 +801,14 @@
     <!-- End Done card details popup -->
 
     <!-- start card details popup -->
-    <div id="TodoCardDetailsForm" class="modal" >
+    <!-- <div id="TodoCardDetailsForm" class="modal" >
         <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
             <div class="modal-body">
-                <!-- Start Form Details -->  
-                <h5 style="text-align: center;" class="w3-text-blue">CARD DETAILS</h5>
-
-                <form class="w3-container w3-card-4"action="" style="padding-top: 20px;" method="POST" enctype="multipart/form-data">
-
-                    <!-- Start Card Name Input -->
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">   
-                          <label class="w3-text-black"><b>Title</b></label>
-                      </div>
-                      <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="cardtitle" type="text">
-                      </div>
-                    </div>
-                    <!-- End Card Name Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Description Input -->
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Description</b></label>
-                      </div>
-                      <div class="col-75">
-                          <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
-                      </div>
-                    </div>
-                    <!-- End Description Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Checklist Input -->
-                    <div class="row" style="padding-left:50px;" >  
-                        <div class="col-25">  
-                            <label class="w3-text-black"><b>Checklist</b></label>
-                        </div>
-                        <div class="col-75">
-                            <div id="myDIV" class="header" style="" >
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                            </div>
-
-                            <ul id="myUL">
-                               <!-- <li id="ul-container"></li>  -->
-                            </ul>
-
-                           <!--  <script>
-                                // Create a "close" button and append it to each list item
-                                var myNodelist = document.getElementsByTagName("LI");
-                                var i;
-                                for (i = 0; i < myNodelist.length; i++) 
-                                {
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    myNodelist[i].appendChild(span);
-                                }
-
-                                // Click on a close button to hide the current list item
-                                var close = document.getElementsByClassName("close");
-                                var i;
-                                for (i = 0; i < close.length; i++) 
-                                {
-                                    close[i].onclick = function() 
-                                    {
-                                        var div = this.parentElement;
-                                        div.style.display = "none";
-                                    }
-                                }
-
-                                // Add a "checked" symbol when clicking on a list item
-                                var list = document.querySelector('ul');
-                                list.addEventListener('click', function(ev)
-                                {
-                                    if (ev.target.tagName === 'LI') 
-                                    {
-                                        ev.target.classList.toggle('checked');
-                                    }
-                                }, false);
-
-                                // Create a new list item when clicking on the "Add" button
-                                function newElement() 
-                                {
-                                    var li = document.createElement("li");
-                                    var inputValue = document.getElementById("myInput").value;
-                                    var t = document.createTextNode(inputValue);
-                                    li.appendChild(t);
-                                    if (inputValue === '') 
-                                    {
-                                        alert("You must write something!");
-                                    } else {
-                                        document.getElementById("myUL").appendChild(li);
-                                    }
-                                    document.getElementById("myInput").value = "";
-
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    li.appendChild(span);
-
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-                                }
-                            </script> -->
-
-                        </div>
-                    </div>
-                    <!--End Checklist Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Member List Input -->                                                     
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Members</b></label>
-                        </div>
-                        <div class="col-75">
-                            <select id="member" name="cardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <!-- End Member List Input --> 
-                    
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Label Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Label Name</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;">                                                
-                      </div>
-                    </div>
-                    <!-- End Label Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Label color Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Label Color</b></label>
-                        </div>
-                        <div class="col-75" style="background-color: white;">
-                            <input type="color" name="cardlabelcolor" style="width: 320px; height: 40px;">                      
-                        </div>
-                    </div>
-                    <!-- End Label color Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Due Date Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Due Date</b></label>
-                      </div>
-                      <div class="col-75">
-                        <input type="datetime-local" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
-                      </div>
-                    </div>
-                    <!-- End Due Date Input --> 
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Move to  Input --> 
-                    <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Move</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select id="move" name="cardmove" style="width:320px; height: 45px;">
-                          <option value="todo">To Do</option>
-                          <option value="doing">Doing</option>
-                          <option value="done">Done</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- End Move to Input -->
-
-                    <hr style="border-top: 1px solid #bbb;">
-
-                    <!-- Start Button Input -->  
-                    <div>
-                        <center>
-                            <button type="submit" name="carddetails" class="btn btn-success" style="width:150px;">Save</button>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger" onclick="closeTodoCardDetailsForm()" style="background-color: red; width:150px;" >Cancel</a>
-                            <p></p>
-                        </center>
-                    </div>
-                    <!-- End Button Input -->
-              
-                </form>
-              <!--End Form Details -->
+                
             </div> 
 
         </div>
-    </div>
+    </div> -->
     <!-- End card details popup -->
 
 </head>
@@ -1087,8 +886,8 @@
                                     <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
                                         <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
                                             
-                                            <div>
-                                                <label style="float: left;"> Description about board</label>
+                                        <div>
+                                            <label style="float: left;"> Description about board</label>
                                                 <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
                                                 <br><br><br>
                                                 <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled=""><?php echo $bdescription; ?></textarea>
@@ -1125,24 +924,24 @@
                                             <div>
                                                 <label style="float: left;">Wanna Close Board ?</label><br><br>
                                             </div>
-                                            <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
-                                            <div>
-                                                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                                                    <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
-                                                    <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
-                                                <!-- Start card details popup fuction-->
-                                                <script>
-                                                    function deleteopen() {
-                                                      document.getElementById("deleteboard").style.display = "flex";
-                                                    }
-                                                    function deleteclose() {
-                                                      document.getElementById("deleteboard").style.display = "none";
-                                                    }
-                                                </script>
-                                                <!-- End card details popup fuction-->
-                                                </form>
-                                            </div>
-                                            <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                        <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                        <div>
+                            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                            <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                            <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                            <!-- Start card details popup fuction-->
+                            <script>
+                                function deleteopen() {
+                                    document.getElementById("deleteboard").style.display = "flex";
+                                }
+                                function deleteclose() {
+                                    document.getElementById("deleteboard").style.display = "none";
+                                }
+                            </script>
+                            <!-- End card details popup fuction-->
+                            </form>
+                            </div>
+                            <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
 
                                         </div></center>
                                     </div>
@@ -1273,19 +1072,19 @@
                                             $cardlabelcolor=$row_todo['LabelColor'];
                                             $cardduedate=$row_todo['DueDate']; 
                                             $cardid=$row_todo['Cardid'];
-                                            /*$_SESSION['card']=$row_todo['Cardid'];*/
+                                            
+                                            
   
                                 ?>
                                     <!-- Start Todo card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="/*openTodoCardDetailsForm*//*(*//*<?php echo $cardid; ?>*/">
-                                        <a href="cards.php">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="">
+                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
                                                 <span class="badge ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
                                                     <?php echo $cardlabel;?>   
-                                                </span>                                               
-                                            </p>
+                                                </span> </p>
                                             <br>
                                     <?php
                                         if ($cardduedate<date("Y-m-d")) 
@@ -1380,7 +1179,7 @@
 
                                     <!-- Start Doing card 1-->
                                     <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php">
+                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1482,7 +1281,7 @@
 
                                     <!-- Start Done card 1-->
                                     <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php">
+                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 

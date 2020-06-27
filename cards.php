@@ -1,7 +1,23 @@
 <?php 
     include_once("DbConnection.php");
-    $cid=$_POST['Cardid'];
+    $cardid=$_GET['Cardid']; 
+
+if (isset($_POST['carddetails'])){
+
+    
+        echo $updatecard = "UPDATE tblcard SET CardName ='".$_REQUEST['cardtitle']."',Description='".$_REQUEST['carddescription']."',Label='".$_REQUEST['cardlabel']."',LabelColor='".$_REQUEST['cardlabelcolor']."', DueDate='".$_REQUEST['cardduedate']."', Listid='".$_REQUEST['cardmove']."' WHERE Cardid='$cardid'";
+        
+        $Exe_update=mysqli_query($con,$updatecard)or die(mysqli_error($con));
+        
+            if (mysqli_query($con, $updatecard)) {
+                echo '<script type="text/javascript" id="error">alert("Card Updated successfully..");</script>';
+                header("location:cards.php?Cardid=$cardid");
+            } else {
+                echo "Error updating record: ".mysqli_error($con);
+            }
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -45,17 +61,34 @@
                     </div>
                     <!--  End subTitle details -->
 
+    <!-- Fetch Details -->
+        <?php
+
+        $card_query="select * from tblcard where Cardid='".$_GET['Cardid']."'";
+        $Execute=mysqli_query($con,$card_query) or die(mysqli_error($con));
+        $fetch=mysqli_fetch_array($Execute);
+
+            $cardid = $fetch['Cardid'];
+            $cardname = $fetch['CardName'];
+            $carddescription=$fetch['Description'];
+            $cardlabel = $fetch['Label'];
+            $cardlabelcolor = $fetch['LabelColor'];       
+            $cardduedate = $fetch['DueDate'];
+            $listid=$fetch['Listid'];
+        ?>
+
+    <!-- Fetch Details -->
 <!-- start card details to be displayed and update -->
     <div class="container-fluid page__container">
         <div class="card card-form">
             <div class="row no-gutters">
-                <div class="card-body" style="text-align: center;">
+                <div class="card-body col-lg-3" style="text-align: center;">
                     <p><h5 style="text-align: center;" class="w3-text-blue">CARD DETAILS</h5></p>
                     <p class="text-muted">Edit your card details and settings.</p>
                 </div>
-            <div class="card-form__body card-body">
+            <div class="card-form__body col-lg-9 card-body">
                                     
-            <form class="w3-container w3-card-4"action="" style="padding-top: 20px;" method="POST" enctype="multipart/form-data"> 
+            <form class="w3-container w3-card-4" style="padding-top: 20px;" method="POST" enctype="multipart/form-data"> 
        	    <!-- <div class="form-group"> -->
            	<!-- Start Card Name Input -->
                 <div class="row" style="padding-left:50px;" >
@@ -63,7 +96,11 @@
                         <label class="w3-text-black"><b>Title</b></label>
                     </div>
                     <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="cardtitle" type="text">
+                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="cardtitle" type="text" 
+                        value="<?php 
+                                    if(isset($cardname))
+                                        echo $cardname;
+                                ?>">
                    	</div>
                 </div>
             <!-- End Card Name Input -->
@@ -76,7 +113,14 @@
                         <label class="w3-text-black"><b>Description</b></label>
                     </div>
                     <div class="col-75">
-                        <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ..."></textarea>
+                        <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ...">
+                            <?php 
+                                    if(isset($carddescription))
+                                        echo $carddescription;
+                                    else 
+                                        echo " ";
+                                ?>
+                        </textarea>
                     </div>
                 </div>
             <!-- End Description Input -->
@@ -88,8 +132,10 @@
                             <label class="w3-text-black"><b>Checklist</b></label>
                         </div>
                         <div class="col-75">
-                            <div id="myDIV" class="header" style="" >
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text">
+                            <div>
+                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text"
+
+                                >
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
                             </div>
@@ -98,7 +144,7 @@
                                <!-- <li id="ul-container"></li>  -->
                             </ul>
 
-                           <!--  <script>
+                            <script>
                                 // Create a "close" button and append it to each list item
                                 var myNodelist = document.getElementsByTagName("LI");
                                 var i;
@@ -163,7 +209,7 @@
                                         }
                                     }
                                 }
-                            </script> -->
+                            </script>
 
                         </div>
                     </div>
@@ -195,7 +241,13 @@
                         <label class="w3-text-black"><b>Label Name</b></label>
                       </div>
                       <div class="col-75" >
-                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;">                                                
+                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;"
+                        value=" <?php 
+                                    if(isset($cardlabel))
+                                        echo $cardlabel;
+                                    else 
+                                        echo " ";
+                                ?>">                                                
                       </div>
                     </div>
                     <!-- End Label Input -->
@@ -207,8 +259,14 @@
                         <div class="col-25">     
                             <label class="w3-text-black"><b>Label Color</b></label>
                         </div>
-                        <div class="col-75" style="background-color: white;">
-                            <input type="color" name="cardlabelcolor" style="width: 320px; height: 40px;">                      
+                        <div class="col-75" >
+                            <input type="color" name="cardlabelcolor" style="width: 320px; height: 40px;"
+                            value=" <?php 
+                                    if(isset($cardlabelcolor))
+                                        echo $cardlabelcolor;
+                                    else 
+                                        echo " ";
+                                ?>">                      
                         </div>
                     </div>
                     <!-- End Label color Input -->
@@ -221,7 +279,13 @@
                         <label class="w3-text-black"><b>Due Date</b></label>
                       </div>
                       <div class="col-75">
-                        <input type="datetime-local" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border">
+                        <input type="datetime" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border" 
+                        value="<?php 
+                                    if(isset($cardduedate))
+                                        echo $cardduedate;
+                                    else 
+                                        echo " ";
+                                ?>">
                       </div>
                     </div>
                     <!-- End Due Date Input --> 
@@ -235,9 +299,36 @@
                       </div>
                       <div class="col-75" >
                         <select id="move" name="cardmove" style="width:320px; height: 45px;">
-                          <option value="todo">To Do</option>
-                          <option value="doing">Doing</option>
-                          <option value="done">Done</option>
+                          <option value="1" 
+                            <?php 
+                                if(isset($listid))
+                                    {
+                                        if($listid == 1)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    }
+                            ?>>To Do</option>
+                          <option value="2" 
+                            <?php 
+                                if(isset($listid))
+                                    {
+                                        if($listid == 2)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    }
+                            ?>>Doing</option>
+                          <option value="3" 
+                            <?php 
+                                if(isset($listid))
+                                    {
+                                        if($listid == 3)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    }
+                            ?>>Done</option>
                         </select>
                       </div>
                     </div>
@@ -250,7 +341,7 @@
                         <center>
                             <button type="submit" name="carddetails" class="btn btn-success" style="width:150px;">Save</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <!-- <a href="#" class="btn btn-danger" onclick="closeTodoCardDetailsForm()" style="background-color: red; width:150px;" >Cancel</a> -->
+                            <a href="#" class="btn btn-danger"style="background-color: red; width:150px;" >Delete</a>
                             <p></p>
                         </center>
                     </div>

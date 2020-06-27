@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+<?php include_once("DbConnection.php");?>
+    
+=======
 <?php
 include_once("DbConnection.php");
     $bid=$_GET['Bid'];
@@ -9,6 +13,7 @@ include_once("DbConnection.php");
         $update_education_description = "UPDATE tblboard set BoardDescription = '$board_description_education' where Bid='$bid' ";
         $Exe_update_education_description=mysqli_query($con,$update_education_description)or die(mysqli_error($con));
 ?>
+<<<<<<< HEAD
         <script type="text/javascript">
                     alert("Description added Successfully");
         </script>
@@ -164,6 +169,9 @@ include_once("DbConnection.php");
 
 ?>
 
+=======
+>>>>>>> b9d9e71b3f225533d5c7a1e6d4b20fe1a5916d62
+>>>>>>> 4f9aff4e1a9e5ec78d0f6dd2c914826d350345f0
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
