@@ -1,7 +1,6 @@
  <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
-   /*$listid =$_SESSION["Listid"];*/
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 

@@ -23,7 +23,7 @@
     <title>EaseWork- Team Boards</title>
     <?php include_once('csslinks.php');?>
 
-     <!-- start delete team popup -->
+    <!-- start delete team popup -->
     <div id="deleteteam" class="modal">
         <div class="modal-content" style="width: 50%; height: 250px;">
             <form method="POST" enctype="multipart/form-data" action="" class="form-container">
