@@ -1734,7 +1734,8 @@ include_once("DbConnection.php");
                                     ?>
 
                                                 <!-- Start Syllabus remaining card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
@@ -1743,10 +1744,25 @@ include_once("DbConnection.php");
                                                                 </span>                                               
                                                         </p>
                                                         <br>
-                                                        <p class="d-flex align-items-center mb-2">
-                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                        </p>
+                                                        <?php
+                                        if ($cardduedate<date("Y-m-d")) 
+                                        {
+                                        ?>  
+                                            <p class="d-flex align-items-center mb-2">
+                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                <span class="text-muted mr-3">Due-Date</span>
+                                            </p>
+                                        <?php
+                                        }
+                                        else{
+                                    ?>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                        <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                </p>
+                                            <?php
+                                        }
+                                    ?>
 
                                                         <div class="media align-items-center" style="float: right;">
                                                             <div class=" mr-2 avatar-group" >
@@ -1813,7 +1829,8 @@ include_once("DbConnection.php");
 
 
                                         <!-- Start Syllabus to be covered today card 1-->
-                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                            <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
@@ -1822,11 +1839,24 @@ include_once("DbConnection.php");
                                                                 </span>                                               
                                                         </p>
                                                         <br>
+                                                        <?php
+                                        if ($cardduedate<date("Y-m-d")) 
+                                        {
+                                    ?><p class="d-flex align-items-center mb-2">
+                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                <span class="text-muted mr-3">Due-Date</span>
+                                            </p>
+                                            <?php
+                                        }
+                                        else{
+                                    ?>
                                                         <p class="d-flex align-items-center mb-2">
                                                             <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                             <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                         </p>
-
+                                                    <?php
+                                        }
+                                    ?>
                                                         <div class="media align-items-center" style="float: right;">
                                                             <div class=" mr-2 avatar-group" >
                                                                 <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
@@ -1893,7 +1923,8 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus covered card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -1902,10 +1933,25 @@ include_once("DbConnection.php");
                                                                         </span>                                               
                                                                 </p>
                                                                 <br>
-                                                                <p class="d-flex align-items-center mb-2">
-                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                                </p>
+                                                                <?php
+                                        if ($cardduedate<date("Y-m-d")) 
+                                        {
+                                    ?>
+                                    <p class="d-flex align-items-center mb-2">
+                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                <span class="text-muted mr-3">Due-Date</span>
+                                            </p>
+                                        <?php
+                                        }
+                                        else{
+                                    ?>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                </p>
+                                            <?php
+                                        }
+                                    ?>
 
                                                                 <div class="media align-items-center" style="float: right;">
                                                                     <div class=" mr-2 avatar-group" >
@@ -1973,7 +2019,8 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus Assignments card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="cardopenForm()">
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -1982,11 +2029,25 @@ include_once("DbConnection.php");
                                                                         </span>                                               
                                                                 </p>
                                                                 <br>
+                                                                <?php
+                                        if ($cardduedate<date("Y-m-d")) 
+                                        {
+                                    ?>
+                                            <p class="d-flex align-items-center mb-2">
+                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                <span class="text-muted mr-3">Due-Date</span>
+                                            </p>
+                                            <?php
+                                        }
+                                        else{
+                                    ?>
                                                                 <p class="d-flex align-items-center mb-2">
                                                                     <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                                     <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                                 </p>
-
+                                                <?php
+                                        }
+                                    ?>
                                                                 <div class="media align-items-center" style="float: right;">
                                                                     <div class=" mr-2 avatar-group" >
                                                                         <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">

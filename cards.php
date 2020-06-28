@@ -2,6 +2,22 @@
     include_once("DbConnection.php");
     $cardid=$_GET['Cardid']; 
 
+
+/* delete card button*/
+    if (isset($_REQUEST['deletecardspopup'])) 
+    {
+        /*$uid=$_SESSION['UserID'];*/
+        $delete_card = "DELETE FROM tblcard WHERE Cardid ='".$_GET['Cardid']."'";
+        $Exe_delete_card=mysqli_query($con,$delete_card)or die(mysqli_error($con));
+
+        if (mysqli_query($con, $delete_card)) {
+                echo '<script type="text/javascript" id="error">alert("Card Updated successfully..");</script>';
+                header("location:cards.php?Cardid=$cardid");
+            }
+        /*header("location:index.php?Uid=$uid");*/
+    } 
+    /* delete card button*/
+
 if (isset($_POST['carddetails'])){
 
     
@@ -299,36 +315,116 @@ if (isset($_POST['carddetails'])){
                       </div>
                       <div class="col-75" >
                         <select id="move" name="cardmove" style="width:320px; height: 45px;">
+                            <?php
+                            if($listid == 1 || $listid ==2 || $listid == 3)
+                                {
+                                    ?>
                           <option value="1" 
                             <?php 
-                                if(isset($listid))
-                                    {
                                         if($listid == 1)
                                             echo "disabled";
                                         else
                                             echo "";
-                                    }
+                                   
                             ?>>To Do</option>
                           <option value="2" 
                             <?php 
-                                if(isset($listid))
-                                    {
                                         if($listid == 2)
                                             echo "disabled";
                                         else
                                             echo "";
-                                    }
+                                  
                             ?>>Doing</option>
                           <option value="3" 
                             <?php 
-                                if(isset($listid))
-                                    {
                                         if($listid == 3)
                                             echo "disabled";
                                         else
                                             echo "";
-                                    }
+                                    
                             ?>>Done</option>
+                            <?php
+                            }    
+                        ?>
+                            <?php
+                            if($listid == 4 || $listid ==5 || $listid == 6 || $listid ==7)
+                                {
+                                    ?>
+                          <option value="4" 
+                            <?php 
+                                        if($listid == 4)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                   
+                            ?>>Syllabus Remaining</option>
+                          <option value="5" 
+                            <?php 
+                                        if($listid == 5)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                  
+                            ?>>Syllabus to be covered today</option>
+                          <option value="6" 
+                            <?php 
+                                        if($listid == 6)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    
+                            ?>>Syllabus Covered</option>
+                          <option value="7" 
+                            <?php 
+                                        if($listid == 7)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    
+                            ?>>Assignments</option>
+                            <?php
+                            }    
+                        ?>
+                        <?php
+                            if($listid == 8 || $listid ==9 || $listid == 10 || $listid ==11)
+                                {
+                                    ?>
+                          <option value="8" 
+                            <?php 
+                                        if($listid == 8)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                   
+                            ?>>Todo Before Trip</option>
+                          <option value="9" 
+                            <?php 
+                                        if($listid == 9)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                  
+                            ?>>Todo in Holiday</option>
+                          <option value="10" 
+                            <?php 
+                                        if($listid == 10)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    
+                            ?>>To eat and drink</option>
+                          <option value="11" 
+                            <?php 
+                                        if($listid == 11)
+                                            echo "disabled";
+                                        else
+                                            echo "";
+                                    
+                            ?>>Done</option>
+                            <?php
+                            }    
+                        ?>
+                         
                         </select>
                       </div>
                     </div>
@@ -341,12 +437,39 @@ if (isset($_POST['carddetails'])){
                         <center>
                             <button type="submit" name="carddetails" class="btn btn-success" style="width:150px;">Save</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger"style="background-color: red; width:150px;" >Delete</a>
+                            <button href="#" name="deletecardspopup" class="btn btn-danger"style="background-color: red; width:150px;"  >Delete</button>
+
+                        <!-- Start card details popup fuction-->
+                            <!-- <script>
+                                function deleteopencard() {onclick="deleteopencard()"
+                                    document.getElementById("deletecard").style.display = "flex";
+                                }
+                                function deleteclosecard() {
+                                    document.getElementById("deletecard").style.display = "none";
+                                }
+                            </script> -->
+                            <!-- End card details popup fuction-->
                             <p></p>
                         </center>
                     </div>
                     <!-- End Button Input -->
             
+                    <!-- start show menu delete popup -->
+    <!-- <div id="deletecard" class="modal">
+        <div class="modal-content" style="width: 50%; height: 250px;">
+            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                <div>
+                    <h3><strong>Are you sure ?</strong></h3>
+                </div><br><br>
+                <center><div class="canclebtn">
+                    <button type="submit" name="deletecardspopup" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn cancel" onclick="deleteclosecard()" >No</button>
+                </div></center>
+            </form>
+        </div>
+    </div> -->
+    <!-- End show menu delete popup -->
+
                                 </div>
                             </div>
                         </div>

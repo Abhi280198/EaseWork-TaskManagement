@@ -106,7 +106,7 @@
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (DOING LIST)*/
 
     /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (DONE LIST)*/
-    if (isset($_REQUEST['adddeatcard'])) 
+    if (isset($_REQUEST['addeatcard'])) 
     {
         if ($_REQUEST['eatcardtitle']=="") 
         {
@@ -138,7 +138,7 @@
 
 
 /*START DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (PERSONAL DONE LIST)*/
-    if (isset($_REQUEST['adddpersonaldonecard'])) 
+    if (isset($_REQUEST['addpersonaldonecard'])) 
     {
         if ($_REQUEST['personalcardtitle']=="") 
         {
@@ -347,7 +347,17 @@
                         </div>
                     </div>
                     <!--End Checklist Input -->
+                    <?php
 
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Member List Input -->                                                     
@@ -356,16 +366,34 @@
                             <label class="w3-text-black"><b>Members</b></label>
                         </div>
                         <div class="col-75">
-                            <select id="member" name="cardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
+                            <select id="member" name="beforetripcardmember" style="width:320px; height: 45px;">
+                                <option value="0" disabled selected>--Select--</option>
+                              <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
                             </select>
 
                         </div>
                     </div>
                     <!-- End Member List Input --> 
-                    
+                <?php 
+                                }
+                            }
+                        ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Label Input --> 
@@ -570,7 +598,17 @@
                         </div>
                     </div>
                     <!--End Checklist Input -->
+                    <?php
 
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Member List Input -->                                                     
@@ -580,15 +618,33 @@
                         </div>
                         <div class="col-75">
                             <select id="member" name="holidaycardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
+                                <option value="0" disabled selected>--Select--</option>
+                              <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
                             </select>
 
                         </div>
                     </div>
                     <!-- End Member List Input --> 
-                    
+                <?php 
+                                }
+                            }
+                        ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Label Input --> 
@@ -674,7 +730,7 @@
                         <center>
                             <button  type="submit" name="addholidaycard"class="btn btn-success" style="width:150px;">Save</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger" onclick="cardcloseholidayForm()" style="background-color: red; width:150px;" >Cancel</a>
+                            <a href="#" class="btn btn-danger" onclick="closeholidayForm()" style="background-color: red; width:150px;" >Cancel</a>
                             <p></p>
                         </center>
                     </div>
@@ -704,7 +760,7 @@
                           <label class="w3-text-black"><b>Title</b></label>
                       </div>
                       <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="eatcardTitle" type="text">
+                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="eatcardtitle" type="text">
                       </div>
                     </div>
                     <!-- End Card Name Input -->
@@ -810,7 +866,17 @@
                         </div>
                     </div>
                     <!--End Checklist Input -->
+                    <?php
 
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Member List Input -->                                                     
@@ -820,15 +886,33 @@
                         </div>
                         <div class="col-75">
                             <select id="member" name="eatcardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
+                              <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
                             </select>
 
                         </div>
                     </div>
                     <!-- End Member List Input --> 
-                    
+                <?php 
+                                }
+                            }
+                        ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Label Input --> 
@@ -930,7 +1014,7 @@
 
 
 <!-- start todo personal done card details popup -->
-    <div id="personaldonecardDetails" class="modal" >
+    <div id="personalcardDetails" class="modal" >
         <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
 
             <div class="modal-body">
@@ -944,7 +1028,7 @@
                           <label class="w3-text-black"><b>Title</b></label>
                       </div>
                       <div class="col-75">
-                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="personalcardTitle" type="text">
+                        <input class="w3-input w3-border" style="width: 320px; height: 40px;" name="personalcardtitle" type="text">
                       </div>
                     </div>
                     <!-- End Card Name Input -->
@@ -1050,7 +1134,17 @@
                         </div>
                     </div>
                     <!--End Checklist Input -->
+                    <?php
 
+                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
+                            if($result_selectboardmember ->num_rows!=0)
+                            {  
+                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
+                                $btid=$row_Remainingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                        ?>
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Member List Input -->                                                     
@@ -1059,16 +1153,34 @@
                             <label class="w3-text-black"><b>Members</b></label>
                         </div>
                         <div class="col-75">
-                            <select id="member" name="personalcardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
+                            <select id="member" name="personaldonecardmember" style="width:320px; height: 45px;">
+                              <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
+                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_Remainingmember ['Uid'];
+                                                            $fname=$row_Remainingmember ['Fname'];
+                                                            $lname=$row_Remainingmember ['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
                             </select>
 
                         </div>
                     </div>
                     <!-- End Member List Input --> 
-                    
+                <?php 
+                                }
+                            }
+                        ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
                     <!-- Start Label Input --> 
@@ -1154,7 +1266,7 @@
                         <center>
                             <button  type="submit" name="addpersonaldonecard"class="btn btn-success" style="width:150px;">Save</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger" onclick="cardclosepersonaldoneForm()" style="background-color: red; width:150px;" >Cancel</a>
+                            <a href="#" class="btn btn-danger" onclick="closepersonaldoneForm()" style="background-color: red; width:150px;" >Cancel</a>
                             <p></p>
                         </center>
                     </div>
@@ -1211,25 +1323,35 @@
 
     <div class="preloader"></div>
 
-    <?php
-        $backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
-        $result_backgrounddata = mysqli_query($con,$backgrounddata);
-        if($result_backgrounddata->num_rows!=0)
-       {  
-            while($row_backgrounddata=$result_backgrounddata->fetch_array())  
-            {
-                $bbackground=$row_backgrounddata['Background'];
+<?php
+        if ($bid==0) 
+        {
+    ?>
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/personal_background.jpg); background-repeat: repeat;">
 
-                if($bbackground=="" || !file_exists("$bbackground"))
+    <?php  
+    }
+    else
+    {
+        $backgroundimage = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+        $result_backgroundimage = mysqli_query($con,$backgroundimage);
+        if($result_backgroundimage->num_rows!=0)
+       {  
+            while($row_backgroundimage=$result_backgroundimage->fetch_array())  
+            {
+                $pbackground=$row_backgroundimage['Background'];
+
+                if($pbackground=="" || !file_exists("$pbackground"))
                 {
-                    $bbackground="images/T7MH5H.jpg";
+                    $pbackground="images/personal_background.jpg";
                 }      
 
     ?>
     <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $pbackground; ?>); background-repeat: repeat;">
 
     <?php 
+                }
             }
         }
     ?>
@@ -1238,10 +1360,323 @@
             <?php include_once('header1.php'); ?>
         <!--END Header -->
 
+<?php
+        if ($bid==0) 
+        {
+    ?>
 
+<!--  If Board Id is 0  -->
         <!-- Start container from second header -->
         <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
+        <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
+                    <p></p>
+                    <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
+                        <center>
+                            <h5 style="color: white;">Personal Template</h5>
+                            <small style="color: white;"><strong>Team Name</strong></small>
+                        </center>
+                    </div>
+
+                    <div class="w3-dropdown-click w3-right" style="float: right;">
+                        <button class="w3-button " onclick="myFunction()">Show Menu <i class="fa fa-caret-down"></i></button>
+                            <div id="demo" class="w3-dropdown-content w3-bar-block w3-card" style="right: 0; width: 400px; height: 450px; border-color: black; background-color: black; border-radius: 2px;">
+                                <center><div class="modal-content" style= " margin: 10px; overflow-y: auto; border-radius: 2px; height: 430px;">
+                                    
+                                    <div>
+                                        <label style="float: left;"> Description about board</label>
+                                        <button class="w3-button w3-black w3-round" style="width: 130px; font-size: 12px; float: right;" onclick="desopen()">Add</button>
+                                        <br><br><br>
+                                        <textarea name="description" id="description" rows="7" style="width: 320px; background-color: white; " disabled="">
+                                        </textarea>
+                                    </div>
+                                    <hr style="border-top: 1px solid #bbb;"><br>
+                                    <div>
+                                        <a href="#" class="w3-button w3-black w3-round" style="width: 100%; font-size: 12px;" >Members Details</a>
+                                    </div>
+                                    <hr style="border-top: 1px solid #bbb;">
+                                    <div>
+                                        <label style="float: left;">Wanna Close Board ?</label><br><br>
+                                    </div>
+                                    <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+                                                <div>
+                                                    <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                        <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                        <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                                                    <!-- Start card details popup fuction-->
+                                                    </form>
+                                                </div>
+                                    <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
+
+                                </div></center>
+                            </div>
+                    </div>
+
+                    &nbsp;
+
+                    <div class="dropdown w3-right">
+                        <div class="w3-dropdown-click w3-right">
+                            <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
+                                <option value="visibility" selected disabled >Visibility</option>
+                                <option value="todo" >Private</option>
+                                <option value="doing">Team</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="dropdown w3-right">
+                        <div class="w3-dropdown-click w3-right">
+                            <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
+                                <option value="visibility" selected disabled >Members List</option>
+                                <option value="todo" disabled >Member1</option>
+                                <option value="doing"disabled>Member2</option>
+                                <option value="todo" disabled>Member3</option>
+                                <option value="todo" disabled>Member4</option>
+                                <option value="todo" disabled>Member5</option>
+                            </select>
+                        </div>
+                    </div>
+                                  
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+        </div>
+
+        <!-- End second Header Content -->
+
+                <!-- start trello container after second header  -->
+                <div class="trello-container">
+                    <div class="trello-board container-fluid page__container mt-5" >
+
+                        <!-- Start before trip list-->
+                        <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Todo Before Trip</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start before trip card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-1" >
+
+                                        <!-- Start before trip card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Buying Clothes</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End before trip card 1-->
+                                    
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End before trip card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End before trip list-->
+
+                        <!-- Start Todo in Holiday list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Todo in Holiday</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Todo in Holiday card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-2">
+
+                                        <!-- Start Todo in Holiday card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Joining Course</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Todo in Holiday card 1-->
+                                        
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Todo in Holiday card Section-->
+
+                            </div>
+                        </div>
+                        <!-- End Todo in Holiday list-->
+                        
+                        <!-- Start To Eat and Drink list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">To Eat and Drink</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start To Eat and Drink card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-3">
+
+                                        <!-- Start To Eat and Drink card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Learn new Recipe</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Syllabus Covered card 1-->
+
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End To Eat and Drink card Section-->
+                            
+                            </div>
+                        </div>
+                        <!-- End To Eat and Drink list-->
+
+                        <!-- Start Personal Done list-->
+                        <div class="trello-board__tasks">
+                            <div class="card bg-light border">
+
+                                <!-- Start list name-->
+                                <div class="card-header card-header-sm bg-white">
+                                    <h4 class="card-header__title">Done</h4>
+                                </div>
+                                <!-- End list name-->
+
+                                <!-- Start Personal Done card Section-->
+                                <div class="card-body p-2">
+                                    <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
+
+                                        <!-- Start Personal Done card 1-->
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" >
+                                            <div class="p-3">
+                                                <p class="m-0 d-flex align-items-center">
+                                                    <strong>Tickets Booked</strong> 
+                                                    <span class="badge badge-success ml-auto">Label</span>                                               
+                                                </p>
+                                                <br>
+                                                <p class="d-flex align-items-center mb-2">
+                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                    <span class="text-muted mr-3">Due-Date</span>
+                                                </p>
+
+                                                <div class="media align-items-center" style="float: right;">
+                                                    <div class=" mr-2 avatar-group" >
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
+                                                            <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Personal Done card 1-->
+
+                                    </div>
+                                    <button class="btn btn-light btn-block mt-2">Add Card</button>
+                                </div>
+                                <!-- End Personal Done card Section-->
+                            
+                            </div>
+                        </div>
+                        <!-- End Personal Done list-->
+
+                    </div>
+                </div>
+                <!-- // END trello container after second header -->
+
+            </div>
+            <!-- end container of Board id is 0 from second header -->
+
+    <?php
+        }
+        else
+        {
+    ?>
+
+<!--If Board Id is not 0 -->
+
+             <!-- Start Board id is not 0 from second header -->
+            <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
             <!-- start create board link -->
             <div class="w3-bar w3-black">
@@ -1369,12 +1804,20 @@
                     <div class="w3-dropdown-click w3-right">
                         <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
                             <?php
+                                    if ($bvisibilty == "Public") 
+                                    {
+                                ?>
+                                        <option value="Private" >Private</option>
+                                        <option value="Team">Team</option>
+                                        <option value="Public" selected>Public</option>
+                                    <?php
+                                }
                                     if ($bvisibilty == "Private") 
                                     {
                                 ?>
                                         <option value="Private" selected>Private</option>
                                         <option value="Team">Team</option>
-                                        <!-- <option value="Public">Public</option> -->
+                                        <option value="Public">Public</option>
                                 <?php
                                     }
                                     if ($bvisibilty == "Team") 
@@ -1382,15 +1825,16 @@
                                 ?>
                                         <option value="Private" >Private</option>
                                         <option value="Team" selected>Team</option>
-                                        <!-- <option value="Public">Public</option> -->
+                                        <option value="Public">Public</option>
                                 <?php
                                     }
                                     else
                                     {
                                 ?>
                                     <option value="visibility" selected disabled >Visibility</option>
-                                    <option value="todo" >Private</option>
-                                    <option value="doing">Team</option>
+                                    <option value="Private" >Private</option>
+                                        <option value="Team">Team</option>
+                                        <option value="Public">Public</option>
                                 <?php
                                     }
                                 ?>
@@ -1407,12 +1851,23 @@
                 <div class="dropdown w3-right">
                     <div class="w3-dropdown-click w3-right">
                         <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
-                            <option value="visibility" selected disabled >Members List</option>
-                            <option value="todo" disabled >Member1</option>
-                            <option value="doing"disabled>Member2</option>
-                            <option value="todo" disabled>Member3</option>
-                            <option value="todo" disabled>Member4</option>
-                            <option value="todo" disabled>Member5</option>
+                            <option value="Members" selected disabled >Members List</option>
+                                            <?php        
+                                                $personalmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                $result_personalmember = mysqli_query($con,$personalmember);
+                                                if($result_personalmember->num_rows!=0)
+                                                {  
+                                                    while($row_personalmember=$result_personalmember->fetch_array())  
+                                                    {
+                                                        $member=$row_personalmember['Uid'];
+                                                        $fname=$row_personalmember['Fname'];
+                                                        $lname=$row_personalmember['Lname'];
+                                            ?>
+                                                        <option value="<?php echo $member;?>" disabled ><?php echo $fname." ".$lname;?></option>
+                                            <?php
+                                                    }
+                                                }
+                                            ?>
                         </select>
                     </div>
                 </div>
@@ -1420,7 +1875,7 @@
                         }   
                     ?> 
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->             
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                 <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                 <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
 
@@ -1436,18 +1891,7 @@
             <!-- start trello container after second header  -->
             <div class="trello-container"><br>
                 <div class="trello-board container-fluid page__container mt-5">
-                <script>
-                        function openTodoCardDetailsForm(cardid) 
-                        {
-                            var card=cardid;
-                            console.log(card);
-                            document.getElementById("TodoCardDetailsForm").style.display = "flex";
-                        }
-                        function closeTodoCardDetailsForm() 
-                        {
-                            document.getElementById("TodoCardDetailsForm").style.display = "none";
-                        }
-                    </script>
+                
                     <!-- Start Todo before trip list-->
                     <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
                         
@@ -1570,7 +2014,7 @@
                                 <div class="trello-board__tasks-list card-list" id="trello-tasks-2">
 
                                 <?php
-                                    $selectholidayquery = "SELECT * FROM tblcard Where Listid=2 AND Bid='$bid'";  
+                                    $selectholidayquery = "SELECT * FROM tblcard Where Listid=9 AND Bid='$bid'";  
                                     $result_holiday = mysqli_query($con,$selectholidayquery);
                                     if($result_holiday->num_rows!=0)
                                     {  
@@ -1643,7 +2087,7 @@
                                     function holidayform() {
                                       document.getElementById("holidaycardDetails").style.display = "flex";
                                     }
-                                    function holidayform() {
+                                    function closeholidayform() {
                                       document.getElementById("holidaycardDetails").style.display = "none";
                                     }
                                 </script>
@@ -1669,7 +2113,7 @@
                             <div class="card-body p-2">
                                 <div class="trello-board__tasks-list card-list" id="trello-tasks-3">
                                     <?php
-                                    $selecteatquery = "SELECT * FROM tblcard Where Listid=3 AND Bid='$bid'";  
+                                    $selecteatquery = "SELECT * FROM tblcard Where Listid=10 AND Bid='$bid'";  
                                     $result_eat = mysqli_query($con,$selecteatquery);
                                     if($result_eat->num_rows!=0)
                                     {  
@@ -1769,7 +2213,7 @@
                             <div class="card-body p-2">
                                 <div class="trello-board__tasks-list card-list" id="trello-tasks-4">
                                     <?php
-                                    $selectpersonalquery = "SELECT * FROM tblcard Where Listid=3 AND Bid='$bid'";  
+                                    $selectpersonalquery = "SELECT * FROM tblcard Where Listid=11 AND Bid='$bid'";  
                                     $result_personal = mysqli_query($con,$selectpersonalquery);
                                     if($result_personal->num_rows!=0)
                                     {  
@@ -1834,14 +2278,14 @@
                                     }
                                 ?>
                                 </div>
-                                <a href="#" class="btn btn-light btn-block mt-2" onclick="cardopenPersonaldoneForm()">Add Card</a>
+                                <a href="#" class="btn btn-light btn-block mt-2" onclick="openPersonaldoneForm()">Add Card</a>
                                 <!-- Start card details popup fuction-->
                                 <script>
-                                    function cardopenPersonaldoneForm() {
-                                      document.getElementById("personaldonecardDetails").style.display = "flex";
+                                    function openPersonaldoneForm() {
+                                      document.getElementById("personalcardDetails").style.display = "flex";
                                     }
-                                    function cardclosePersonaldoneForm() {
-                                      document.getElementById("personaldonecardDetails").style.display = "none";
+                                    function closePersonaldoneForm() {
+                                      document.getElementById("personalcardDetails").style.display = "none";
                                     }
                                 </script>
                                 <!-- End card details popup fuction-->
@@ -1858,7 +2302,9 @@
 
         </div>
         <!-- end container from second header -->
-
+        <?php
+        }
+    ?>
     </div>
     <!-- // END whole page -->
 
