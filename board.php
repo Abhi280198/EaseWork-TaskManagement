@@ -1,7 +1,6 @@
  <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
-   /*$listid =$_SESSION["Listid"];*/
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
@@ -37,7 +36,7 @@
         $uid=$_SESSION['UserID'];
         $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
-        header("location:index.php?Uid=$uid");
+        header("location:index.php");
     } 
     /*End database delete board button(SHOW MENU)*/
 
@@ -50,7 +49,7 @@
         }
         else
         {
-            /*$tocardid=*/$todo_card_description= $todo_card_label =$todo_card_labelcolor =$todo_card_duedate="";
+            $todo_card_description= $todo_card_label =$todo_card_labelcolor =$todo_card_duedate=$todo_card_member="";
 
         
             $todo_card_title = $_REQUEST['todocardtitle'];
@@ -58,20 +57,28 @@
             $todo_card_label = $_REQUEST['todocardlabel'];
             $todo_card_labelcolor = $_REQUEST['todocardlabelcolor'];
             $todo_card_duedate = $_REQUEST['todocardduedate'];
-            /*$todolistid=$_FETCH['Listid'];*/
-            if (condition) {
-                # code...
-            }
-                $todo_query="insert into tblcard values(null,'$todo_card_title','$todo_card_label','$todo_card_labelcolor','$todo_card_duedate',now(),'$todo_card_description',1,'$bid',1)";
-                $run_todo = mysqli_query($con,$todo_query);
+            $todo_card_member = $_REQUEST['todocardmember'];
+                
+            $todo_query="insert into tblcard values(null,'$todo_card_title','$todo_card_label','$todo_card_labelcolor','$todo_card_duedate',now(),'$todo_card_description',1,'$bid',1)";
+            $run_todo = mysqli_query($con,$todo_query);
+            $todo1= mysqli_insert_id($con);
 
-                if($run_todo)
+            if($run_todo)
+            {
+                if ($todo1) 
                 {
-                    header("location:board.php?Bid=$bid");
+                    $query1_todo="INSERT into tblmembercard values(null,'$todo_card_member','$todo1')";
+                    $run_todocard = mysqli_query($con,$query1_todo);
+                    if($run_todocard)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:board.php?Bid=$bid");
+                    }
                 }
-                else{
-                    echo "error".mysqli_error($con);   
-                } 
+            }
+            else{
+                echo "error".mysqli_error($con);   
+            } 
         } 
     }
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (TODO LIST)*/
@@ -85,20 +92,31 @@
         }
         else
         {
-            $doing_card_description= $doing_card_label =$doing_card_labelcolor =$doing_card_duedate="";
+            $doing_card_description= $doing_card_label =$doing_card_labelcolor =$doing_card_duedate=$doing_card_member="";
 
             $doing_card_title = $_REQUEST['doingcardtitle'];
             $doing_card_description = $_REQUEST['doingcarddescription'];
             $doing_card_label = $_REQUEST['doingcardlabel'];
             $doing_card_labelcolor = $_REQUEST['doingcardlabelcolor'];
             $doing_card_duedate = $_REQUEST['doingcardduedate'];
+            $doing_card_member = $_REQUEST['doingmember'];
 
             $doing_query="insert into tblcard values(null,'$doing_card_title','$doing_card_label','$doing_card_labelcolor','$doing_card_duedate',now(),'$doing_card_description',2,'$bid',1)";
             $run_doing = mysqli_query($con,$doing_query);
+            $doing1= mysqli_insert_id($con);
 
             if($run_doing)
             {
-                header("location:board.php?Bid=$bid");
+                if ($doing1) 
+                {
+                    $query1_doing="INSERT into tblmembercard values(null,'$doing_card_member','$doing1')";
+                    $run_doingcard = mysqli_query($con,$query1_doing);
+                    if($run_doingcard)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:board.php?Bid=$bid");
+                    }
+                }
             }
             else{
                 echo "error".mysqli_error($con);   
@@ -116,20 +134,31 @@
         }
         else
         {
-            $done_card_description= $done_card_label =$done_card_labelcolor =$done_card_duedate="";
+            $done_card_description= $done_card_label =$done_card_labelcolor =$done_card_duedate=$done_card_member="";
 
             $done_card_title = $_REQUEST['donecardtitle'];
             $done_card_description = $_REQUEST['donecarddescription'];
             $done_card_label = $_REQUEST['donecardlabel'];
             $done_card_labelcolor = $_REQUEST['donecardlabelcolor'];
             $done_card_duedate = $_REQUEST['donecardduedate'];
+            $done_card_member = $_REQUEST['donecardmember'];
 
             $done_query="insert into tblcard values(null,'$done_card_title','$done_card_label','$done_card_labelcolor','$done_card_duedate',now(),'$done_card_description',3,'$bid',1)";
             $run_done = mysqli_query($con,$done_query);
+            $done1= mysqli_insert_id($con);
 
             if($run_done)
             {
-                header("location:board.php?Bid=$bid");
+                if ($done1) 
+                {
+                    $query1_done="INSERT into tblmembercard values(null,'$done_card_member','$done1')";
+                    $run_donecard = mysqli_query($con,$query1_done);
+                    if($run_donecard)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:board.php?Bid=$bid");
+                    }
+                }
             }
             else{
                 echo "error".mysqli_error($con);   
@@ -318,23 +347,53 @@
                     </div>
                     <!--End Checklist Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                    <?php
 
-                    <!-- Start Member List Input -->                                                     
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Members</b></label>
-                        </div>
-                        <div class="col-75">
-                            <select id="member" name="cardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
+                        $selecttodomember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                        $result_selecttodomember = mysqli_query($con,$selecttodomember);
+                        if($result_selecttodomember ->num_rows!=0)
+                        {  
+                                $row_todomember=mysqli_fetch_array($result_selecttodomember);
+                                $btid=$row_todomember['Tid'];
+                                if ($btid !=1) 
+                                {
+                    ?>
+                                        <hr style="border-top: 1px solid #bbb;">
 
-                        </div>
-                    </div>
-                    <!-- End Member List Input --> 
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="todocardmember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $todomember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_todomember  = mysqli_query($con,$todomember );
+                                                    if($result_todomember ->num_rows!=0)
+                                                    {  
+                                                        while($row_todomember =$result_todomember ->fetch_array())  
+                                                        {
+                                                            $member=$row_todomember['Uid'];
+                                                            $fname=$row_todomember['Fname'];
+                                                            $lname=$row_todomember['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
                     
                     <hr style="border-top: 1px solid #bbb;">
 
@@ -517,23 +576,53 @@
                     </div>
                     <!--End Checklist Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                   <?php
 
-                    <!-- Start Member List Input -->                                                     
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Members</b></label>
-                        </div>
-                        <div class="col-75">
-                            <select id="member" name="doingcardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
+                        $selectdoingmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                        $result_selectdoingmember = mysqli_query($con,$selectdoingmember);
+                        if($result_selectdoingmember ->num_rows!=0)
+                        {  
+                                $row_doingmember=mysqli_fetch_array($result_selectdoingmember);
+                                $btid=$row_doingmember['Tid'];
+                                if ($btid !=1) 
+                                {
+                    ?>
+                                        <hr style="border-top: 1px solid #bbb;">
 
-                        </div>
-                    </div>
-                    <!-- End Member List Input --> 
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="doingmember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $doingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_doingmember  = mysqli_query($con,$doingmember );
+                                                    if($result_doingmember ->num_rows!=0)
+                                                    {  
+                                                        while($row_doingmember =$result_doingmember ->fetch_array())  
+                                                        {
+                                                            $member=$row_doingmember['Uid'];
+                                                            $fname=$row_doingmember['Fname'];
+                                                            $lname=$row_doingmember['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
                     
                     <hr style="border-top: 1px solid #bbb;">
 
@@ -718,23 +807,53 @@
                     </div>
                     <!--End Checklist Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                    <?php
 
-                    <!-- Start Member List Input -->                                                     
-                    <div class="row" style="padding-left:50px;" >
-                        <div class="col-25">     
-                            <label class="w3-text-black"><b>Members</b></label>
-                        </div>
-                        <div class="col-75">
-                            <select id="member" name="donecardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
+                        $selectdonemember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                        $result_selectdonemember = mysqli_query($con,$selectdonemember);
+                        if($result_selectdonemember ->num_rows!=0)
+                        {  
+                                $row_donemember=mysqli_fetch_array($result_selectdonemember);
+                                $btid=$row_donemember['Tid'];
+                                if ($btid !=1) 
+                                {
+                    ?>
+                                        <hr style="border-top: 1px solid #bbb;">
 
-                        </div>
-                    </div>
-                    <!-- End Member List Input --> 
+                                        <!-- Start Member List Input -->                                                     
+                                        <div class="row" style="padding-left:50px;" >
+                                            <div class="col-25">     
+                                                <label class="w3-text-black"><b>Members</b></label>
+                                            </div>
+                                            <div class="col-75">
+                                                <select id="country" name="donecardmember" style="width:320px; height: 45px;">
+                                                    <option value="0" disabled selected>--Select--</option>
+                                                <?php        
+                                                    $donemember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_donemember  = mysqli_query($con,$donemember );
+                                                    if($result_donemember ->num_rows!=0)
+                                                    {  
+                                                        while($row_donemember =$result_donemember ->fetch_array())  
+                                                        {
+                                                            $member=$row_donemember['Uid'];
+                                                            $fname=$row_donemember['Fname'];
+                                                            $lname=$row_donemember['Lname'];
+                                                ?>
+
+                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- End Member List Input --> 
+                        <?php 
+                                }
+                            }
+                        ?>
                     
                     <hr style="border-top: 1px solid #bbb;">
 
@@ -795,17 +914,6 @@
         </div>
     </div>
     <!-- End Done card details popup -->
-
-    <!-- start card details popup -->
-    <!-- <div id="TodoCardDetailsForm" class="modal" >
-        <div class="modal-content" style="width: 50%; height: 80%; overflow: auto;">
-            <div class="modal-body">
-                
-            </div> 
-
-        </div>
-    </div> -->
-    <!-- End card details popup -->
 
 </head>
 
@@ -871,7 +979,11 @@
                             <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                                 <center>
                                     <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                                    <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
+                                    <small style="color: white;">
+                                        <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                            <strong><?php echo $tname; ?></strong>
+                                        </a>
+                                    </small>
                                 </center>
                             </div>
 
@@ -997,12 +1109,23 @@
                             <div class="dropdown w3-right">
                                 <div class="w3-dropdown-click w3-right">
                                     <select class="w3-button " id="country" name="country" style="height: 35px; width: 140px;">
-                                        <option value="visibility" selected disabled >Members List</option>
-                                        <option value="todo" disabled >Member1</option>
-                                        <option value="doing"disabled>Member2</option>
-                                        <option value="todo" disabled>Member3</option>
-                                        <option value="todo" disabled>Member4</option>
-                                        <option value="todo" disabled>Member5</option>
+                                        <option value="Members" selected disabled >Members List</option>
+                                        <?php        
+                                            $boardmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                            $result_boardmember = mysqli_query($con,$boardmember);
+                                            if($result_boardmember->num_rows!=0)
+                                                {  
+                                                    while($row_boardmember=$result_boardmember->fetch_array())  
+                                                    {
+                                                        $member=$row_boardmember['Uid'];
+                                                        $fname=$row_boardmember['Fname'];
+                                                        $lname=$row_boardmember['Lname'];
+                                            ?>
+                                                        <option value="<?php echo $member;?>" disabled ><?php echo $fname." ".$lname;?></option>
+                                            <?php
+                                                    }
+                                                }
+                                            ?>
                                     </select>
                                 </div>
                             </div>
@@ -1027,19 +1150,6 @@
             <!-- start trello container after second header  -->
             <div class="trello-container">
                 <div class="trello-board container-fluid page__container">
-
-                    <script>
-                        function openTodoCardDetailsForm(cardid) 
-                        {
-                            var card=cardid;
-                            console.log(card);
-                            document.getElementById("TodoCardDetailsForm").style.display = "flex";
-                        }
-                        function closeTodoCardDetailsForm() 
-                        {
-                            document.getElementById("TodoCardDetailsForm").style.display = "none";
-                        }
-                    </script>
 
                     <!-- Start Todo list-->
                     <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3"]'>
@@ -1073,50 +1183,54 @@
   
                                 ?>
                                     <!-- Start Todo card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
-                                                <span class="badge ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                    <?php echo $cardlabel;?>   
-                                                </span> </p>
-                                            <br>
-                                    <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due date</span>
+                                                <?php
+                                                    if ($cardlabel!="") 
+                                                    {
+                                                ?>
+                                                        <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                            <?php echo $cardlabel;?>
+                                                        </span>
+                                                <?php
+                                                    }
+                                                ?>    
                                             </p>
-                                    <?php
-                                        }
-                                        else{
-                                    ?>
+                                            <br>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
+                                            <?php
+                                                $selecttodomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                $result_todomem = mysqli_query($con,$selecttodomem);
+                                                if($result_todomem->num_rows!=0)
+                                                {  
+                                                    $row_todomem=mysqli_fetch_array($result_todomem);
+                                                    $ufname=$row_todomem['Fname'];
+                                                    $ulname=$row_todomem['Lname'];
+                                                    $upropic=$row_todomem['ProfilePic'];
 
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
+                                                    if($upropic=="" || !file_exists("images/profile/$upropic"))
+                                                    {
+                                                        $upropic="No.png";
+                                                    }
+                                                            
+                                            ?>
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $ufname." ".$ulname;?>">
+                                                                    <img src="images/profile/<?php echo $upropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            <?php 
+                                                }
+                                            ?>
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End Todo card 1-->
                                 <?php
@@ -1174,51 +1288,55 @@
                                 ?>
 
                                     <!-- Start Doing card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
-                                                <span class="badge ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                    <?php echo $cardlabel;?>   
-                                                </span> 
+                                                <?php
+                                                    if ($cardlabel!="") 
+                                                    {
+                                                ?>
+                                                        <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                            <?php echo $cardlabel;?>
+                                                        </span>
+                                                <?php
+                                                    }
+                                                ?>   
                                             </p>
                                             <br>
-                                    <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3" >Due Date</span>
-                                            </p>
-                                    <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
 
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
+                                            <?php
+                                                $selectdoingmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                $result_doingmem = mysqli_query($con,$selectdoingmem);
+                                                if($result_doingmem->num_rows!=0)
+                                                {  
+                                                    $row_doingmem=mysqli_fetch_array($result_doingmem);
+                                                    $udoingfname=$row_doingmem['Fname'];
+                                                    $udoinglname=$row_doingmem['Lname'];
+                                                    $udoingpropic=$row_doingmem['ProfilePic'];
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
+                                                    if($udoingpropic=="" || !file_exists("images/profile/$udoingpropic"))
+                                                    {
+                                                        $udoingpropic="No.png";
+                                                    }
+                                                            
+                                            ?>
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $udoingfname." ".$udoinglname;?>">
+                                                                    <img src="images/profile/<?php echo $udoingpropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            <?php 
+                                                }
+                                            ?>
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End Doing card 1-->
                                 <?php 
@@ -1276,50 +1394,56 @@
 
 
                                     <!-- Start Done card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
-                                                <span class="badge ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                    <?php echo $cardlabel;?>   
-                                                </span>                                               
+                                                <?php
+                                                    if ($cardlabel!="") 
+                                                    {
+                                                ?>
+                                                        <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                            <?php echo $cardlabel;?>
+                                                        </span>
+                                                <?php
+                                                    }
+                                                ?>                                                 
                                             </p>
                                             <br>
-                                    <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3" >Due Date</span>
-                                            </p>
-                                    <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
+                                            <?php
+                                                $selectdonemem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                $result_donemem = mysqli_query($con,$selectdonemem);
+                                                if($result_donemem->num_rows!=0)
+                                                {  
+                                                    $row_donemem=mysqli_fetch_array($result_donemem);
+                                                    $ufname=$row_donemem['Fname'];
+                                                    $ulname=$row_donemem['Lname'];
+                                                    $upropic=$row_donemem['ProfilePic'];
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
+                                                    if($upropic=="" || !file_exists("images/profile/$upropic"))
+                                                    {
+                                                        $upropic="No.png";
+                                                    }
+                                                            
+                                            ?>
 
-                                                </div>
-                                            </div>
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $ufname." ".$ulname;?>">
+                                                                    <img src="images/profile/<?php echo $upropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            <?php 
+                                                }
+                                            ?>
+
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End Done card 1-->
                                 <?php 

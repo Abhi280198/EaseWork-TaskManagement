@@ -195,7 +195,8 @@
                                         <select name = "Boarddropdown">
                                             <!-- php code Team -->
                                             <?php 
-                                                $select_team="select * from tblteam where IsActive=1 AND Uid IN (1,'".$_SESSION['UserID']."')";
+                                                $uteam=$_SESSION['UserID'];
+                                                $select_team="SELECT * from tblteam where IsActive=1 And Tid=1 OR Tid IN (SELECT DISTINCT Tid from tblteammember where Uid='$uteam')";
                                                 $Execute_select_team=mysqli_query($con,$select_team)or die(mysqli_error($con));
                                                 while($fetch_team=mysqli_fetch_array($Execute_select_team))
                                                 {

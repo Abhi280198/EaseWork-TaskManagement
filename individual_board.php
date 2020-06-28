@@ -161,7 +161,7 @@
                             ?>
                                 <h4 class="card-title m-0">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    No Individual Boards available. <a href="#" onclick="openForm()">Create Board.</a>
+                                    No Individual Boards available.
                                 </h4>
                             <?php
                                 }

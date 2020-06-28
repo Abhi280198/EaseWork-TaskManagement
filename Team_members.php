@@ -232,84 +232,22 @@
                                             </div>
                                             
                                             
-                                                <div class="col-auto d-flex align-items-center">
+                                                <div class="col-auto d-flex align-items-center" style="padding-right: 100px;">
 
                                                 <?php
                                                     if ($Bid=="") 
                                                     {
                                                 ?>
-                                                    <a href="#" class="text-body" onclick="show()">On <?php echo $count-1; ?> Boards</a>
+                                                    <a href="Team_member_addremove.php?Tid=<?php echo $Tid; ?>&Uid=<?php echo $Uid; ?>" class="text-body" >On <?php echo $count-1; ?> Boards</a>
                                                 <?php
                                                     }
                                                     else
                                                     {
                                                 ?>
-                                                    <a href="#" class="text-body" onclick="show()">On <?php echo $count; ?> Boards</a>
+                                                    <a href="Team_member_addremove.php?Tid=<?php echo $Tid; ?>&Uid=<?php echo $Uid; ?>" class="text-body" >On <?php echo $count; ?> Boards</a>
                                                 <?php
                                                     }
                                                 ?>
-
-                                                    <!-- start popover -->
-                                                    
-
-                                                    <div class="main-popover" id="board-popup">
-                                                        <div class="main-container">
-                                                            <span>Team Boards</span>
-                                                            <button type="button" class="closeButton" onclick="hidePopover()">Close</button> 
-                                                            <hr>
-                                                        </div>
-                                                        <div>
-                                                            <p><?php echo $FirstName; ?><?php echo $LastName; ?> is a member of following team boards:</p>
-                                                        </div>
-                                                        <ul class="popover-ul">
-
-                                                        <?php
-                                                        if($Uid)
-                                                        {
-                                                            $boarddisplay = "SELECT * FROM tblboard where Tid=$Tid AND Uid=$Uid";
-                                                            $resboard=mysqli_query($con,$boarddisplay);
-                                                            if($resboard->num_rows!=0)
-                                                            {
-                                                                while($rowresboard=$resboard->fetch_array())  
-                                                                {  
-                                                                    $backboard=$rowresboard['Background'];
-                                                                    if($backboard=="" || !file_exists("$backboard"))
-                                                                    {
-                                                                        $backboard="images/backgrounddefault.jpg";
-                                                                    } 
-                                                        ?>
-                                                            <div>
-                                                                <li class="popover-ul-li">
-                                                                    <a class="popover-a" href="#" style="text-decoration: none;">
-                                                                        <div>
-                                                                            <span class="avatar avatar-xxs avatar-online mr-2">
-                                                                                <img src="<?php echo $backboard;?>" alt="Avatar" class="avatar-img rounded-circle">
-                                                                            </span>
-                                                                            <span ><?php echo $rowresboard['Btitle']; ?></span>
-                                                                        </div>  
-                                                                    </a>
-                                                                </li>
-                                                            </div>
-                                                        <?php 
-                                                                }
-                                                            }
-                                                        }
-                                                        ?>
-                                                        </ul>
-
-                                                    </div>
-                                                    
-
-                                                    <!-- END popover -->
-                                                    <script>
-                                                        function show() {
-                                                          document.getElementById("board-popup").style.display = "block";
-                                                        }
-
-                                                        function hidePopover() {
-                                                          document.getElementById("board-popup").style.display = "none";
-                                                        }
-                                                    </script>
 
                                                 </div>
 
@@ -327,9 +265,8 @@
                                                         // if($Uid==$teamUid)
                                                         // {
                                                 ?>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center">
-                                                    
-                                                    <a href="#" class="text-body">Admin</a>
+                                                <div class="col-auto align-items-center" style="padding-right: 160px;">
+                                                    <span class="text-body">Admin</span>
                                                 </div>
                                                 
                                                 <?php
@@ -337,15 +274,15 @@
                                                     else{
 
                                                 ?>
-                                                <div class="div-buttons" class="col-auto d-flex align-items-center">
+                                                <div class="col-auto align-items-center" style="padding-right: 150px;">
                                                     
-                                                    <a href="#" class="text-body">Member</a>
+                                                    <span class="text-body">Member</span>
                                                 </div>
                                                 <?Php
                                                     }
                                                 ?>
                                                 <!-- ----------------Leave or Remove----------------- -->
-
+<!-- 
                                                 <?php
                                                 
                                                 if($Uid==$_SESSION['UserID'])
@@ -367,7 +304,7 @@
                                                 </div>
                                                 <?php
                                                     }
-                                                ?>
+                                                ?> -->
                                             
                                         </div>
                                     </div>
