@@ -44,7 +44,7 @@ include_once("DbConnection.php");
         }
         else
         {
-            $Syllabus1description= $Syllabus1label =$Syllabus1labelcolor =$Syllabus1duedate="";
+            $Syllabus1description= $Syllabus1label =$Syllabus1labelcolor =$Syllabus1duedate= $Syllabus1member="";
 
             $Syllabus1title = $_REQUEST['SyllabusRemainingTitle'];
             $Syllabus1description = $_REQUEST['SyllabusRemainingdescription'];
@@ -54,15 +54,25 @@ include_once("DbConnection.php");
             $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
 
             $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
-                $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
+            $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
+            $syllabus1= mysqli_insert_id($con);
 
-                if($run_Syllabus1)
+            if($run_Syllabus1)
+            {
+                if ($syllabus1) 
                 {
-                    header("location:Education_template.php?Bid=$bid");
+                    $query1_sremain="INSERT into tblmembercard values(null,'$Syllabus1member','$syllabus1')";
+                    $run_sremain = mysqli_query($con,$query1_sremain);
+                    if($run_sremain)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:Education_template.php?Bid=$bid");
+                    }
                 }
-                else{
-                    echo "error".mysqli_error($con);   
-                } 
+            }
+            else{
+                echo "error".mysqli_error($con);   
+            } 
         } 
     }
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Remaining LIST)*/
@@ -85,16 +95,26 @@ include_once("DbConnection.php");
             $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
             $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
 
-            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',2)";
-                $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1)";
+            $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
+            $syllabus2= mysqli_insert_id($con);
 
-                if($run_Syllabus2)
+            if($run_Syllabus2)
+            {
+                if ($syllabus2) 
                 {
-                    header("location:Education_template.php?Bid=$bid");
+                    $query2_stoday="INSERT into tblmembercard values(null,'$Syllabus2member','$syllabus2')";
+                    $run_stoday = mysqli_query($con,$query2_stoday);
+                    if($run_stoday)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:Education_template.php?Bid=$bid");
+                    }
                 }
-                else{
-                    echo "error".mysqli_error($con);   
-                } 
+            }
+            else{
+                echo "error".mysqli_error($con);   
+            } 
         } 
     }
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Today LIST)*/
@@ -117,16 +137,26 @@ include_once("DbConnection.php");
             $Syllabus3duedate = $_REQUEST['SyllabusCoveredduedate'];
             $Syllabus3member = $_REQUEST['SyllabusCoveredMember'];
 
-            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',3)";
-                $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
+            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1)";
+            $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
+            $syllabus3= mysqli_insert_id($con);
 
-                if($run_Syllabus3)
+            if($run_Syllabus3)
+            {
+                if ($syllabus3) 
                 {
-                    header("location:Education_template.php?Bid=$bid");
+                    $query3_stoday="INSERT into tblmembercard values(null,'$Syllabus3member','$syllabus3')";
+                    $run_scover = mysqli_query($con,$query3_stoday);
+                    if($run_scover)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:Education_template.php?Bid=$bid");
+                    }
                 }
-                else{
-                    echo "error".mysqli_error($con);   
-                } 
+            }
+            else{
+                echo "error".mysqli_error($con);   
+            } 
         } 
     }
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
@@ -149,16 +179,26 @@ include_once("DbConnection.php");
             $Syllabus4duedate = $_REQUEST['SyllabusAssignmentduedate'];
             $Syllabus4member = $_REQUEST['SyllabusAssignmentMember'];
 
-            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',4)";
-                $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
+            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1)";
+            $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
+            $syllabus4= mysqli_insert_id($con);
 
-                if($run_Syllabus4)
+            if($run_Syllabus4)
+            {
+                if ($syllabus4) 
                 {
-                    header("location:Education_template.php?Bid=$bid");
+                    $query4_stoday="INSERT into tblmembercard values(null,'$Syllabus4member','$syllabus4')";
+                    $run_sassign = mysqli_query($con,$query4_stoday);
+                    if($run_sassign)
+                    {
+                        echo "Data Inserted Successfully..";
+                        header("location:Education_template.php?Bid=$bid");
+                    }
                 }
-                else{
-                    echo "error".mysqli_error($con);   
-                } 
+            }
+            else{
+                echo "error".mysqli_error($con);   
+            }
         } 
     }
     /*END DATABASE INSERT DATA THROUGH ADD CARD BUTTON IN (Syllabus Covered LIST)*/
@@ -581,12 +621,12 @@ include_once("DbConnection.php");
 
                         <?php
 
-                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
-                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
-                            if($result_selectboardmember ->num_rows!=0)
+                            $select2boardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_2selectboardmember = mysqli_query($con,$select2boardmember);
+                            if($result_2selectboardmember ->num_rows!=0)
                             {  
-                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
-                                $btid=$row_Remainingmember['Tid'];
+                                $row_2Remainingmember=mysqli_fetch_array($result_2selectboardmember);
+                                $btid=$row_2Remainingmember['Tid'];
                                 if ($btid !=1) 
                                 {
                         ?>
@@ -601,18 +641,18 @@ include_once("DbConnection.php");
                                                 <select id="country" name="SyllabusTodayMember" style="width:320px; height: 45px;">
                                                     <option value="0" disabled selected>--Select--</option>
                                                 <?php        
-                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
-                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
-                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    $Remaining2member = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remaining2member  = mysqli_query($con,$Remaining2member );
+                                                    if($result_Remaining2member ->num_rows!=0)
                                                     {  
-                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        while($row_Remaining2member =$result_Remaining2member ->fetch_array())  
                                                         {
-                                                            $member=$row_Remainingmember ['Uid'];
-                                                            $fname=$row_Remainingmember ['Fname'];
-                                                            $lname=$row_Remainingmember ['Lname'];
+                                                            $member2=$row_Remaining2member ['Uid'];
+                                                            $fname2=$row_Remaining2member ['Fname'];
+                                                            $lname2=$row_Remaining2member ['Lname'];
                                                 ?>
 
-                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                            <option value="<?php echo $member2;?>"><?php echo $fname2." ".$lname2;?></option>
                                                 <?php
                                                         }
                                                     }
@@ -812,12 +852,12 @@ include_once("DbConnection.php");
 
                         <?php
 
-                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
-                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
-                            if($result_selectboardmember ->num_rows!=0)
+                            $selectboardmember3 = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember3 = mysqli_query($con,$selectboardmember3);
+                            if($result_selectboardmember3 ->num_rows!=0)
                             {  
-                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
-                                $btid=$row_Remainingmember['Tid'];
+                                $row_Remainingmember3=mysqli_fetch_array($result_selectboardmember3);
+                                $btid=$row_Remainingmember3['Tid'];
                                 if ($btid !=1) 
                                 {
                         ?>
@@ -829,21 +869,21 @@ include_once("DbConnection.php");
                                                 <label class="w3-text-black"><b>Members</b></label>
                                             </div>
                                             <div class="col-75">
-                                                <select id="country" name="SyllabuCoveredMember" style="width:320px; height: 45px;">
+                                                <select id="country" name="SyllabusCoveredMember" style="width:320px; height: 45px;">
                                                     <option value="0" disabled selected>--Select--</option>
                                                 <?php        
-                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
-                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
-                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    $Remaining3member = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remaining3member  = mysqli_query($con,$Remaining3member );
+                                                    if($result_Remaining3member ->num_rows!=0)
                                                     {  
-                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        while($row_Remaining3member =$result_Remaining3member ->fetch_array())  
                                                         {
-                                                            $member=$row_Remainingmember ['Uid'];
-                                                            $fname=$row_Remainingmember ['Fname'];
-                                                            $lname=$row_Remainingmember ['Lname'];
+                                                            $member3=$row_Remaining3member['Uid'];
+                                                            $fname3=$row_Remaining3member['Fname'];
+                                                            $lname3=$row_Remaining3member['Lname'];
                                                 ?>
 
-                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                            <option value="<?php echo $member3;?>"><?php echo $fname3." ".$lname3;?></option>
                                                 <?php
                                                         }
                                                     }
@@ -1043,12 +1083,12 @@ include_once("DbConnection.php");
 
                         <?php
 
-                            $selectboardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
-                            $result_selectboardmember = mysqli_query($con,$selectboardmember);
-                            if($result_selectboardmember ->num_rows!=0)
+                            $selectboardmember4 = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
+                            $result_selectboardmember4 = mysqli_query($con,$selectboardmember4);
+                            if($result_selectboardmember4 ->num_rows!=0)
                             {  
-                                $row_Remainingmember=mysqli_fetch_array($result_selectboardmember);
-                                $btid=$row_Remainingmember['Tid'];
+                                $row_Remainingmember4=mysqli_fetch_array($result_selectboardmember4);
+                                $btid=$row_Remainingmember4['Tid'];
                                 if ($btid !=1) 
                                 {
                         ?>
@@ -1060,21 +1100,21 @@ include_once("DbConnection.php");
                                                 <label class="w3-text-black"><b>Members</b></label>
                                             </div>
                                             <div class="col-75">
-                                                <select id="country" name="SyllabuAssignmentMember" style="width:320px; height: 45px;">
-                                                    <option value="0" disabled selected>--Select--</option>
+                                                <select  name="SyllabusAssignmentMember" style="width:320px; height: 45px;">
+                                                        <option value="0" disabled selected>--Select--</option>
                                                 <?php        
-                                                    $Remainingmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
-                                                    $result_Remainingmember  = mysqli_query($con,$Remainingmember );
-                                                    if($result_Remainingmember ->num_rows!=0)
+                                                    $Remainingmember4 = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$bid)";  
+                                                    $result_Remainingmember4  = mysqli_query($con,$Remainingmember4 );
+                                                    if($result_Remainingmember4 ->num_rows!=0)
                                                     {  
-                                                        while($row_Remainingmember =$result_Remainingmember ->fetch_array())  
+                                                        while($row_Remainingmember4 =$result_Remainingmember4->fetch_array())  
                                                         {
-                                                            $member=$row_Remainingmember ['Uid'];
-                                                            $fname=$row_Remainingmember ['Fname'];
-                                                            $lname=$row_Remainingmember ['Lname'];
+                                                            $member4=$row_Remainingmember4['Uid'];
+                                                            $fname4=$row_Remainingmember4['Fname'];
+                                                            $lname4=$row_Remainingmember4['Lname'];
                                                 ?>
 
-                                                            <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                                            <option value="<?php echo $member4;?>"><?php echo $fname4." ".$lname4;?></option>
                                                 <?php
                                                         }
                                                     }
@@ -1549,7 +1589,11 @@ include_once("DbConnection.php");
                         <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                             <center>
                                 <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                                <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
+                                <small style="color: white;">
+                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                        <strong><?php echo $tname; ?></strong>
+                                    </a>
+                                </small>
                             </center>
                         </div>
 
@@ -1734,14 +1778,25 @@ include_once("DbConnection.php");
                                     ?>
 
                                                 <!-- Start Syllabus remaining card 1-->
+<<<<<<< HEAD
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
                                                     <a href="cards.php?Cardid=<?php echo $cardid;?>">
+=======
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
-                                                            <strong><?php echo $cardname;?></strong> 
-                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                                    <?php echo $cardlabel;?>
-                                                                </span>                                               
+                                                            <strong><?php echo $cardname;?></strong>
+                                                            <?php 
+                                                                if ($cardlabel!="") 
+                                                                {
+                                                            ?> 
+                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                        <?php echo $cardlabel;?>
+                                                                    </span>   
+                                                            <?php
+                                                                }
+                                                            ?>                                            
                                                         </p>
                                                         <br>
                                                         <?php
@@ -1764,13 +1819,34 @@ include_once("DbConnection.php");
                                         }
                                     ?>
 
-                                                        <div class="media align-items-center" style="float: right;">
-                                                            <div class=" mr-2 avatar-group" >
-                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                    <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <?php
+                                                            $selectrmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                            $result_rmem = mysqli_query($con,$selectrmem);
+                                                            if($result_rmem->num_rows!=0)
+                                                            {  
+                                                                $row_Rmember=mysqli_fetch_array($result_rmem);
+                                                                $ufname=$row_Rmember['Fname'];
+                                                                $ulname=$row_Rmember['Lname'];
+                                                                $upropic=$row_Rmember['ProfilePic'];
+
+                                                                if($upropic=="" || !file_exists("images/profile/$upropic"))
+                                                                {
+                                                                    $upropic="No.png";
+                                                                }
+                                                               
+                                                        ?>
+
+                                                                    <div class="media align-items-center" style="float: right;">
+                                                                        <div class=" mr-2 avatar-group" >
+                                                                            <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $ufname." ".$ulname;?>">
+                                                                                <img src="images/profile/<?php echo $upropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                        <?php 
+                                                            }
+                                                        ?>
+
                                                     </div>
                                                 </div>
                                                 <!-- End Syllabus remaining card 1-->
@@ -1829,14 +1905,25 @@ include_once("DbConnection.php");
 
 
                                         <!-- Start Syllabus to be covered today card 1-->
+<<<<<<< HEAD
                                         <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
                                             <a href="cards.php?Cardid=<?php echo $cardid;?>">
+=======
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
-                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                                    <?php echo $cardlabel;?>
-                                                                </span>                                               
+                                                            <?php 
+                                                                if ($cardlabel!="") 
+                                                                {
+                                                            ?> 
+                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                        <?php echo $cardlabel;?>
+                                                                    </span>   
+                                                            <?php
+                                                                }
+                                                            ?>                                             
                                                         </p>
                                                         <br>
                                                         <?php
@@ -1854,6 +1941,7 @@ include_once("DbConnection.php");
                                                             <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                             <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                         </p>
+<<<<<<< HEAD
                                                     <?php
                                         }
                                     ?>
@@ -1864,6 +1952,37 @@ include_once("DbConnection.php");
                                                                 </div>
                                                             </div>
                                                         </div>
+=======
+
+                                                       <?php
+                                                            $selecttomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                            $result_tomem = mysqli_query($con,$selecttomem);
+                                                            if($result_tomem->num_rows!=0)
+                                                            {  
+                                                                $row_tomember=mysqli_fetch_array($result_tomem);
+                                                                $tofname=$row_tomember['Fname'];
+                                                                $tolname=$row_tomember['Lname'];
+                                                                $topropic=$row_tomember['ProfilePic'];
+
+                                                                if($topropic=="" || !file_exists("images/profile/$topropic"))
+                                                                {
+                                                                    $topropic="No.png";
+                                                                }
+                                                               
+                                                        ?>
+
+                                                                    <div class="media align-items-center" style="float: right;">
+                                                                        <div class=" mr-2 avatar-group" >
+                                                                            <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $tofname." ".$tolname;?>">
+                                                                                <img src="images/profile/<?php echo $topropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                        <?php 
+                                                            }
+                                                        ?>
+
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     </div>
                                                 </div>
                                         <!-- End Syllabus to be covered today card 1-->
@@ -1923,14 +2042,25 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus covered card 1-->
+<<<<<<< HEAD
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
                                                     <a href="cards.php?Cardid=<?php echo $cardid;?>">
+=======
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
-                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                                            <?php echo $cardlabel;?>
-                                                                        </span>                                               
+                                                                    <?php 
+                                                                        if ($cardlabel!="") 
+                                                                        {
+                                                                    ?> 
+                                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                                <?php echo $cardlabel;?>
+                                                                            </span>   
+                                                                    <?php
+                                                                        }
+                                                                    ?>                                              
                                                                 </p>
                                                                 <br>
                                                                 <?php
@@ -1953,13 +2083,34 @@ include_once("DbConnection.php");
                                         }
                                     ?>
 
-                                                                <div class="media align-items-center" style="float: right;">
-                                                                    <div class=" mr-2 avatar-group" >
-                                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+                                                        <?php
+                                                            $selectcmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                            $result_cmem = mysqli_query($con,$selectcmem);
+                                                            if($result_cmem->num_rows!=0)
+                                                            {  
+                                                                $row_cmember=mysqli_fetch_array($result_cmem);
+                                                                $cfname=$row_cmember['Fname'];
+                                                                $clname=$row_cmember['Lname'];
+                                                                $cpropic=$row_cmember['ProfilePic'];
+
+                                                                if($cpropic=="" || !file_exists("images/profile/$cpropic"))
+                                                                {
+                                                                    $cpropic="No.png";
+                                                                }
+                                                               
+                                                        ?>
+
+                                                                    <div class="media align-items-center" style="float: right;">
+                                                                        <div class=" mr-2 avatar-group" >
+                                                                            <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $cfname." ".$clname;?>">
+                                                                                <img src="images/profile/<?php echo $cpropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                        <?php 
+                                                            }
+                                                        ?>
+
                                                             </div>
                                                         </div>
                                                 <!-- End Syllabus covered card 1-->
@@ -2019,14 +2170,25 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus Assignments card 1-->
+<<<<<<< HEAD
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
                                                     <a href="cards.php?Cardid=<?php echo $cardid;?>">
+=======
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
-                                                                    <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
-                                                                            <?php echo $cardlabel;?>
-                                                                        </span>                                               
+                                                                    <?php 
+                                                                        if ($cardlabel!="") 
+                                                                        {
+                                                                    ?> 
+                                                                            <span class="badge badge-success ml-auto" style="font-size: 12px; margin-right: 20px; height:25px; background-color: <?php echo $cardlabelcolor;?>">
+                                                                                <?php echo $cardlabel;?>
+                                                                            </span>   
+                                                                    <?php
+                                                                        }
+                                                                    ?>                                               
                                                                 </p>
                                                                 <br>
                                                                 <?php
@@ -2045,6 +2207,7 @@ include_once("DbConnection.php");
                                                                     <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                                     <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                                 </p>
+<<<<<<< HEAD
                                                 <?php
                                         }
                                     ?>
@@ -2052,9 +2215,36 @@ include_once("DbConnection.php");
                                                                     <div class=" mr-2 avatar-group" >
                                                                         <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
                                                                             <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
+=======
+
+                                                        <?php
+                                                            $selectassmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
+                                                            $result_assmem = mysqli_query($con,$selectassmem);
+                                                            if($result_assmem->num_rows!=0)
+                                                            {  
+                                                                $row_assmember=mysqli_fetch_array($result_assmem);
+                                                                $assfname=$row_assmember['Fname'];
+                                                                $asslname=$row_assmember['Lname'];
+                                                                $asspropic=$row_assmember['ProfilePic'];
+
+                                                                if($asspropic=="" || !file_exists("images/profile/$asspropic"))
+                                                                {
+                                                                    $asspropic="No.png";
+                                                                }
+                                                               
+                                                        ?>
+
+                                                                    <div class="media align-items-center" style="float: right;">
+                                                                        <div class=" mr-2 avatar-group" >
+                                                                            <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $assfname." ".$asslname;?>">
+                                                                                <img src="images/profile/<?php echo $asspropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                            </div>
+>>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                        <?php 
+                                                            }
+                                                        ?>
                                                             </div>
                                                         </div>
                                                 <!-- End Syllabus Assignments card 1-->

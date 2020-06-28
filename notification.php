@@ -52,7 +52,7 @@
                     <?php
 
                                     $user=$_SESSION['Emailid'];
-                                    $select_notification="SELECT * from tblnotification WHERE NotificationEmail='$user'";
+                                    $select_notification="SELECT * from tblnotification WHERE NotificationEmail='$user' ORDER BY Date DESC,Time ASC";
                                     $result_notification=mysqli_query($con,$select_notification) or die(mysqli_error($con));
                                     if($result_notification->num_rows!=0)
                                     {
