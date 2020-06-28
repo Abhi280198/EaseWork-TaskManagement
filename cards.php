@@ -25,25 +25,22 @@ if (isset($_POST['carddetails'])){
 <head>
 	<title>EaseWork- Profile</title>
     <?php include_once('csslinks.php');?>
-
     <link type="text/css" href="assets/css/board.css" rel="stylesheet">
-
 </head>
+
 <body class="layout-default">
 
 	<div class="preloader"></div>
 
     <!-- Header Layout -->
     <div class="mdk-header-layout js-mdk-header-layout">
-
-        <!-- Header -->
+    <!-- Header -->
 
         <?php include_once('header1.php');?>
         <!-- // END Header -->
 
         <!-- Header Layout Content -->
         <div class="mdk-header-layout__content">
-
             <div class="mdk-drawer-layout js-mdk-drawer-layout" data-push data-responsive-width="992px">
                 <div class="mdk-drawer-layout__content page">
 
@@ -61,23 +58,22 @@ if (isset($_POST['carddetails'])){
                     </div>
                     <!--  End subTitle details -->
 
-    <!-- Fetch Details -->
-        <?php
+                    <!-- Fetch Details -->
+                    <?php
+                        $card_query="select * from tblcard where Cardid='".$_GET['Cardid']."'";
+                        $Execute=mysqli_query($con,$card_query) or die(mysqli_error($con));
+                        $fetch=mysqli_fetch_array($Execute);
 
-        $card_query="select * from tblcard where Cardid='".$_GET['Cardid']."'";
-        $Execute=mysqli_query($con,$card_query) or die(mysqli_error($con));
-        $fetch=mysqli_fetch_array($Execute);
-
-            $cardid = $fetch['Cardid'];
-            $cardname = $fetch['CardName'];
-            $carddescription=$fetch['Description'];
-            $cardlabel = $fetch['Label'];
-            $cardlabelcolor = $fetch['LabelColor'];       
-            $cardduedate = $fetch['DueDate'];
-            $listid=$fetch['Listid'];
-        ?>
-
-    <!-- Fetch Details -->
+                            $cardid = $fetch['Cardid'];
+                            $cardname = $fetch['CardName'];
+                            $carddescription=$fetch['Description'];
+                            $cardlabel = $fetch['Label'];
+                            $cardlabelcolor = $fetch['LabelColor'];       
+                            $cardduedate = $fetch['DueDate'];
+                            $listid=$fetch['Listid'];
+                    ?>
+                    <!-- Fetch Details -->
+                    
 <!-- start card details to be displayed and update -->
     <div class="container-fluid page__container">
         <div class="card card-form">
