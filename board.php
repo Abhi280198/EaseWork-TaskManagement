@@ -37,7 +37,7 @@
         $uid=$_SESSION['UserID'];
         $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
-        header("location:index.php?Uid=$uid");
+        header("location:index.php");
     } 
     /*End database delete board button(SHOW MENU)*/
 

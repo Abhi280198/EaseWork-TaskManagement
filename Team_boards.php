@@ -1,6 +1,19 @@
 <?php 
     include_once("DbConnection.php");
     $Tid=$_GET['Tid'];
+
+    /*Start database delete board button(SHOW MENU)*/
+    if (isset($_REQUEST['deleteteamYes'])) 
+    {
+        $delete_team = "DELETE FROM tblteam WHERE Tid=$Tid";
+        $Exe_delete_team=mysqli_query($con,$delete_team)or die(mysqli_error($con));
+        $delete_teamboard = "DELETE FROM tblboard WHERE Tid=$Tid";
+        $Exe_delete_teamboard=mysqli_query($con,$delete_teamboard)or die(mysqli_error($con));
+        $delete_teammember = "DELETE FROM tblteammember WHERE Tid=$Tid";
+        $Exe_delete_teammember=mysqli_query($con,$delete_teammember)or die(mysqli_error($con));
+        header("location:index.php");
+    } 
+    /*End database delete board button(SHOW MENU)*/
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -9,6 +22,22 @@
     
     <title>EaseWork- Team Boards</title>
     <?php include_once('csslinks.php');?>
+
+     <!-- start delete team popup -->
+    <div id="deleteteam" class="modal">
+        <div class="modal-content" style="width: 50%; height: 250px;">
+            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                <div>
+                    <h3><strong>Are you sure ?</strong></h3>
+                </div><br><br>
+                <center><div class="canclebtn">
+                    <button type="submit" name="deleteteamYes" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn cancel" onclick="deleteteamclose()" >No</button>
+                </div></center>
+            </form>
+        </div>
+    </div>
+    <!-- End show delete team popup -->
 
 </head>
 
@@ -49,6 +78,18 @@
                                 <h1 class="m-0">Boards</h1>
                             </div>
                             <a href="Template_dashboard.php?Uid=<?php echo $_SESSION['UserID'];?>" class="btn btn-success ml-3">Explore Templates</a>
+                            <button type="button" name="teamdelete"  onclick="deleteteamopen()" class="btn btn-danger ml-3" style="width:15%;">Delete Team</a>
+
+                            <!-- Start card details popup fuction-->
+                            <script>
+                                function deleteteamopen() {
+                                    document.getElementById("deleteteam").style.display = "flex";
+                                }
+                                function deleteteamclose() {
+                                    document.getElementById("deleteteam").style.display = "none";
+                                }
+                            </script>
+                            <!-- End card details popup fuction-->
                         </div>
                     </div>
                     <!--End Bold header section-->
@@ -158,7 +199,7 @@
                             ?>
                                     <h4 class="card-title m-0">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        No Boards available for this team. <a href="#" onclick="openForm()">Create Board.</a>
+                                        No Boards available for this team.
                                     </h4>
                             <?php
                                 }
