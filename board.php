@@ -258,11 +258,11 @@
                     </div>
                     <!-- End Description Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
-
+                   <!--  <hr style="border-top: 1px solid #bbb;">
+ -->
 
                     <!-- Start Checklist Input --> 
-                    <div class="row" style="padding-left:50px;" >
+                    <!-- <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
                         <label class="w3-text-black"><b>Checklist</b></label>
                       </div>
@@ -289,7 +289,7 @@
                                     </div>
                                 </li>
                             </ul>
-                    </div>                                  
+                    </div>         -->                          
                     <!--End Checklist Input -->
                     
 
@@ -434,10 +434,10 @@
                     </div>
                     <!-- End Description Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                    <!-- <hr style="border-top: 1px solid #bbb;"> -->
 
                      <!-- Start Checklist Input --> 
-                    <div class="row" style="padding-left:50px;" >
+                    <!-- <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
                         <label class="w3-text-black"><b>Checklist</b></label>
                       </div>
@@ -464,7 +464,7 @@
                                     </div>
                                 </li>
                             </ul>
-                    </div>                                  
+                    </div>    -->                               
                     <!--End Checklist Input -->
 
 
@@ -610,10 +610,10 @@
                     </div>
                     <!-- End Description Input -->
 
-                    <hr style="border-top: 1px solid #bbb;">
+                    <!-- <hr style="border-top: 1px solid #bbb;"> -->
 
                      <!-- Start Checklist Input --> 
-                    <div class="row" style="padding-left:50px;" >
+                    <!-- <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
                         <label class="w3-text-black"><b>Checklist</b></label>
                       </div>
@@ -640,7 +640,7 @@
                                     </div>
                                 </li>
                             </ul>
-                    </div>                                  
+                    </div>    -->                               
                     <!--End Checklist Input -->
 
                     <?php

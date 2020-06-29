@@ -1607,7 +1607,7 @@
                     <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                         <center>
                             <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                            <small style="color: white;"><strong><?php echo $tname; ?></strong></small>
+                            <small style="color: white;"><strong><a href="Team_boards.php?Tid=<?php echo $btid;?>"><?php echo $tname; ?></a></strong></small>
                         </center>
                     </div>
 
@@ -1650,11 +1650,6 @@
                                         ?>
                                         <!-- END DATABASE REDIRECT TO TEAM PAGE (SHOW MENU) -->
                                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER DETAILS CAN'T BE SHOWN -->
-                                    <script>
-                                        function memberpage() {
-                                          location.replace("Team_members.php")
-                                        }
-                                    </script>
 
                                     <hr style="border-top: 1px solid #bbb;">
                                     <div>
@@ -1808,7 +1803,7 @@
   
                                 ?>
                                     <!-- Start Todo before trip card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong>
@@ -1915,7 +1910,7 @@
                                 ?>
 
                                     <!-- Start Todo in Holiday card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -2019,7 +2014,7 @@
                                 ?>
 
                                     <!-- Start To eat and drink card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -2126,7 +2121,7 @@
                                 ?>
 
                                     <!-- Start Done card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
