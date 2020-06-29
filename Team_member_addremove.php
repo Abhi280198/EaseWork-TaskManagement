@@ -96,6 +96,7 @@
                                                 $btitle=$row_detailboard['Btitle'];
                                                 $buid=$row_detailboard['Uid'];
                                                 $bisactive=$row_detailboard['IsActive'];
+                                                $btempid=$row_detailboard['Tempid'];
 
                                     ?>
                                                 <tr>
@@ -116,9 +117,26 @@
                                                             }
                                                             else
                                                             {
+                                                                if ($btempid==1) 
+                                                                {
+                                                               
                                                         ?>
-                                                                <a href="Team_boards.php?Tid=<?php echo $Tid;?>"><?php echo $btitle; ?></a>
+                                                                    <a href="Education_template.php?Bid=<?php echo $bid;?>"><?php echo $btitle; ?></a>
                                                         <?php
+                                                                }
+                                                                else if ($btempid==2) 
+                                                                {
+                                                        ?>
+                                                                    <a href="Personal_template.php?Bid=<?php echo $bid;?>"><?php echo $btitle; ?></a>
+                                                        <?php            
+                                                                }
+                                                                else
+                                                                {
+                                                        ?>
+                                                                    <a href="board.php?Bid=<?php echo $bid;?>"><?php echo $btitle; ?></a>
+                                                        <?php 
+                                                                }
+
                                                             }
                                                         ?>
                                                         </div>

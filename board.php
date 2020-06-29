@@ -1181,7 +1181,7 @@
   
                                 ?>
                                     <!-- Start Todo card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1286,7 +1286,7 @@
                                 ?>
 
                                     <!-- Start Doing card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1392,7 +1392,7 @@
 
 
                                     <!-- Start Done card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
