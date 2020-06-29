@@ -47,6 +47,21 @@
     box-shadow: none;
 }
 
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 80px;
+}
+
+div.gallery:hover {
+  border: 3px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
 
 </style>
 
@@ -238,27 +253,27 @@
                                                             <div class="pop-over-content">
                                                                 <ul class="grid-background">
                                                                     <li class="grid-background-item" >
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg1.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg1.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                     <li class="grid-background-item">
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg2.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg2.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                     <li class="grid-background-item">
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg3.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg3.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                     <li class="grid-background-item">
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg4.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg4.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                     <li class="grid-background-item">
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg5.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg5.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                     <li class="grid-background-item">
-                                                                        <div class="grid-background-select" onclick="selectBgImage(this)" style="background-image: url('images/bg6.jpg');">    
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg6.jpg');">    
                                                                         </div>
                                                                     </li>
                                                                 </ul>
