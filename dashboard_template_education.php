@@ -1,3 +1,71 @@
+<style type="text/css">
+    .pop-over-content{
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 12px 12px;
+
+}
+
+.grid-background{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+ }
+
+.grid-background-item{
+    height: 56px;
+    width: calc(33.3% - 8px);
+    margin-bottom: 8px;
+    margin-right: 8px;
+ }
+
+ .grid-background-select{
+    align-items: center;
+    border-radius: 3px;
+    color: rgba(0,0,0,.4);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    margin: 0;
+    min-height: 0;
+    padding: 0;
+    position: relative;
+    line-height: 0;
+    width: 100%;
+    cursor: pointer;
+ }
+
+ .grid-background-select, .grid-background-select:focus, .grid-background-select:hover {
+    background: none;
+    background-color: #fff;
+    background-position: 50%;
+    background-size: cover;
+    box-shadow: none;
+}
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 80px;
+}
+
+div.gallery:hover {
+  border: 3px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+</style>
+
+
+
 <?php 
     include_once("DbConnection.php");
 
@@ -85,6 +153,78 @@
                 <option value = "Public">Public</option>
             </select>
             <br><br>
+
+            <div  class="my-3">
+                                     <a href="#" style="display:block;text-align: right;" onclick="showBgPopover()" ><b>Add Background image</b></a> 
+                                        
+                                    <!-- start popover -->
+
+                                                    <div class="main-popover"  id="background-popover">
+                                                        <div class="main-container">
+                                                            <span>Background</span>
+                                                            <button type="button" class="closeButton" onclick="hideBgPopover()">Close</button> 
+                                                            <hr>
+                                                        </div>
+                                                        <div>
+                                                            <div class="pop-over-content">
+                                                                <ul class="grid-background">
+                                                                    <li class="grid-background-item" >
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg1.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="grid-background-item">
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg2.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="grid-background-item">
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg3.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="grid-background-item">
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg4.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="grid-background-item">
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg5.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="grid-background-item">
+                                                                        <div class="grid-background-select gallery" onclick="selectBgImage(this)" style="background-image: url('images/bg6.jpg');">    
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                   
+                                                    <script>
+                                                        function showBgPopover() {
+                                                          document.getElementById("background-popover").style.display = "block";
+                                                        }
+
+                                                        function hideBgPopover() {
+                                                          document.getElementById("background-popover").style.display = "none";
+                                                        }
+                                                    </script>
+
+                                                    <script type="text/javascript">
+                                                        function selectBgImage(bg){
+                                                            
+                                                            style = bg.currentStyle || window.getComputedStyle(bg, false),
+                                                            bi = style.backgroundImage;
+                                                            console.log(bi);
+                                                            imgUrl=bi.slice(bi.indexOf('image'),-2);
+                                                            console.log(imgUrl);
+                                                            var bgUrl=document.getElementById('background_url').value=imgUrl;
+                                                        }
+
+                                                    </script>
+                                    <!-- END popover -->
+
+                                    </div>
+            
             <br><br>
             <div class="canclebtn">
             <button  type="submit" name="UseTemplateSubmit" class="btn cancel">Create</button>
