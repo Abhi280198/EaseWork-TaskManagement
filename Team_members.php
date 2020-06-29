@@ -235,6 +235,7 @@
                                                 <div class="col-auto d-flex align-items-center" style="padding-right: 100px;">
 
                                                 <?php
+
                                                     if ($Bid=="") 
                                                     {
                                                 ?>

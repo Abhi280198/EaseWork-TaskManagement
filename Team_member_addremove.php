@@ -95,6 +95,8 @@
                                                 $bid=$row_detailboard['Bid'];
                                                 $btitle=$row_detailboard['Btitle'];
                                                 $buid=$row_detailboard['Uid'];
+                                                $bisactive=$row_detailboard['IsActive'];
+
                                     ?>
                                                 <tr>
                                                     <td>
@@ -105,7 +107,20 @@
 
                                                     <td>
                                                         <div class="media align-items-center">
-                                                            <a href="Team_boards.php?Tid=<?php echo $Tid;?>"><?php echo $btitle; ?></a>
+                                                        <?php 
+                                                            if($bisactive==0)
+                                                            {
+                                                        ?>
+                                                                <a href="Complete.php?Uid=<?php echo $_SESSION['UserID'];?>"><?php echo $btitle; ?></a><span style="color: red; margin-left: 30px;"><strong>Completed Board</strong></span>
+                                                        <?php 
+                                                            }
+                                                            else
+                                                            {
+                                                        ?>
+                                                                <a href="Team_boards.php?Tid=<?php echo $Tid;?>"><?php echo $btitle; ?></a>
+                                                        <?php
+                                                            }
+                                                        ?>
                                                         </div>
                                                     </td>
 

@@ -31,6 +31,8 @@ include_once("DbConnection.php");
     {
         $delete_board_education = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_education_board=mysqli_query($con,$delete_board_education)or die(mysqli_error($con));
+        $delete_board_member = "DELETE FROM tblteammember WHERE Bid='$bid'";
+        $Exe_delete_board_member=mysqli_query($con,$delete_board_member)or die(mysqli_error($con));
         header("location:index.php?Uid=$uid");
     } 
     /*End database delete board button(SHOW MENU)*/
@@ -1778,12 +1780,7 @@ include_once("DbConnection.php");
                                     ?>
 
                                                 <!-- Start Syllabus remaining card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong>
@@ -1799,25 +1796,10 @@ include_once("DbConnection.php");
                                                             ?>                                            
                                                         </p>
                                                         <br>
-                                                        <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                        ?>  
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
-                                                <p class="d-flex align-items-center mb-2">
-                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                        <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                </p>
-                                            <?php
-                                        }
-                                    ?>
+                                                        <p class="d-flex align-items-center mb-2">
+                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                        </p>
 
                                                         <?php
                                                             $selectrmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1905,12 +1887,7 @@ include_once("DbConnection.php");
 
 
                                         <!-- Start Syllabus to be covered today card 1-->
-<<<<<<< HEAD
-                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                            <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
                                         <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
@@ -1926,33 +1903,10 @@ include_once("DbConnection.php");
                                                             ?>                                             
                                                         </p>
                                                         <br>
-                                                        <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?><p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                                         <p class="d-flex align-items-center mb-2">
                                                             <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                             <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                         </p>
-<<<<<<< HEAD
-                                                    <?php
-                                        }
-                                    ?>
-                                                        <div class="media align-items-center" style="float: right;">
-                                                            <div class=" mr-2 avatar-group" >
-                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                    <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-=======
 
                                                        <?php
                                                             $selecttomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1982,7 +1936,6 @@ include_once("DbConnection.php");
                                                             }
                                                         ?>
 
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     </div>
                                                 </div>
                                         <!-- End Syllabus to be covered today card 1-->
@@ -2042,12 +1995,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus covered card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -2063,25 +2011,10 @@ include_once("DbConnection.php");
                                                                     ?>                                              
                                                                 </p>
                                                                 <br>
-                                                                <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                    <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
-                                                <p class="d-flex align-items-center mb-2">
-                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                </p>
-                                            <?php
-                                        }
-                                    ?>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                                </p>
 
                                                         <?php
                                                             $selectcmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -2170,12 +2103,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus Assignments card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
                                                 <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -2191,31 +2119,10 @@ include_once("DbConnection.php");
                                                                     ?>                                               
                                                                 </p>
                                                                 <br>
-                                                                <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                                                 <p class="d-flex align-items-center mb-2">
                                                                     <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                                     <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                                 </p>
-<<<<<<< HEAD
-                                                <?php
-                                        }
-                                    ?>
-                                                                <div class="media align-items-center" style="float: right;">
-                                                                    <div class=" mr-2 avatar-group" >
-                                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-=======
 
                                                         <?php
                                                             $selectassmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -2239,7 +2146,6 @@ include_once("DbConnection.php");
                                                                             <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $assfname." ".$asslname;?>">
                                                                                 <img src="images/profile/<?php echo $asspropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
                                                                             </div>
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                                         </div>
                                                                     </div>
                                                         <?php 

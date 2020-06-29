@@ -1,19 +1,13 @@
 <?php include_once("DbConnection.php");
     $bid=$_GET['Bid'];
-    /*$listid =$_SESSION["Listid"];*/
-    /*$cardid=$_GET['Cardid'];*/
+    $uid=$_SESSION['UserID'];
 
 /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
     {
         $Updateisactive = "UPDATE tblboard set IsActive=0 where Bid='$bid' ";
         $Exe_updateisactive=mysqli_query($con,$Updateisactive)or die(mysqli_error($con));
-?>
-        <script type="text/javascript">
-                alert("Board Completed Successfully");
-                window.location.href = 'Complete.php';
-        </script>
-<?php
+        header("location:Complete.php?Uid=$uid");
     }
     /*End database complete board button(SHOW MENU)*/
 
@@ -37,6 +31,8 @@
         $uid=$_SESSION['UserID'];
         $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
+        $delete_board_member = "DELETE FROM tblteammember WHERE Bid='$bid'";
+        $Exe_delete_board_member=mysqli_query($con,$delete_board_member)or die(mysqli_error($con));
         header("location:index.php?Uid=$uid");
     } 
     /*End database delete board button(SHOW MENU)*/
@@ -1678,26 +1674,6 @@
              <!-- Start Board id is not 0 from second header -->
             <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
-            <!-- start create board link -->
-            <div class="w3-bar w3-black">
-                <div class="w3-bar-item" style="margin-left: 400px;">This is a Personal Template.</div>
-                <div class="w3-bar-item"></div>
-                <a href="#" class="w3-bar-item w3-green" onclick="openTemplatePopup()">Create board from Template</a>
-
-                <script>
-                    function openTemplatePopup() 
-                    {
-                        document.getElementById("useTemplatePopup").style.display = "flex";
-                    }
-
-                    function closeTemplatePopup() 
-                    {
-                        document.getElementById("useTemplatePopup").style.display = "none";
-                    }
-                </script>
-            </div>
-            <!-- end create board link --> 
-
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
                 $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
@@ -1893,7 +1869,7 @@
                 <div class="trello-board container-fluid page__container mt-5">
                 
                     <!-- Start Todo before trip list-->
-                    <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                    <div class="trello-board__tasks">
                         
                         <div class="card bg-light border">
 
@@ -1924,8 +1900,7 @@
   
                                 ?>
                                     <!-- Start Todo before trip card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -1934,42 +1909,19 @@
                                                     <?php echo $cardlabel;?></span>       
                                             </p>
                                             <br>
-                                            <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
-
                                             <div class="media align-items-center" style="float: right;">
                                                 <div class=" mr-2 avatar-group" >
 
                                                     <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
                                                         <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
                                                     </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End Todo before trip card 1-->
                                 <?php
@@ -2029,8 +1981,7 @@
                                 ?>
 
                                     <!-- Start Todo in Holiday card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -2038,40 +1989,19 @@
                                                 </span>                                               
                                             </p>
                                             <br>
-                                            <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
                                             <div class="media align-items-center" style="float: right;">
                                                 <div class=" mr-2 avatar-group" >
 
                                                     <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
                                                         <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
                                                     </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End Todo in Holiday card 1-->
                                     <?php 
@@ -2128,8 +2058,7 @@
                                 ?>
 
                                     <!-- Start To eat and drink card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -2137,41 +2066,19 @@
                                                     <?php echo $cardlabel;?></span>                                               
                                             </p>
                                             <br>
-                                            <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
-
                                             <div class="media align-items-center" style="float: right;">
                                                 <div class=" mr-2 avatar-group" >
 
                                                     <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
                                                         <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
                                                     </div>
-
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
                                     </div>
                                     <!-- End To eat and drink card 1-->
                             <!-- End To eat and drink card Section-->
@@ -2228,8 +2135,7 @@
                                 ?>
 
                                     <!-- Start Done card 1-->
-                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                        <a href="cards.php?Cardid=<?php echo $cardid;?>">
+                                    <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>';">
                                         <div class="p-3">
                                             <p class="m-0 d-flex align-items-center">
                                                 <strong><?php echo $cardname; ?></strong> 
@@ -2237,40 +2143,38 @@
                                                     <?php echo $cardlabel;?></span>                                               
                                             </p>
                                             <br>
-                                            <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                             <p class="d-flex align-items-center mb-2">
                                                 <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                 <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
                                             </p>
-                                    <?php
-                                        }
-                                    ?>
-                                            <div class="media align-items-center" style="float: right;">
-                                                <div class=" mr-2 avatar-group" >
+                                            <?php
+                                                $selectdonee = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid=$cardid)";  
+                                                $result_donee = mysqli_query($con,$selectdonee);
+                                                if($result_donee->num_rows!=0)
+                                                {  
+                                                    $row_donee=mysqli_fetch_array($result_donee);
+                                                    $ufname=$row_donee['Fname'];
+                                                    $ulname=$row_donee['Lname'];
+                                                    $upropic=$row_donee['ProfilePic'];
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
+                                                    if($upropic=="" || !file_exists("images/profile/$upropic"))
+                                                    {
+                                                        $upropic="No.png";
+                                                    }
+                                                            
+                                            ?>
 
-                                                    <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                                        <div class="media align-items-center" style="float: right;">
+                                                            <div class=" mr-2 avatar-group" >
+                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $ufname." ".$ulname;?>">
+                                                                    <img src="images/profile/<?php echo $upropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            <?php 
+                                                }
+                                            ?>
                                         </div>
-                                        </a>
                                     </div>
                                     <!-- End Done card 1-->
                                     <?php 

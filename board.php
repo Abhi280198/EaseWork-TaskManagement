@@ -1,18 +1,14 @@
  <?php 
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+    $uid=$_SESSION['UserID'];
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
     {
         $Updateisactive = "UPDATE tblboard set IsActive=0 where Bid='$bid' ";
         $Exe_updateisactive=mysqli_query($con,$Updateisactive)or die(mysqli_error($con));
-?>
-        <script type="text/javascript">
-                alert("Board Completed Successfully");
-                window.location.href = 'Complete.php';
-        </script>
-<?php
+        header("location:Complete.php?Uid=$uid");
     }
     /*End database complete board button(SHOW MENU)*/
 
@@ -36,6 +32,8 @@
         $uid=$_SESSION['UserID'];
         $delete_board = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_board=mysqli_query($con,$delete_board)or die(mysqli_error($con));
+        $delete_board_member = "DELETE FROM tblteammember WHERE Bid='$bid'";
+        $Exe_delete_board_member=mysqli_query($con,$delete_board_member)or die(mysqli_error($con));
         header("location:index.php");
     } 
     /*End database delete board button(SHOW MENU)*/
