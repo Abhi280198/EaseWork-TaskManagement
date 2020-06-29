@@ -171,93 +171,38 @@ if (isset($_POST['carddetails']))
             <!-- End Description Input -->
             <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Checklist Input -->
-                    <div class="row" style="padding-left:50px;" >  
-                        <div class="col-25">  
-                            <label class="w3-text-black"><b>Checklist</b></label>
-                        </div>
-                        <div class="col-75">
-                            <div>
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text"
+                    <!-- Start Checklist Input --> 
+                    <div class="row" style="padding-left:50px;" >
+                      <div class="col-25">     
+                        <label class="w3-text-black"><b>Checklist</b></label>
+                      </div>
+                        <div class="col-75"  >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
+                            
+                            <a href="ChecklistAdd.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $Bid?>&Input=todochecklist" type="button" name="todoChecklistAdd" class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</a>
 
-                                >
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                            </div>
-
-                            <ul id="myUL">
-                               <!-- <li id="ul-container"></li>  -->
-                            </ul>
-
-                            <script>
-                                // Create a "close" button and append it to each list item
-                                var myNodelist = document.getElementsByTagName("LI");
-                                var i;
-                                for (i = 0; i < myNodelist.length; i++) 
-                                {
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    myNodelist[i].appendChild(span);
-                                }
-
-                                // Click on a close button to hide the current list item
-                                var close = document.getElementsByClassName("close");
-                                var i;
-                                for (i = 0; i < close.length; i++) 
-                                {
-                                    close[i].onclick = function() 
-                                    {
-                                        var div = this.parentElement;
-                                        div.style.display = "none";
-                                    }
-                                }
-
-                                // Add a "checked" symbol when clicking on a list item
-                                var list = document.querySelector('ul');
-                                list.addEventListener('click', function(ev)
-                                {
-                                    if (ev.target.tagName === 'LI') 
-                                    {
-                                        ev.target.classList.toggle('checked');
-                                    }
-                                }, false);
-
-                                // Create a new list item when clicking on the "Add" button
-                                function newElement() 
-                                {
-                                    var li = document.createElement("li");
-                                    var inputValue = document.getElementById("myInput").value;
-                                    var t = document.createTextNode(inputValue);
-                                    li.appendChild(t);
-                                    if (inputValue === '') 
-                                    {
-                                        alert("You must write something!");
-                                    } else {
-                                        document.getElementById("myUL").appendChild(li);
-                                    }
-                                    document.getElementById("myInput").value = "";
-
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    li.appendChild(span);
-
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-                                }
-                            </script>
-
+                            
                         </div>
                     </div>
+                    <br>
+                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
+                             <ul class="list-unstyled list-todo" id="todo">
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
+                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
+                                        <a href="#">Remove</center></a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
+                                        <a href="#">Remove</center></a>
+                                    </div>
+                                </li>
+                            </ul>
+                    </div>                                  
                     <!--End Checklist Input -->
 
                     <hr style="border-top: 1px solid #bbb;">
