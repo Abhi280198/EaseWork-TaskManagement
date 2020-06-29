@@ -2,6 +2,8 @@
 include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
+    $senduser=$_SESSION['Firstname'];
+    $senduser1=$_SESSION['Lastname'];
 
     /*Start database add board description button(SHOW MENU)*/
     if (isset($_REQUEST['showdescriptioneducation'])) 
@@ -66,9 +68,25 @@ include_once("DbConnection.php");
                     $query1_sremain="INSERT into tblmembercard values(null,'$Syllabus1member','$syllabus1')";
                     $run_sremain = mysqli_query($con,$query1_sremain);
                     if($run_sremain)
-                    {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                    {   
+                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus1member AND tblboard.Bid=$bid" ;
+                        $run_suser = mysqli_query($con,$suser);
+                        if($run_suser->num_rows!=0)
+                        {  
+                            $row_suser=$run_suser->fetch_array();
+
+                            $usfirst=$row_suser['Fname'];
+                            $uslast=$row_suser['Lname'];
+                            $usemail=$row_suser['Email'];
+                            $boname=$row_suser['Btitle'];
+
+                            $subject = "Easework";
+                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus1title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+
+                            header("location:Education_template.php?Bid=$bid");
+                        }
                     }
                 }
             }
@@ -109,8 +127,24 @@ include_once("DbConnection.php");
                     $run_stoday = mysqli_query($con,$query2_stoday);
                     if($run_stoday)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus2member AND tblboard.Bid=$bid" ;
+                        $run_suser = mysqli_query($con,$suser);
+                        if($run_suser->num_rows!=0)
+                        {  
+                            $row_suser=$run_suser->fetch_array();
+
+                            $usfirst=$row_suser['Fname'];
+                            $uslast=$row_suser['Lname'];
+                            $usemail=$row_suser['Email'];
+                            $boname=$row_suser['Btitle'];
+
+                            $subject = "Easework";
+                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus2title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+
+                            header("location:Education_template.php?Bid=$bid");
+                        }
                     }
                 }
             }
@@ -151,8 +185,24 @@ include_once("DbConnection.php");
                     $run_scover = mysqli_query($con,$query3_stoday);
                     if($run_scover)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus3member AND tblboard.Bid=$bid" ;
+                        $run_suser = mysqli_query($con,$suser);
+                        if($run_suser->num_rows!=0)
+                        {  
+                            $row_suser=$run_suser->fetch_array();
+
+                            $usfirst=$row_suser['Fname'];
+                            $uslast=$row_suser['Lname'];
+                            $usemail=$row_suser['Email'];
+                            $boname=$row_suser['Btitle'];
+
+                            $subject = "Easework";
+                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus3title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+
+                            header("location:Education_template.php?Bid=$bid");
+                        }
                     }
                 }
             }
@@ -193,8 +243,24 @@ include_once("DbConnection.php");
                     $run_sassign = mysqli_query($con,$query4_stoday);
                     if($run_sassign)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus4member AND tblboard.Bid=$bid" ;
+                        $run_suser = mysqli_query($con,$suser);
+                        if($run_suser->num_rows!=0)
+                        {  
+                            $row_suser=$run_suser->fetch_array();
+
+                            $usfirst=$row_suser['Fname'];
+                            $uslast=$row_suser['Lname'];
+                            $usemail=$row_suser['Email'];
+                            $boname=$row_suser['Btitle'];
+
+                            $subject = "Easework";
+                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus4title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+
+                            header("location:Education_template.php?Bid=$bid");
+                        }
                     }
                 }
             }
@@ -1752,7 +1818,7 @@ include_once("DbConnection.php");
                     <div class="trello-board container-fluid page__container mt-5" >
 
                         <!-- Start Syllabus remaining list-->
-                        <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                        <div class="trello-board__tasks">
                             <div class="card bg-light border">
 
                                 <!-- Start list name-->
@@ -1780,7 +1846,7 @@ include_once("DbConnection.php");
                                     ?>
 
                                                 <!-- Start Syllabus remaining card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+                                            <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong>
@@ -1887,7 +1953,7 @@ include_once("DbConnection.php");
 
 
                                         <!-- Start Syllabus to be covered today card 1-->
-                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
@@ -1995,7 +2061,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus covered card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -2103,7 +2169,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus Assignments card 1-->
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
