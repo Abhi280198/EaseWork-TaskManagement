@@ -65,6 +65,16 @@ if (isset($_POST['carddetails']))
 }
 ?>
 
+<!-- Database for todo checklist -->
+<?php 
+    if(isset($_REQUEST['txtTodoChecklist']))
+    {
+        $insert_todo_cl = "INSERT into tblchecklist values(null,'".$_REQUEST['todochecklist']."','$cardid',1)";
+        $run_checklist = mysqli_query($con,$insert_todo_cl)or die(mysqli_error($con));
+    }
+?>
+
+<!-- END Database for todo checklist -->
 
 
 <!DOCTYPE html>
@@ -178,30 +188,40 @@ if (isset($_POST['carddetails']))
                       </div>
                         <div class="col-75"  >
                             <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
-                            
-                            <a href="ChecklistAdd.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $Bid?>&Input=todochecklist" type="button" name="todoChecklistAdd" class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</a>
 
-                            
+                            <input type="submit" class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;" name="txtTodoChecklist" value="Add Item">
+
                         </div>
                     </div>
                     <br>
+
                     <div class="row" style="padding-left:160px; padding-top: 10px;" >
+                         
                              <ul class="list-unstyled list-todo" id="todo">
+                               <?php 
+                                    $Todo_checklist = "SELECT * from tblchecklist where Cardid=$cardid";
+                                    $res_checklist = mysqli_query($con,$Todo_checklist);
+                                    if($res_checklist->num_rows !=0)
+                                    {  
+                                        while($row=$res_checklist->fetch_array())  
+                                        {
+                                            $ChecklistName=$row['ChecklistName'];
+                                            $ChecklistID=$row['Checklistid'];
+                                            
+                                ?>
                                 <li>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
-                                        <a href="#">Remove</center></a>
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <label class="custom-control-label" for="customCheck1"><?php echo $ChecklistName?></label>
+                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
+                               <?php
+                                    }
+                                }
+                                ?>
                             </ul>
+                             
                     </div>                                  
                     <!--End Checklist Input -->
 
