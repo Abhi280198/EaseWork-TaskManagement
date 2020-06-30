@@ -3,6 +3,7 @@
 include_once("DbConnection.php");
    $Cardid=$_GET['Cardid'];
    $checkid=$_GET['Checklistid'];
+   $bid=$_GET['Bid'];
    if(isset($_GET['Cardid']))
    {
 
@@ -12,6 +13,6 @@ include_once("DbConnection.php");
    	           
         $delete_checklist = "DELETE FROM tblchecklist where Checklistid=$checkid";
         $Exe_delete_checklist = mysqli_query($con,$delete_checklist)or die(mysqli_error($con));
-        header("location:cards.php?Cardid=$Cardid");
+        header("location:cards.php?Cardid=$Cardid&Bid=$bid");
    }
 ?>

@@ -94,6 +94,7 @@ if (isset($_POST['carddetails']))
     {
         $insert_todo_cl = "INSERT into tblchecklist values(null,'".$_REQUEST['todochecklist']."','$cardid',1)";
         $run_checklist = mysqli_query($con,$insert_todo_cl)or die(mysqli_error($con));
+        header("location:cards.php?Cardid=$cardid&Bid=$Bid");
     }
 ?>
 
@@ -218,9 +219,9 @@ if (isset($_POST['carddetails']))
                     </div>
                     <br>
 
-                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
+                    <div class="row" style="padding-left:200px; padding-top: 10px;" >
                          
-                             <ul class="list-unstyled list-todo" id="todo">
+                        
                                <?php 
                                     $Todo_checklist = "SELECT * from tblchecklist where Cardid=$cardid";
                                     $res_checklist = mysqli_query($con,$Todo_checklist);
@@ -232,18 +233,20 @@ if (isset($_POST['carddetails']))
                                             $ChecklistID=$row['Checklistid'];
                                             
                                 ?>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1"><?php echo $ChecklistName?></label>
-                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
-                                    </div>
-                                </li>
+                                <ul class="list-unstyled list-todo" id="todo">
+                                    <li>
+                                            <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
+                                            <label class="w3-text-black" for="customCheck1">
+                                                <b><?php echo $ChecklistName?></b>
+                                            </label>
+                                            <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
+                                    </li>
+                                </ul>
                                <?php
                                     }
                                 }
                                 ?>
-                            </ul>
+                        
                              
                     </div>                                  
                     <!--End Checklist Input -->
