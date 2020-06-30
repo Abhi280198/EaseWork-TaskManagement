@@ -87,7 +87,7 @@
                     
 
                         <!--Start counter section-->
-                        <div class="row card-group-row">
+<!--                         <div class="row card-group-row">
                             <div class="col-lg-3 col-md-6 card-group-row__col">
                                 <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
                                     <div class="flex">
@@ -130,14 +130,10 @@
                             </div>
                             </div>
                         </div>
-                        <!--End counter section-->
+ -->                        <!--End counter section-->
 
-                    <div class="row" style="margin-left: 110px; margin-right: 110px;">
                         <!-- Table Data -->
-                        <div class="col-sm-6 col-md-6 col-lg-7" >
-                            <!-- <div class="card-header">
-                                <h4 class="mr-sm-2" for="inlineFormFilterBy">Member & Task Details(Progress)</h4>
-                            </div> -->
+                        <div class="card" style="margin-right: 130px; margin-left: 130px;">
                             <div class="card-header card-header-large bg-white">
                                 <h5 class="mr-sm-2" for="inlineFormFilterBy">Member & Task Details(Progress)</h5>
                             </div>
@@ -149,51 +145,73 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 18px;">Sr.No</th>
-                                            <th>Team Member</th>
-                                            <th style="width: 150px;">Progress</th>
-                                            <th style="width: 48px;">Per(%)</th>
+                                            <th>Board Member</th>
                                             <th style="width: 37px;">Allocated</th>
                                             <th style="width: 120px;">Completed</th>
-                                            <th style="width: 51px;">Earnings</th>
+                                            <th style="width: 400px;">Progress</th>
+                                            <th style="width: 48px;">Per(%)</th>
+                                            <!-- <th style="width: 51px;">Earnings</th> -->
                                         </tr>
                                     </thead>
                                     <tbody class="list" id="staff">
                                         <?php 
                                             $bid=$_GET['Bid'];
-                                            $select="SELECT * from tbluser where Email='$Mem_Email' AND IsActive=1";
-                                            $Execute_select_Data = mysqli_query($con,$SelectData)or die(mysqli_error($con));
-                                            if($Execute_select_Data->num_rows!=0)
+                                            $select="SELECT * FROM tbluser u,tblteammember tm WHERE tm.Bid=$bid AND u.Uid=tm.Uid";
+                                            $res=mysqli_query($con,$select);
+                                            if($res->num_rows!=0)
                                             {
+                                                while($fetch_user=$res->fetch_array()) 
+                                                {
+                                                    $fetch_uid=$fetch_user['Uid'];
+                                                    /*while($fetch_user=mysqli_fetch_array($Execute_select_Data)>0) */
+                                                    /*while($row=$res->fetch_array())  */
+                                                    $srno=1;
+                                                    $cardData1="SELECT count(Bid) AS 'cnt1' FROM tblcard c,tblmembercard mc 
+                                                    WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid";
+                                                    $card_Data1=mysqli_query($con,$cardData1);
+                                                    $fetch_cnt1=$card_Data1->fetch_array();
 
+                                                    $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
+                                                    WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND isActive=1";
+                                                    $card_Data2=mysqli_query($con,$cardData2);
+                                                    $fetch_cnt2=$card_Data2->fetch_array();             
+
+                                                    $total=$fetch_cnt1['cnt1'];                                  
+                                                    $completed=$fetch_cnt2['cnt2'];
+                                                    $per=$completed*100/$total;
+
+                                                    ?>
+                                                        <tr class="selected">
+                                                            <td><?php echo $srno?></td>
+                                                            <td>
+                                                                <div class="media align-items-center">
+                                                                    <div class="avatar avatar-xs mr-2">
+                                                                        <img src="images/profile/<?php echo $fetch_user['ProfilePic']; ?>" alt="Avatar" class= "avatar-img rounded-circle">
+                                                                    </div>
+                                                                    <div class="media-body"> 
+                                                                        <span class="js-lists-values-employee-name">
+                                                                            <?php echo $fetch_user['Fname']; ?>
+                                                                            <?php echo $fetch_user['Lname']; ?>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td><?php echo $fetch_cnt1['cnt1']; ?></td>
+                                                            <td><?php echo $fetch_cnt2['cnt2']; ?></td>
+                                                            <td>
+                                                                <div class="progress" style="height: 6px;">
+                                                                    <div class="progress-bar" role="progressbar" style="width: <?php echo $per; ?>%;" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td><?php echo $per; ?></td>
+                                                        </tr>
+                                                    <?php
+                                                    $srno++;
+                                                }
                                             }
                                         ?>
-                                        <tr class="selected">
-                                            <td>1</td>
-                                            <td>
-                                                <div class="media align-items-center">
-                                                    <div class="avatar avatar-xs mr-2">
-                                                        <img src="assets/images/256_luke-porter-261779-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                    </div>
-                                                    <div class="media-body">
+                                        
 
-                                                        <span class="js-lists-values-employee-name">Michael Smith</span>
-
-                                                    </div>
-                                                </div>
-
-                                            </td>
-
-                                            <td>
-                                                <div class="progress" style="height: 6px;">
-                                                    <div class="progress-bar" role="progressbar" style="width: 61%;" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </td>
-
-                                            <td>12</td>
-                                            <td><span class="badge badge-warning">ADMIN</span></td>
-                                            <td><small class="text-muted">3 days ago</small></td>
-                                            <td>$12,402</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -207,7 +225,8 @@
 
 
                         <!-- Pie Chart -->
-                        <div class="col-sm-6 col-md-9 col-lg-5" >
+                        <div id="piechart"></div>
+                        <!-- <div class="caard" style="margin-left: 130px; margin-right: 130px;">
                             <div class="card-header card-header-large bg-white d-flex align-items-center">
                                 <h5 class="mr-sm-2" for="inlineFormFilterBy">No.of Task</h5>
                             </div>
@@ -253,9 +272,9 @@
                                             </div>
                                         </div>
                                     </div>
-                        </div>
+                        </div> -->
                         <!-- Pie Chart -->
-                    </div>
+                    
 
                         
 

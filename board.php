@@ -1135,7 +1135,7 @@
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->            
                             <a href="calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                             <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                            <a href="report.php" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                            <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                     </div>
                     <!-- End second Header Content -->
 
