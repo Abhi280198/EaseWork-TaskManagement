@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jun 28, 2020 at 06:26 PM
--- Server version: 5.6.17
--- PHP Version: 7.2.18
+-- Host: 127.0.0.1
+-- Generation Time: Jun 29, 2020 at 11:20 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,9 +27,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `tblboard`
 --
 
-DROP TABLE IF EXISTS `tblboard`;
-CREATE TABLE IF NOT EXISTS `tblboard` (
-  `Bid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblboard` (
+  `Bid` int(11) NOT NULL,
   `Btitle` varchar(100) NOT NULL,
   `Tid` int(11) NOT NULL,
   `Visibility` varchar(50) NOT NULL,
@@ -39,26 +37,18 @@ CREATE TABLE IF NOT EXISTS `tblboard` (
   `Tempid` int(11) DEFAULT NULL,
   `BoardDescription` varchar(100) DEFAULT NULL,
   `Background` varchar(100) DEFAULT NULL,
-  `IsActive` tinyint(4) NOT NULL,
-  PRIMARY KEY (`Bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+  `IsActive` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblboard`
 --
 
 INSERT INTO `tblboard` (`Bid`, `Btitle`, `Tid`, `Visibility`, `Uid`, `Date`, `Tempid`, `BoardDescription`, `Background`, `IsActive`) VALUES
-(22, 'board notification', 42, 'Team', 27, '2020-06-26', NULL, NULL, '', 1),
-(23, 'board notification2', 42, 'Team', 27, '2020-06-26', NULL, NULL, '', 1),
-(24, 'board3', 42, 'Team', 27, '2020-06-27', NULL, NULL, '', 1),
+(22, 'board notification', 42, 'Team', 27, '2020-06-26', NULL, 'Notification team', '', 1),
+(24, 'board3', 42, 'Team', 27, '2020-06-27', NULL, NULL, '', 0),
 (25, 'Class Management-board', 42, 'Private', 26, '2020-06-27', 1, 'new board of class management template\r\n                        ', 'images/bg1.jpg', 1),
-(26, 'Vacation Planning', 43, 'Team', 20, '2020-06-27', 2, 'fesf', 'images/blog-img78.jpg', 1),
-(27, 'Class Management', 43, 'Team', 20, '2020-06-28', 1, NULL, 'images/backgrounddefault.jpg', 1),
-(28, 'vacation', 42, 'Team', 27, '2020-06-28', NULL, NULL, 'images/bg3.jpg', 1),
-(29, 'Vacation Planning', 42, 'Team', 27, '2020-06-28', 2, NULL, 'images/blog-img78.jpg', 1),
-(30, 'Class ', 42, 'Team', 27, '2020-06-28', 1, NULL, 'images/backgrounddefault.jpg', 1),
-(31, 'tution2', 42, 'Team', 27, '2020-06-28', NULL, NULL, '', 1),
-(33, 'Vacation Planning', 42, 'Team', 27, '2020-06-28', 2, NULL, 'images/blog-img78.jpg', 1);
+(27, 'Vacation Planning', 42, 'Team', 27, '2020-06-29', 2, 'vacaatttttiiioonnn', 'images/blog-img78.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -66,27 +56,15 @@ INSERT INTO `tblboard` (`Bid`, `Btitle`, `Tid`, `Visibility`, `Uid`, `Date`, `Te
 -- Table structure for table `tblcalendar`
 --
 
-DROP TABLE IF EXISTS `tblcalendar`;
-CREATE TABLE IF NOT EXISTS `tblcalendar` (
-  `Calendarid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblcalendar` (
+  `Calendarid` int(11) NOT NULL,
   `CalendarTitle` varchar(255) NOT NULL,
   `CalendarStart` datetime NOT NULL,
   `CalendarEnd` datetime DEFAULT NULL,
   `CalendarStatus` tinyint(7) NOT NULL,
-  `Uid` int(11) NOT NULL,
-  PRIMARY KEY (`Calendarid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tblcalendar`
---
-
-INSERT INTO `tblcalendar` (`Calendarid`, `CalendarTitle`, `CalendarStart`, `CalendarEnd`, `CalendarStatus`, `Uid`) VALUES
-(1, 'HeadStart', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
-(2, 'heading', '2020-06-04 00:00:00', '2020-06-05 00:00:00', 1, 20),
-(3, 'abcd', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
-(4, 'new task', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
-(5, 'new event', '2020-06-17 00:00:00', '2020-06-18 00:00:00', 1, 27);
+  `Uid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Error reading data for table dbtask.tblcalendar: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `dbtask`.`tblcalendar`' at line 1
 
 -- --------------------------------------------------------
 
@@ -94,41 +72,37 @@ INSERT INTO `tblcalendar` (`Calendarid`, `CalendarTitle`, `CalendarStart`, `Cale
 -- Table structure for table `tblcard`
 --
 
-DROP TABLE IF EXISTS `tblcard`;
-CREATE TABLE IF NOT EXISTS `tblcard` (
-  `Cardid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblcard` (
+  `Cardid` int(11) NOT NULL,
   `CardName` varchar(100) NOT NULL,
   `Label` varchar(100) DEFAULT NULL,
-  `LabelColor` varchar(100) NOT NULL,
+  `LabelColor` varchar(100) DEFAULT NULL,
   `DueDate` date DEFAULT NULL,
   `CreationDate` date NOT NULL,
   `Description` varchar(100) DEFAULT NULL,
   `Listid` int(11) NOT NULL,
   `Bid` int(11) NOT NULL,
-  `IsActive` tinyint(7) NOT NULL,
-  PRIMARY KEY (`Cardid`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
+  `IsActive` tinyint(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblcard`
 --
 
 INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `CreationDate`, `Description`, `Listid`, `Bid`, `IsActive`) VALUES
-(12, 'Syllabus1', 'important', '#ff0000', '0000-00-00', '2020-06-27', 'chapter 3,4', 4, 25, 1),
-(13, 'Syllabus 2', 'complicated', '#ff8800', '0000-00-00', '2020-06-27', 'chap 5', 5, 25, 2),
-(14, 'Syllabus 3', 'Success', '#1be90c', '2020-06-30', '2020-06-27', 'chap 1', 6, 25, 3),
-(15, 'Assignment 1', 'Assigned', '#011e1d', '2020-07-11', '2020-06-27', 'new assignment', 7, 25, 4),
-(16, 'Chapter 5', 'read at home', '#fcdb03', '0000-00-00', '2020-06-27', '', 4, 25, 1),
-(17, 'www', '  dss', '#000000', '2020-07-09', '2020-06-27', '                                                        yyyy                                        ', 3, 26, 1),
-(18, 'adding to do card', 'high', '#d38888', '2020-07-12', '2020-06-27', 'trying to add card', 8, 26, 1),
-(20, 'eat and drink', ' high', '#000000', '2020-08-22', '2020-06-28', '                            dwadaw                        ', 1, 26, 1),
-(21, 'eat and drink', 'high', '#2f6f46', '2020-07-30', '2020-06-28', 'feasdfcas', 10, 26, 1),
-(22, 'add holiday', '  high', '#000000', '2020-08-14', '2020-06-28', '                                                                                    faedasdcas      ', 8, 26, 1),
-(23, '2 lessons', 'priority', '#30bb4c', '2020-07-31', '2020-06-28', 'large', 4, 27, 1),
-(24, 'covered 1 lesson', 'wide', '#d3e73c', '2020-07-30', '2020-06-28', 'incomplete', 5, 27, 2),
-(26, 'assign', 'quick', '#2ebd6c', '2020-07-26', '2020-06-28', 'faefdad', 7, 27, 4),
-(28, '2 lessons', ' priority', '#d82222', '2020-07-23', '2020-06-28', '                            topics   doing  ', 1, 30, 1),
-(29, 'covered 1 lesson', ' wdwd', '#000000', '0000-00-00', '2020-06-28', '                            dad                        ', 1, 30, 2);
+(29, 'card1', ' extra', '#000000', '2020-07-09', '2020-06-28', '                                                                                                    ', 4, 25, 1),
+(30, 'card2', 'second', '#790101', '0000-00-00', '2020-06-28', '', 5, 25, 1),
+(32, 'card4', '', '#000000', '0000-00-00', '2020-06-28', '', 5, 25, 1),
+(37, 'card3', 'new try', '#2f0404', '0000-00-00', '2020-06-28', '', 6, 25, 1),
+(38, 'card 4', 'imp', '#c60c0c', '2020-07-11', '2020-06-28', '', 7, 25, 1),
+(43, 'doing 1', 'important', '#e71313', '2020-07-11', '2020-06-28', '', 2, 22, 1),
+(44, 'done 3', 'Success', '#7dc313', '0000-00-00', '2020-06-28', '', 3, 22, 1),
+(46, ',m skadnjqfk', '', '#000000', '0000-00-00', '2020-06-28', '', 1, 26, 1),
+(52, 'new before trip', ' shoes', '#000000', '0000-00-00', '2020-06-29', '                                 ', 9, 27, 1),
+(53, 'new holiday', ' river rafting', '#000000', '0000-00-00', '2020-06-29', '                                                    ', 8, 27, 1),
+(54, 'eating foods', 'tacos', '#f03c00', '0000-00-00', '2020-06-29', '', 10, 27, 1),
+(55, 'ticket booked', '2 tickets', '#ff0fcb', '0000-00-00', '2020-06-29', '', 11, 27, 1),
+(56, 'newwww', 'new', '#ec1313', '2020-07-10', '2020-06-29', 'hiiii', 1, 22, 1);
 
 -- --------------------------------------------------------
 
@@ -136,13 +110,11 @@ INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `
 -- Table structure for table `tblchecklist`
 --
 
-DROP TABLE IF EXISTS `tblchecklist`;
-CREATE TABLE IF NOT EXISTS `tblchecklist` (
-  `Checklistid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblchecklist` (
+  `Checklistid` int(11) NOT NULL,
   `ChecklistName` varchar(100) DEFAULT NULL,
   `Cardid` int(11) NOT NULL,
-  `IsActive` tinyint(7) NOT NULL,
-  PRIMARY KEY (`Checklistid`)
+  `IsActive` tinyint(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -151,16 +123,14 @@ CREATE TABLE IF NOT EXISTS `tblchecklist` (
 -- Table structure for table `tblcontact`
 --
 
-DROP TABLE IF EXISTS `tblcontact`;
-CREATE TABLE IF NOT EXISTS `tblcontact` (
-  `Cid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblcontact` (
+  `Cid` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Mobile` bigint(20) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `Subject` varchar(100) NOT NULL,
-  `Description` varchar(100) NOT NULL,
-  PRIMARY KEY (`Cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+  `Description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblcontact`
@@ -193,12 +163,10 @@ INSERT INTO `tblcontact` (`Cid`, `Name`, `Mobile`, `Email`, `Subject`, `Descript
 -- Table structure for table `tbllist`
 --
 
-DROP TABLE IF EXISTS `tbllist`;
-CREATE TABLE IF NOT EXISTS `tbllist` (
-  `Listid` int(11) NOT NULL AUTO_INCREMENT,
-  `ListName` varchar(100) NOT NULL,
-  PRIMARY KEY (`Listid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `tbllist` (
+  `Listid` int(11) NOT NULL,
+  `ListName` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbllist`
@@ -223,13 +191,31 @@ INSERT INTO `tbllist` (`Listid`, `ListName`) VALUES
 -- Table structure for table `tblmembercard`
 --
 
-DROP TABLE IF EXISTS `tblmembercard`;
-CREATE TABLE IF NOT EXISTS `tblmembercard` (
-  `Mcardid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblmembercard` (
+  `Mcardid` int(11) NOT NULL,
   `Uid` int(11) NOT NULL,
-  `Cardid` int(11) NOT NULL,
-  PRIMARY KEY (`Mcardid`)
+  `Cardid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tblmembercard`
+--
+
+INSERT INTO `tblmembercard` (`Mcardid`, `Uid`, `Cardid`) VALUES
+(10, 26, 29),
+(11, 27, 30),
+(13, 26, 32),
+(18, 26, 37),
+(22, 27, 42),
+(23, 27, 43),
+(24, 27, 44),
+(25, 0, 45),
+(26, 27, 46),
+(28, 28, 52),
+(29, 28, 53),
+(30, 28, 54),
+(31, 28, 55),
+(32, 27, 56);
 
 -- --------------------------------------------------------
 
@@ -237,17 +223,15 @@ CREATE TABLE IF NOT EXISTS `tblmembercard` (
 -- Table structure for table `tblnotification`
 --
 
-DROP TABLE IF EXISTS `tblnotification`;
-CREATE TABLE IF NOT EXISTS `tblnotification` (
-  `Notificationid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblnotification` (
+  `Notificationid` int(11) NOT NULL,
   `NotificationEmail` varchar(100) NOT NULL,
   `Bid` int(11) NOT NULL,
   `Tid` int(11) NOT NULL,
   `IsRead` tinyint(7) NOT NULL,
   `Time` time NOT NULL,
-  `Date` date NOT NULL,
-  PRIMARY KEY (`Notificationid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+  `Date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblnotification`
@@ -259,7 +243,12 @@ INSERT INTO `tblnotification` (`Notificationid`, `NotificationEmail`, `Bid`, `Ti
 (5, 'poojakusingh40@gmail.com', 24, 42, 0, '00:28:32', '2020-06-27'),
 (6, 'jigneshmahadik777@gmail.com', 23, 42, 0, '00:49:14', '2020-06-27'),
 (7, 'jigneshmahadik777@gmail.com', 25, 42, 0, '12:13:28', '2020-06-27'),
-(8, 'shivalikirdat@gmail.com', 26, 43, 1, '23:07:53', '2020-06-27');
+(8, 'poojakusingh40@gmail.com', 25, 42, 0, '01:03:51', '2020-06-28'),
+(9, 'jigneshmahadik777@gmail.com', 22, 42, 1, '15:21:33', '2020-06-28'),
+(10, 'poojakusingh40@gmail.com', 26, 44, 0, '17:10:39', '2020-06-28'),
+(11, 'riya.jain9497@gmail.com', 24, 42, 1, '00:37:27', '2020-06-29'),
+(12, 'jigneshmahadik777@gmail.com', 28, 42, 1, '01:16:43', '2020-06-29'),
+(13, 'riya.jain9497@gmail.com', 27, 42, 1, '01:43:33', '2020-06-29');
 
 -- --------------------------------------------------------
 
@@ -267,18 +256,16 @@ INSERT INTO `tblnotification` (`Notificationid`, `NotificationEmail`, `Bid`, `Ti
 -- Table structure for table `tblteam`
 --
 
-DROP TABLE IF EXISTS `tblteam`;
-CREATE TABLE IF NOT EXISTS `tblteam` (
-  `Tid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblteam` (
+  `Tid` int(11) NOT NULL,
   `Tname` varchar(100) NOT NULL,
   `Ttype` varchar(100) NOT NULL,
   `TeamDescription` varchar(100) NOT NULL,
   `Uid` int(11) NOT NULL,
   `Date` date NOT NULL,
   `IsActive` tinyint(4) NOT NULL,
-  `ProfilePic` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`Tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+  `ProfilePic` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblteam`
@@ -286,8 +273,8 @@ CREATE TABLE IF NOT EXISTS `tblteam` (
 
 INSERT INTO `tblteam` (`Tid`, `Tname`, `Ttype`, `TeamDescription`, `Uid`, `Date`, `IsActive`, `ProfilePic`) VALUES
 (1, 'No Team', 'others', 'For individual Boards', 1, '2020-06-01', 1, NULL),
-(42, 'team notification', 'others', 'abcd', 27, '2020-06-26', 1, NULL),
-(43, 'plans', 'others', 'tution options', 20, '2020-06-27', 1, NULL);
+(42, 'team notification', 'Education', 'abcd', 27, '2020-06-26', 1, 'about-img9.jpg'),
+(43, 'team check', 'Marketing', 'new team ', 26, '2020-06-28', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -295,17 +282,15 @@ INSERT INTO `tblteam` (`Tid`, `Tname`, `Ttype`, `TeamDescription`, `Uid`, `Date`
 -- Table structure for table `tblteammember`
 --
 
-DROP TABLE IF EXISTS `tblteammember`;
-CREATE TABLE IF NOT EXISTS `tblteammember` (
-  `Tmid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tblteammember` (
+  `Tmid` int(11) NOT NULL,
   `Tid` int(11) NOT NULL,
   `Uid` int(11) DEFAULT NULL,
   `Email` varchar(100) NOT NULL,
   `Bid` int(11) DEFAULT NULL,
   `Date` date NOT NULL,
-  `IsActive` tinyint(7) NOT NULL,
-  PRIMARY KEY (`Tmid`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
+  `IsActive` tinyint(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tblteammember`
@@ -314,12 +299,11 @@ CREATE TABLE IF NOT EXISTS `tblteammember` (
 INSERT INTO `tblteammember` (`Tmid`, `Tid`, `Uid`, `Email`, `Bid`, `Date`, `IsActive`) VALUES
 (37, 42, 27, 'poojakusingh40@gmail.com', NULL, '2020-06-26', 1),
 (38, 42, 27, 'poojakusingh40@gmail.com', 22, '2020-06-26', 1),
-(39, 42, 27, 'poojakusingh40@gmail.com', 23, '2020-06-26', 1),
 (40, 42, 27, 'poojakusingh40@gmail.com', 24, '2020-06-27', 1),
-(41, 42, 26, 'jigneshmahadik777@gmail.com', 23, '2020-06-27', 1),
 (42, 42, 26, 'jigneshmahadik777@gmail.com', 25, '2020-06-27', 1),
-(43, 43, 20, 'poojakusingh40@gmail.com', NULL, '2020-06-27', 1),
-(44, 43, 28, 'shivalikirdat@gmail.com', 26, '2020-06-27', 1);
+(43, 42, 27, 'poojakusingh40@gmail.com', 25, '2020-06-28', 1),
+(45, 43, 26, 'jigneshmahadik777@gmail.com', NULL, '2020-06-28', 1),
+(51, 42, 28, 'riya.jain9497@gmail.com', 27, '2020-06-29', 1);
 
 -- --------------------------------------------------------
 
@@ -327,13 +311,11 @@ INSERT INTO `tblteammember` (`Tmid`, `Tid`, `Uid`, `Email`, `Bid`, `Date`, `IsAc
 -- Table structure for table `tbltemplate`
 --
 
-DROP TABLE IF EXISTS `tbltemplate`;
-CREATE TABLE IF NOT EXISTS `tbltemplate` (
-  `Tempid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbltemplate` (
+  `Tempid` int(11) NOT NULL,
   `TempName` varchar(100) NOT NULL,
-  `IsActive` tinyint(7) NOT NULL,
-  PRIMARY KEY (`Tempid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `IsActive` tinyint(7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbltemplate`
@@ -349,9 +331,8 @@ INSERT INTO `tbltemplate` (`Tempid`, `TempName`, `IsActive`) VALUES
 -- Table structure for table `tbluser`
 --
 
-DROP TABLE IF EXISTS `tbluser`;
-CREATE TABLE IF NOT EXISTS `tbluser` (
-  `Uid` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbluser` (
+  `Uid` int(11) NOT NULL,
   `Fname` varchar(100) NOT NULL,
   `Lname` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL,
@@ -360,9 +341,8 @@ CREATE TABLE IF NOT EXISTS `tbluser` (
   `Date` date NOT NULL,
   `IsActive` tinyint(7) NOT NULL,
   `ProfilePic` varchar(100) DEFAULT NULL,
-  `Token` varchar(255) NOT NULL,
-  PRIMARY KEY (`Uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+  `Token` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbluser`
@@ -370,8 +350,160 @@ CREATE TABLE IF NOT EXISTS `tbluser` (
 
 INSERT INTO `tbluser` (`Uid`, `Fname`, `Lname`, `Email`, `Password`, `Mobile`, `Date`, `IsActive`, `ProfilePic`, `Token`) VALUES
 (26, 'Jigneshkumar', 'Mahadik', 'jigneshmahadik777@gmail.com', 'jignesh', 9967543621, '2020-06-25', 1, 'avtar-15.jpg', '40f77517b570558baf1f2dd1de2a8f'),
-(27, 'Abhilasha', 'Kumari', 'poojakusingh40@gmail.com', 'pujasingh', 7684905416, '2020-06-26', 1, 'avtar-14.jpg', '8ac545db3046f5e19985388adb9104'),
-(28, 'shiv', 'kirdat', 'shivalikirdat@gmail.com', 'shiv12', 8983926549, '2020-06-28', 1, NULL, '634f89ab1315a3eb7f6044e261e776');
+(27, 'Abhilasha', 'Kumari', 'poojakusingh40@gmail.com', 'pujasingh', 7684905419, '2020-06-26', 1, 'avtar-14.jpg', '8ac545db3046f5e19985388adb9104'),
+(28, 'Riya', 'Jain', 'riya.jain9497@gmail.com', 'riya jain', 9876543219, '2020-06-29', 1, NULL, '22ecf09288bd00e68a3504ddfd0c36');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tblboard`
+--
+ALTER TABLE `tblboard`
+  ADD PRIMARY KEY (`Bid`);
+
+--
+-- Indexes for table `tblcalendar`
+--
+ALTER TABLE `tblcalendar`
+  ADD PRIMARY KEY (`Calendarid`);
+
+--
+-- Indexes for table `tblcard`
+--
+ALTER TABLE `tblcard`
+  ADD PRIMARY KEY (`Cardid`);
+
+--
+-- Indexes for table `tblchecklist`
+--
+ALTER TABLE `tblchecklist`
+  ADD PRIMARY KEY (`Checklistid`);
+
+--
+-- Indexes for table `tblcontact`
+--
+ALTER TABLE `tblcontact`
+  ADD PRIMARY KEY (`Cid`);
+
+--
+-- Indexes for table `tbllist`
+--
+ALTER TABLE `tbllist`
+  ADD PRIMARY KEY (`Listid`);
+
+--
+-- Indexes for table `tblmembercard`
+--
+ALTER TABLE `tblmembercard`
+  ADD PRIMARY KEY (`Mcardid`);
+
+--
+-- Indexes for table `tblnotification`
+--
+ALTER TABLE `tblnotification`
+  ADD PRIMARY KEY (`Notificationid`);
+
+--
+-- Indexes for table `tblteam`
+--
+ALTER TABLE `tblteam`
+  ADD PRIMARY KEY (`Tid`);
+
+--
+-- Indexes for table `tblteammember`
+--
+ALTER TABLE `tblteammember`
+  ADD PRIMARY KEY (`Tmid`);
+
+--
+-- Indexes for table `tbltemplate`
+--
+ALTER TABLE `tbltemplate`
+  ADD PRIMARY KEY (`Tempid`);
+
+--
+-- Indexes for table `tbluser`
+--
+ALTER TABLE `tbluser`
+  ADD PRIMARY KEY (`Uid`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tblboard`
+--
+ALTER TABLE `tblboard`
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `tblcalendar`
+--
+ALTER TABLE `tblcalendar`
+  MODIFY `Calendarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tblcard`
+--
+ALTER TABLE `tblcard`
+  MODIFY `Cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- AUTO_INCREMENT for table `tblchecklist`
+--
+ALTER TABLE `tblchecklist`
+  MODIFY `Checklistid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tblcontact`
+--
+ALTER TABLE `tblcontact`
+  MODIFY `Cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `tbllist`
+--
+ALTER TABLE `tbllist`
+  MODIFY `Listid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `tblmembercard`
+--
+ALTER TABLE `tblmembercard`
+  MODIFY `Mcardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `tblnotification`
+--
+ALTER TABLE `tblnotification`
+  MODIFY `Notificationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tblteam`
+--
+ALTER TABLE `tblteam`
+  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT for table `tblteammember`
+--
+ALTER TABLE `tblteammember`
+  MODIFY `Tmid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- AUTO_INCREMENT for table `tbltemplate`
+--
+ALTER TABLE `tbltemplate`
+  MODIFY `Tempid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbluser`
+--
+ALTER TABLE `tbluser`
+  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
