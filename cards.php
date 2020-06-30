@@ -234,7 +234,7 @@ if (isset($_POST['carddetails']))
                         </div>
                         <div class="col-75">
                             <select id="country" name="upcardmember" style="width:320px; height: 45px;">
-                                    <!-- <option value="0" disabled selected>--Select--</option> -->
+                            <option value="0" selected>--Select--</option>
                                     <?php        
                                         $upmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$Bid)";  
                                         $result_upmember  = mysqli_query($con,$upmember );
@@ -245,18 +245,25 @@ if (isset($_POST['carddetails']))
                                                 $member=$row_upmember['Uid'];
                                                 $fname=$row_upmember['Fname'];
                                                 $lname=$row_upmember['Lname'];
-                                                if(isset($muid)==$member)
+
+                                                $memberselected="select * from tblmembercard where Cardid='$cardid' ";
+                                                $Execute_selected=mysqli_query($con,$memberselected) or die(mysqli_error($con));
+                                                $fetch_selected=mysqli_fetch_array($Execute_selected);
+
+                                                $muid=$fetch_selected['Uid'];
+
+                                                if ($member==$muid) 
                                                 {
                                     ?>
-
-                                                    <option value="<?php echo $member;?>" selected><?php echo $fname." ".$lname;?></option>
+                                                    <option selected="" value="<?php echo $member;?>">
+                                                        <?php echo $fname." ".$lname;?>
+                                                    </option>
                                     <?php
-                                                }
-                                                else
+                                                }else
                                                 {
                                     ?>
                                                     <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
-                                    <?php
+                                    <?php  
                                                 }
                                             }
                                         }
@@ -274,13 +281,7 @@ if (isset($_POST['carddetails']))
                         <label class="w3-text-black"><b>Label Name</b></label>
                       </div>
                       <div class="col-75" >
-                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;"
-                        value=" <?php 
-                                    if(isset($cardlabel))
-                                        echo $cardlabel;
-                                    else 
-                                        echo " ";
-                                ?>">                                                
+                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;" value="<?php if(isset($cardlabel)){echo $cardlabel;}?>">                                                
                       </div>
                     </div>
                     <!-- End Label Input -->

@@ -2,6 +2,8 @@
     include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
+    $senduser=$_SESSION['Firstname'];
+    $senduser1=$_SESSION['Lastname'];
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
@@ -69,8 +71,31 @@
                     $run_todocard = mysqli_query($con,$query1_todo);
                     if($run_todocard)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:board.php?Bid=$bid");
+                        if ($todo_card_member==0) 
+                        {
+                           header("location:board.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$todo_card_member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
+
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$todo_card_title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
+
+                                header("location:board.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -111,8 +136,31 @@
                     $run_doingcard = mysqli_query($con,$query1_doing);
                     if($run_doingcard)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:board.php?Bid=$bid");
+                        if ($doing_card_member==0) 
+                        {
+                           header("location:board.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$doing_card_member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+                                
+                                    $usfirst=$row_suser['Fname'];
+                                    $uslast=$row_suser['Lname'];
+                                    $usemail=$row_suser['Email'];
+                                    $boname=$row_suser['Btitle'];
+
+                                    $subject = "Easework";
+                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card- $doing_card_title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                    $headers = "From: poojakusingh35@gmail.com";
+                                    mail($usemail, $subject, $body, $headers);
+                                
+                                header("location:board.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -153,8 +201,31 @@
                     $run_donecard = mysqli_query($con,$query1_done);
                     if($run_donecard)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:board.php?Bid=$bid");
+                        if ($done_card_member==0) 
+                        {
+                           header("location:board.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid='$done_card_member' AND tblboard.Bid='$bid'" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+                                
+                                    $usfirst=$row_suser['Fname'];
+                                    $uslast=$row_suser['Lname'];
+                                    $usemail=$row_suser['Email'];
+                                    $boname=$row_suser['Btitle'];
+
+                                    $subject = "Easework";
+                                    $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$done_card_title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                    $headers = "From: poojakusingh35@gmail.com";
+                                    mail($usemail, $subject, $body, $headers);
+                                
+                                header("location:board.php?Bid=$bid");
+                            }
+                        }
                     }
 
                 }
@@ -257,41 +328,6 @@
                       </div>
                     </div>
                     <!-- End Description Input -->
-
-                   <!--  <hr style="border-top: 1px solid #bbb;">
- -->
-
-                    <!-- Start Checklist Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Checklist</b></label>
-                      </div>
-                        <div class="col-75"  >
-                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
-                            <button type="button" name="todoChecklistAdd" class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
-                             <ul class="list-unstyled list-todo" id="todo">
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                            </ul>
-                    </div>         -->                          
-                    <!--End Checklist Input -->
-                    
 
                     <?php
 
@@ -433,40 +469,6 @@
                       </div>
                     </div>
                     <!-- End Description Input -->
-
-                    <!-- <hr style="border-top: 1px solid #bbb;"> -->
-
-                     <!-- Start Checklist Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Checklist</b></label>
-                      </div>
-                        <div class="col-75"  >
-                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
-                            <button class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
-                             <ul class="list-unstyled list-todo" id="todo">
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                            </ul>
-                    </div>    -->                               
-                    <!--End Checklist Input -->
-
 
                    <?php
 

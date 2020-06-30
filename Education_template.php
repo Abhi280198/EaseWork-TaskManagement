@@ -69,23 +69,30 @@ include_once("DbConnection.php");
                     $run_sremain = mysqli_query($con,$query1_sremain);
                     if($run_sremain)
                     {   
-                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus1member AND tblboard.Bid=$bid" ;
-                        $run_suser = mysqli_query($con,$suser);
-                        if($run_suser->num_rows!=0)
-                        {  
-                            $row_suser=$run_suser->fetch_array();
+                        if ($Syllabus1member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus1member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
 
-                            $usfirst=$row_suser['Fname'];
-                            $uslast=$row_suser['Lname'];
-                            $usemail=$row_suser['Email'];
-                            $boname=$row_suser['Btitle'];
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
 
-                            $subject = "Easework";
-                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus1title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
-                            $headers = "From: poojakusingh35@gmail.com";
-                            mail($usemail, $subject, $body, $headers);
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus1title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
 
-                            header("location:Education_template.php?Bid=$bid");
+                                header("location:Education_template.php?Bid=$bid");
+                            }
                         }
                     }
                 }
@@ -127,23 +134,30 @@ include_once("DbConnection.php");
                     $run_stoday = mysqli_query($con,$query2_stoday);
                     if($run_stoday)
                     {
-                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus2member AND tblboard.Bid=$bid" ;
-                        $run_suser = mysqli_query($con,$suser);
-                        if($run_suser->num_rows!=0)
-                        {  
-                            $row_suser=$run_suser->fetch_array();
+                        if ($Syllabus2member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus2member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
 
-                            $usfirst=$row_suser['Fname'];
-                            $uslast=$row_suser['Lname'];
-                            $usemail=$row_suser['Email'];
-                            $boname=$row_suser['Btitle'];
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
 
-                            $subject = "Easework";
-                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus2title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
-                            $headers = "From: poojakusingh35@gmail.com";
-                            mail($usemail, $subject, $body, $headers);
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus2title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
 
-                            header("location:Education_template.php?Bid=$bid");
+                                header("location:Education_template.php?Bid=$bid");
+                            }
                         }
                     }
                 }
@@ -185,23 +199,30 @@ include_once("DbConnection.php");
                     $run_scover = mysqli_query($con,$query3_stoday);
                     if($run_scover)
                     {
-                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus3member AND tblboard.Bid=$bid" ;
-                        $run_suser = mysqli_query($con,$suser);
-                        if($run_suser->num_rows!=0)
-                        {  
-                            $row_suser=$run_suser->fetch_array();
+                        if ($Syllabus3member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus3member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
 
-                            $usfirst=$row_suser['Fname'];
-                            $uslast=$row_suser['Lname'];
-                            $usemail=$row_suser['Email'];
-                            $boname=$row_suser['Btitle'];
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
 
-                            $subject = "Easework";
-                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus3title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
-                            $headers = "From: poojakusingh35@gmail.com";
-                            mail($usemail, $subject, $body, $headers);
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus3title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
 
-                            header("location:Education_template.php?Bid=$bid");
+                                header("location:Education_template.php?Bid=$bid");
+                            }
                         }
                     }
                 }
@@ -243,23 +264,30 @@ include_once("DbConnection.php");
                     $run_sassign = mysqli_query($con,$query4_stoday);
                     if($run_sassign)
                     {
-                        $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus4member AND tblboard.Bid=$bid" ;
-                        $run_suser = mysqli_query($con,$suser);
-                        if($run_suser->num_rows!=0)
-                        {  
-                            $row_suser=$run_suser->fetch_array();
+                        if ($Syllabus4member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus4member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
 
-                            $usfirst=$row_suser['Fname'];
-                            $uslast=$row_suser['Lname'];
-                            $usemail=$row_suser['Email'];
-                            $boname=$row_suser['Btitle'];
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
 
-                            $subject = "Easework";
-                            $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus4title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
-                            $headers = "From: poojakusingh35@gmail.com";
-                            mail($usemail, $subject, $body, $headers);
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus4title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
 
-                            header("location:Education_template.php?Bid=$bid");
+                                header("location:Education_template.php?Bid=$bid");
+                            }
                         }
                     }
                 }
@@ -366,95 +394,6 @@ include_once("DbConnection.php");
                           </div>
                         </div>
                         <!-- End Description Input -->
-
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
 
                         <?php
 
@@ -598,95 +537,6 @@ include_once("DbConnection.php");
                         </div>
                         <!-- End Description Input -->
 
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
-
                         <?php
 
                             $select2boardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -829,95 +679,6 @@ include_once("DbConnection.php");
                         </div>
                         <!-- End Description Input -->
 
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
-
                         <?php
 
                             $selectboardmember3 = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -1059,95 +820,6 @@ include_once("DbConnection.php");
                           </div>
                         </div>
                         <!-- End Description Input -->
-
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
 
                         <?php
 
