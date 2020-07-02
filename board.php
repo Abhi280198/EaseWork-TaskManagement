@@ -4,6 +4,30 @@
     $uid=$_SESSION['UserID'];
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
+    $recentuser=$_SESSION['UserID'];
+
+    $recent="SELECT * from tblboard where Bid=$bid";
+    $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
+    if($Exe_recent->num_rows!=0)
+    {  
+        $row_recent=$Exe_recent->fetch_array();
+
+        $rbid=$row_recent['Bid'];
+        $rtid=$row_recent['Tid'];
+
+        $selectrecent="SELECT * from tblrecent where Bid=$rbid AND Uid=$recentuser";
+        $Exe_selectrecent=mysqli_query($con,$selectrecent)or die(mysqli_error($con));
+        if($Exe_selectrecent->num_rows>0)
+        {
+            $updaterecent= "UPDATE tblrecent set Date=now() where Bid=$rbid AND Uid=$recentuser";  
+            $Exe_updaterecent=mysqli_query($con,$updaterecent)or die(mysqli_error($con));
+        }
+        else
+        {
+            $recentInsert= "INSERT into tblrecent values(null,$rbid,$rtid,$recentuser,now(),1)";
+            $run_recentInsert = mysqli_query($con,$recentInsert);
+        }
+    }
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 

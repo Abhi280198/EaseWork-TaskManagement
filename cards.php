@@ -77,6 +77,22 @@ if (isset($_POST['carddetails']))
                                 header("location:Personal_template.php?Bid=$Bid");
                             }                          
                     }
+                    else
+                    {
+                        if ($list==1||$list==2||$list==3) 
+                            {
+                                header("location:board.php?Bid=$Bid");
+                            }
+                            if ($list==4||$list==5||$list==6||$list==7) 
+                            {
+                                header("location:Education_template.php?Bid=$Bid");
+                            }
+                            if ($list==8||$list==9||$list==10||$list==11) 
+                            {
+                                header("location:Personal_template.php?Bid=$Bid");
+                            }           
+
+                    }
 
                     
                 } 
@@ -235,11 +251,11 @@ if (isset($_POST['carddetails']))
                                 ?>
                                 <ul class="list-unstyled list-todo" id="todo">
                                     <li>
-                                            <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
-                                            <label class="w3-text-black" for="customCheck1">
-                                                <b><?php echo $ChecklistName?></b>
-                                            </label>
-                                            <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
+                                        <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
+                                        <label class="w3-text-black" for="customCheck1">
+                                            <b><?php echo $ChecklistName?></b>
+                                        </label>
+                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
                                     </li>
                                 </ul>
                                <?php
