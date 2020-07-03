@@ -636,39 +636,6 @@
                     </div>
                     <!-- End Description Input -->
 
-                    <!-- <hr style="border-top: 1px solid #bbb;"> -->
-
-                     <!-- Start Checklist Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Checklist</b></label>
-                      </div>
-                        <div class="col-75"  >
-                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
-                            <button class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
-                             <ul class="list-unstyled list-todo" id="todo">
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
-                                        <a href="#">Remove</center></a>
-                                    </div>
-                                </li>
-                            </ul>
-                    </div>    -->                               
-                    <!--End Checklist Input -->
-
                     <?php
 
                         $selectdonemember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -786,36 +753,59 @@
 
     <!-- Start DATABASE BACKGROUND IMAGE CHANGE -->
     <?php
-        $backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
-        $result_backgrounddata = mysqli_query($con,$backgrounddata);
-        if($result_backgrounddata->num_rows!=0)
-       {  
-            while($row_backgrounddata=$result_backgrounddata->fetch_array())  
-            {
-                $bbackground=$row_backgrounddata['Background'];
+       	$backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+		$result_backgrounddata = mysqli_query($con,$backgrounddata);
+		if($result_backgrounddata->num_rows!=0)
+		{  
+			while($row_backgrounddata=$result_backgrounddata->fetch_array())  
+			{
+			    $bbackground=$row_backgrounddata['Background'];
 
-                if($bbackground=="" || !file_exists("$bbackground"))
-                {
-                    $bbackground="images/T7MH5H.jpg";
-                }      
-
+			    if($bbackground=="" || !file_exists("$bbackground"))
+			    {
+			        $bbackground="images/T7MH5H.jpg";
+			    }      
+	?>
+					<!--start whole page-->
+    				<div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
+	<?php
+       		}
+  		}
     ?>
-    <!--start whole page-->
-    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
-
-     <?php 
-            }
-        }
-    ?>
+    
     <!-- END DATABASE BACKGROUND IMAGE CHANGE -->
 
        <!-- Header -->
             <?php include_once('header1.php'); ?>
         <!--END Header -->
 
-        
-        <!-- Start container from second header -->
-        <div class="mdk-header-layout__content" style="overflow-y: auto;">
+        <?php
+
+	        $selectmlist="SELECT * from tblteammember where Bid=$bid";
+	    	$result_selectmlist= mysqli_query($con,$selectmlist);
+	        if($result_selectmlist->num_rows!=0)
+	       	{ 
+	       		while ($row_selectmlist=$result_selectmlist->fetch_array()) 
+	       		{
+	       		 	$tmuid=$row_selectmlist['Uid'];
+
+	       		 	if ($tmuid==$uid) 
+	       		 	{
+	    ?>
+				        <!-- Start container from second header -->
+				        <div class="mdk-header-layout__content" style="overflow-y: auto;">
+		<?php
+					}
+					else
+					{
+		?>
+						<!-- Start container from second header -->
+				        <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+		<?php
+					}
+				}
+			}
+		?>
 
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
@@ -842,9 +832,22 @@
                                 <center>
                                     <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                     <small style="color: white;">
-                                        <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                            <strong><?php echo $tname; ?></strong>
-                                        </a>
+                                    	<?php
+                                    		if ($btid==1) 
+                                    		{
+                                    	?>
+                                    			<a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    	<?php
+                                    		}
+                                    		else
+                                    		{
+                                    	?>
+                                    			<a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    	<?php
+                                    		}
+                                    	?>
+		                                            <strong><?php echo $tname; ?></strong>
+		                                        </a>
                                     </small>
                                 </center>
                             </div>

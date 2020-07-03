@@ -766,28 +766,6 @@
                         ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Label Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Labels</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select style="width:320px; height: 45px;">
-                          <option class="p-3 mb-2 bg-primary text-white">High Priority</option>
-                          <option class="p-3 mb-2 bg-secondary text-white">Solved</option>
-                          <option class="p-3 mb-2 bg-success text-white">Need Hep</option>
-                          <option class="p-3 mb-2 bg-danger text-white">Completed</option>
-                          <option class="p-3 mb-2 bg-warning text-dark">Warning</option>
-                        </select>
-                        <!--<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
-                            <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
-                            <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
-                            <div class="p-3 mb-2 bg-info text-white">.bg-info</div>
-                            <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
-                            <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
-                            <div class="p-3 mb-2 bg-white text-dark">.bg-white</div> -->                                                    
-                      <!-- </div>
-                    </div>  -->
 
                     <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
@@ -1341,12 +1319,23 @@
         }
         else
         {
-    ?>
-
+            $selectmlist="SELECT * from tblteammember where Bid=$bid AND Uid=$uid";
+            $result_selectmlist= mysqli_query($con,$selectmlist);
+            if($result_selectmlist->num_rows!=0)
+            { 
+?>
 <!--If Board Id is not 0 -->
-
-             <!-- Start Board id is not 0 from second header -->
-            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                <!-- Start container from second header -->
+                <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<?php
+            }
+            else
+            {
+?>
+                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+            }
+?>
 
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
@@ -1373,7 +1362,26 @@
                     <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                         <center>
                             <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                            <small style="color: white;"><strong><a href="Team_boards.php?Tid=<?php echo $btid;?>"><?php echo $tname; ?></a></strong></small>
+                            <small style="color: white;">
+                                <strong>
+                                    <?php
+                                        if ($btid==1) 
+                                        {
+                                    ?>
+                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    <?php
+                                        }
+                                    ?>
+                                                <?php echo $tname; ?>
+                                            </a>
+                                </strong>
+                            </small>
                         </center>
                     </div>
 

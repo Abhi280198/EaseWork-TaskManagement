@@ -24,8 +24,8 @@
     <?php include_once('csslinks.php');?>
 
     <!-- start delete team popup -->
-    <div id="deleteteam" class="modal">
-        <div class="modal-content" style="width: 50%; height: 250px;">
+    <div id="deleteteam" class="modal" style="align-items: center; padding-left: 400px;padding-right: 400px;">
+        <div class="modal-content" >
             <form method="POST" enctype="multipart/form-data" action="" class="form-container">
                 <div>
                     <h3><strong>Are you sure ?</strong></h3>

@@ -1320,14 +1320,28 @@ include_once("DbConnection.php");
         }
         else
         {
+            $selectmlist="SELECT * from tblteammember where Bid=$bid AND Uid=$uid";
+            $result_selectmlist= mysqli_query($con,$selectmlist);
+            if($result_selectmlist->num_rows!=0)
+            { 
     ?>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------
                                             If Board Id is not 0 
 ---------------------------------------------------------------------------------------------------------------------------------------->
 
-             <!-- Start Board id is not 0 from second header -->
-            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                <!-- Start Board id is not 0 from second header -->
+                <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<?php
+            }
+            else
+            {
+?>
+                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+            }
+?>
+
 
                 <!-- Start DATABASE IN SECOND HEADER -->
                 <?php
@@ -1354,9 +1368,22 @@ include_once("DbConnection.php");
                             <center>
                                 <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                 <small style="color: white;">
-                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                        <strong><?php echo $tname; ?></strong>
-                                    </a>
+                                    <?php
+                                        if ($btid==1) 
+                                        {
+                                    ?>
+                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    <?php
+                                        }
+                                    ?>
+                                                <strong><?php echo $tname; ?></strong>
+                                            </a>
                                 </small>
                             </center>
                         </div>
