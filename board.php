@@ -823,10 +823,23 @@
                         $bdescription=$row_board['BoardDescription'];
                         $bvisibilty=$row_board['Visibility']; 
 
+                        if ($btid==1) 
+                        {
+            ?>
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
+            <?php
+                        }
+                        else
+                        {
+            ?>
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); "> 
+            <?php
+                        }
             ?>
 
-                    <!-- start second header content -->
-                    <div class="w3-bar" style="background: rgb(120,120,120); ">
+                    
                         <p></p>
                             <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                                 <center>
