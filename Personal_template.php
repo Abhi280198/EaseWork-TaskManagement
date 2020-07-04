@@ -1,8 +1,37 @@
 <?php include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
+<<<<<<< HEAD
+    /*$listid =$_SESSION["Listid"];*/
+    /*$cardid=$_GET['Cardid'];*/
+=======
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
+    $recentuser=$_SESSION['UserID'];
+
+    $recent="SELECT * from tblboard where Bid=$bid";
+    $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
+    if($Exe_recent->num_rows!=0)
+    {  
+        $row_recent=$Exe_recent->fetch_array();
+
+        $rbid=$row_recent['Bid'];
+        $rtid=$row_recent['Tid'];
+
+        $selectrecent="SELECT * from tblrecent where Bid=$rbid AND Uid=$recentuser";
+        $Exe_selectrecent=mysqli_query($con,$selectrecent)or die(mysqli_error($con));
+        if($Exe_selectrecent->num_rows>0)
+        {
+            $updaterecent= "UPDATE tblrecent set Date=now() where Bid=$rbid AND Uid=$recentuser";  
+            $Exe_updaterecent=mysqli_query($con,$updaterecent)or die(mysqli_error($con));
+        }
+        else
+        {
+            $recentInsert= "INSERT into tblrecent values(null,$rbid,$rtid,$recentuser,now(),1)";
+            $run_recentInsert = mysqli_query($con,$recentInsert);
+        }
+    }
+>>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
 /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
@@ -58,9 +87,14 @@
             $trip_card_duedate = $_REQUEST['beforetripduedate'];
             $trip_card_member = $_REQUEST['beforetripcardmember'];
             
+<<<<<<< HEAD
+                $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1,25)";
+                $run_trip = mysqli_query($con,$trip_query);
+=======
             $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1)";
             $run_trip = mysqli_query($con,$trip_query);
             $trip1= mysqli_insert_id($con);
+>>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
             if($run_trip)
             {
@@ -123,7 +157,7 @@
             $holiday_card_duedate = $_REQUEST['holidaycardduedate'];
             $holiday_card_member = $_REQUEST['holidaycardmember'];
 
-            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1)";
+            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1,50)";
             $run_holiday = mysqli_query($con,$holiday_query);
             $holiday1= mysqli_insert_id($con);
 
@@ -188,9 +222,14 @@
             $eat_card_duedate = $_REQUEST['eatcardduedate'];
             $eat_card_member = $_REQUEST['eatcardmember'];
 
+<<<<<<< HEAD
+            $done_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1,75)";
+            $run_done = mysqli_query($con,$done_query);
+=======
             $eat_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1)";
             $run_eat = mysqli_query($con,$eat_query);
             $eat1= mysqli_insert_id($con);
+>>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
             if($run_eat)
             {
@@ -254,7 +293,7 @@
             $personal_card_duedate = $_REQUEST['personalcardduedate'];
             $personal_card_member = $_REQUEST['personaldonecardmember'];
 
-            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1,100)";
             $run_done = mysqli_query($con,$done_query);
             $done1= mysqli_insert_id($con);
 
@@ -742,28 +781,6 @@
                         ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Label Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Labels</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select style="width:320px; height: 45px;">
-                          <option class="p-3 mb-2 bg-primary text-white">High Priority</option>
-                          <option class="p-3 mb-2 bg-secondary text-white">Solved</option>
-                          <option class="p-3 mb-2 bg-success text-white">Need Hep</option>
-                          <option class="p-3 mb-2 bg-danger text-white">Completed</option>
-                          <option class="p-3 mb-2 bg-warning text-dark">Warning</option>
-                        </select>
-                        <!--<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
-                            <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
-                            <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
-                            <div class="p-3 mb-2 bg-info text-white">.bg-info</div>
-                            <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
-                            <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
-                            <div class="p-3 mb-2 bg-white text-dark">.bg-white</div> -->                                                    
-                      <!-- </div>
-                    </div>  -->
 
                     <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
@@ -1084,7 +1101,7 @@
                     </div>
                                   
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
         </div>
 
@@ -1317,12 +1334,23 @@
         }
         else
         {
-    ?>
-
+            $selectmlist="SELECT * from tblteammember where Bid=$bid AND Uid=$uid";
+            $result_selectmlist= mysqli_query($con,$selectmlist);
+            if($result_selectmlist->num_rows!=0)
+            { 
+?>
 <!--If Board Id is not 0 -->
-
-             <!-- Start Board id is not 0 from second header -->
-            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                <!-- Start container from second header -->
+                <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<?php
+            }
+            else
+            {
+?>
+                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+            }
+?>
 
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
@@ -1349,7 +1377,26 @@
                     <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                         <center>
                             <h5 style="color: white;"><?php echo $btitle; ?></h5>
-                            <small style="color: white;"><strong><a href="Team_boards.php?Tid=<?php echo $btid;?>"><?php echo $tname; ?></a></strong></small>
+                            <small style="color: white;">
+                                <strong>
+                                    <?php
+                                        if ($btid==1) 
+                                        {
+                                    ?>
+                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    <?php
+                                        }
+                                    ?>
+                                                <?php echo $tname; ?>
+                                            </a>
+                                </strong>
+                            </small>
                         </center>
                     </div>
 
@@ -1492,6 +1539,16 @@
                             </select>
                         </div>
                     </div>
+<<<<<<< HEAD
+                </div>
+            <?php
+                        }   
+                    ?> 
+                    <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->             
+                <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+                <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+=======
                 <?php
                             }   
                         ?> 
@@ -1499,6 +1556,7 @@
                     <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+>>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
                 </div>
                 <!-- End second Header Content -->

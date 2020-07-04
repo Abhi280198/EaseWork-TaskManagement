@@ -34,33 +34,72 @@
 if (isset($_POST['carddetails']))
 {
         $list=$_REQUEST['cardmove'];
+        $cn=$_REQUEST['cardtitle'];
     
         $updatecard = "UPDATE tblcard SET CardName ='".$_REQUEST['cardtitle']."',Description='".$_REQUEST['carddescription']."',Label='".$_REQUEST['cardlabel']."',LabelColor='".$_REQUEST['cardlabelcolor']."', DueDate='".$_REQUEST['cardduedate']."', Listid='".$_REQUEST['cardmove']."' WHERE Cardid='$cardid'";
 
         $Exe_update=mysqli_query($con,$updatecard)or die(mysqli_error($con));
 
-        $updatemem= "UPDATE tblmembercard SET Uid='".$_REQUEST['upcardmember']."' WHERE Cardid='$cardid'";
-        $Exe_updatemem=mysqli_query($con,$updatemem)or die(mysqli_error($con));
-        
-        if (mysqli_query($con, $updatecard)) 
+        if ($Exe_update) 
         {
-            if ($list==1||$list==2||$list==3) 
-            {
-                header("location:board.php?Bid=$Bid");
-            } 
-            if ($list==4||$list==5||$list==6||$list==7) 
-            {
-                header("location:Education_template.php?Bid=$Bid");
-            }
-            if ($list==8||$list==9||$list==10||$list==11) 
-            {
-                header("location:Personal_template.php?Bid=$Bid");
-            }   
+                $updatemem= "UPDATE tblmembercard SET Uid='".$_REQUEST['upcardmember']."' WHERE Cardid='$cardid'";
+                $Exe_updatemem=mysqli_query($con,$updatemem)or die(mysqli_error($con));
                 
-        } 
-        else 
-        {
-                echo "Error updating record: ".mysqli_error($con);
+                if ($Exe_updatemem) 
+                {
+
+                    $ser="SELECT * from tbluser where Uid='".$_REQUEST['upcardmember']."' ";
+                    $run_ser = mysqli_query($con,$ser);
+                    if($run_ser->num_rows!=0)
+                    {  
+                        while ($row_ser=$run_ser->fetch_array()) 
+                        {
+                            $usfirst=$row_ser['Fname'];
+                            $uslast=$row_ser['Lname'];
+                            $usemail=$row_ser['Email'];
+
+                            $subject = "Easework-Card Updated";
+                            $body = "Hi, $usfirst $uslast. The Card has been updated and You are added to the card- '$cn'. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+                        } 
+
+                        if ($list==1||$list==2||$list==3) 
+                            {
+                                header("location:board.php?Bid=$Bid");
+                            }
+                            if ($list==4||$list==5||$list==6||$list==7) 
+                            {
+                                header("location:Education_template.php?Bid=$Bid");
+                            }
+                            if ($list==8||$list==9||$list==10||$list==11) 
+                            {
+                                header("location:Personal_template.php?Bid=$Bid");
+                            }                          
+                    }
+                    else
+                    {
+                        if ($list==1||$list==2||$list==3) 
+                            {
+                                header("location:board.php?Bid=$Bid");
+                            }
+                            if ($list==4||$list==5||$list==6||$list==7) 
+                            {
+                                header("location:Education_template.php?Bid=$Bid");
+                            }
+                            if ($list==8||$list==9||$list==10||$list==11) 
+                            {
+                                header("location:Personal_template.php?Bid=$Bid");
+                            }           
+
+                    }
+
+                    
+                } 
+                else 
+                {
+                        echo "Error updating record: ".mysqli_error($con);
+                }
         }
 }
 ?>
@@ -71,6 +110,7 @@ if (isset($_POST['carddetails']))
     {
         $insert_todo_cl = "INSERT into tblchecklist values(null,'".$_REQUEST['todochecklist']."','$cardid',1)";
         $run_checklist = mysqli_query($con,$insert_todo_cl)or die(mysqli_error($con));
+        header("location:cards.php?Cardid=$cardid&Bid=$Bid");
     }
 ?>
 
@@ -195,9 +235,9 @@ if (isset($_POST['carddetails']))
                     </div>
                     <br>
 
-                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
+                    <div class="row" style="padding-left:200px; padding-top: 10px;" >
                          
-                             <ul class="list-unstyled list-todo" id="todo">
+                        
                                <?php 
                                     $Todo_checklist = "SELECT * from tblchecklist where Cardid=$cardid";
                                     $res_checklist = mysqli_query($con,$Todo_checklist);
@@ -209,18 +249,20 @@ if (isset($_POST['carddetails']))
                                             $ChecklistID=$row['Checklistid'];
                                             
                                 ?>
-                                <li>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                        <label class="custom-control-label" for="customCheck1"><?php echo $ChecklistName?></label>
-                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
-                                    </div>
-                                </li>
+                                <ul class="list-unstyled list-todo" id="todo">
+                                    <li>
+                                        <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
+                                        <label class="w3-text-black" for="customCheck1">
+                                            <b><?php echo $ChecklistName?></b>
+                                        </label>
+                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
+                                    </li>
+                                </ul>
                                <?php
                                     }
                                 }
                                 ?>
-                            </ul>
+                        
                              
                     </div>                                  
                     <!--End Checklist Input -->

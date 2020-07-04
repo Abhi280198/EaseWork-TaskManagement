@@ -4,6 +4,30 @@ include_once("DbConnection.php");
     $uid=$_SESSION['UserID'];
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
+    $recentuser=$_SESSION['UserID'];
+
+    $recent="SELECT * from tblboard where Bid=$bid";
+    $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
+    if($Exe_recent->num_rows!=0)
+    {  
+        $row_recent=$Exe_recent->fetch_array();
+
+        $rbid=$row_recent['Bid'];
+        $rtid=$row_recent['Tid'];
+
+        $selectrecent="SELECT * from tblrecent where Bid=$rbid AND Uid=$recentuser";
+        $Exe_selectrecent=mysqli_query($con,$selectrecent)or die(mysqli_error($con));
+        if($Exe_selectrecent->num_rows>0)
+        {
+            $updaterecent= "UPDATE tblrecent set Date=now() where Bid=$rbid AND Uid=$recentuser";  
+            $Exe_updaterecent=mysqli_query($con,$updaterecent)or die(mysqli_error($con));
+        }
+        else
+        {
+            $recentInsert= "INSERT into tblrecent values(null,$rbid,$rtid,$recentuser,now(),1)";
+            $run_recentInsert = mysqli_query($con,$recentInsert);
+        }
+    }
 
     /*Start database add board description button(SHOW MENU)*/
     if (isset($_REQUEST['showdescriptioneducation'])) 
@@ -57,7 +81,7 @@ include_once("DbConnection.php");
             $Syllabus1duedate = $_REQUEST['SyllabusRemainingduedate'];
             $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
 
-            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
+            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1,25)";
             $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
             $syllabus1= mysqli_insert_id($con);
 
@@ -122,7 +146,7 @@ include_once("DbConnection.php");
             $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
             $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
 
-            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1)";
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1,50)";
             $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
             $syllabus2= mysqli_insert_id($con);
 
@@ -187,7 +211,7 @@ include_once("DbConnection.php");
             $Syllabus3duedate = $_REQUEST['SyllabusCoveredduedate'];
             $Syllabus3member = $_REQUEST['SyllabusCoveredMember'];
 
-            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1)";
+            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1,75)";
             $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
             $syllabus3= mysqli_insert_id($con);
 
@@ -252,7 +276,7 @@ include_once("DbConnection.php");
             $Syllabus4duedate = $_REQUEST['SyllabusAssignmentduedate'];
             $Syllabus4member = $_REQUEST['SyllabusAssignmentMember'];
 
-            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1)";
+            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1,100)";
             $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
             $syllabus4= mysqli_insert_id($con);
 
@@ -1065,7 +1089,7 @@ include_once("DbConnection.php");
                     </div>
                                   
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                 </div>
                 <!-- End second Header Content -->
@@ -1297,14 +1321,28 @@ include_once("DbConnection.php");
         }
         else
         {
+            $selectmlist="SELECT * from tblteammember where Bid=$bid AND Uid=$uid";
+            $result_selectmlist= mysqli_query($con,$selectmlist);
+            if($result_selectmlist->num_rows!=0)
+            { 
     ?>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------
                                             If Board Id is not 0 
 ---------------------------------------------------------------------------------------------------------------------------------------->
 
-             <!-- Start Board id is not 0 from second header -->
-            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                <!-- Start Board id is not 0 from second header -->
+                <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<?php
+            }
+            else
+            {
+?>
+                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+            }
+?>
+
 
                 <!-- Start DATABASE IN SECOND HEADER -->
                 <?php
@@ -1331,9 +1369,22 @@ include_once("DbConnection.php");
                             <center>
                                 <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                 <small style="color: white;">
-                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                        <strong><?php echo $tname; ?></strong>
-                                    </a>
+                                    <?php
+                                        if ($btid==1) 
+                                        {
+                                    ?>
+                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    <?php
+                                        }
+                                    ?>
+                                                <strong><?php echo $tname; ?></strong>
+                                            </a>
                                 </small>
                             </center>
                         </div>
@@ -1475,10 +1526,15 @@ include_once("DbConnection.php");
                         ?>
                                       
                         <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
+<<<<<<< HEAD
                         <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                         <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" 
                         style="color: black;">Report</a>  
                         <!-- <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>   -->
+=======
+                        <a href="gantt_chart.php?Bid=<?php echo $bid?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                        <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+>>>>>>> cd08eabc80b2084aff3926fec12d1b3722714d52
                     </div>
                     <!-- End second Header Content -->
 
