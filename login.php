@@ -38,7 +38,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>login</title>
+	<title>Sign In</title>
 	<link rel="stylesheet" type="text/css" href="login.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Play">
 
@@ -88,7 +88,7 @@
 <body>
 	<div class="form-container">
 		<form method="POST" class="signin" name="myform" action="login.php">
-			<h2 style="color: white">Log In</h2>
+			<h1 style="color: white">Sign In</h1>
             
             <i  class="fa fa-envelope " aria-hidden="true"></i>
 			<input type="email" name="email" placeholder="Email Id"><br><span id="emails" style="color: red"></span><br>
@@ -97,7 +97,7 @@
 			<input type="password" name="pass" placeholder="Password"><br><span id="passw" style="color: red"></span><br><br>
 
 
-			<button type="submit" name="submit" value="submit" class="btn"  onclick="return validate();">Sign Up</button><br><br>
+			<button type="submit" name="submit" value="submit" class="btn"  onclick="return validate();">Sign In</button><br><br>
 		   <div id="container">
 			<!-- <a href="#" style="margin-right: 0px; font-size: 13px; font-family: Tahoma, Geneva, sans-serif;">Reset Password</a> --><br>
 			 <a href="ForgotPassword.php" style="margin-right: 0px; font-size: 13px; font-family: Tahoma, Geneva, sans-serif;">Forgot Password</a>	

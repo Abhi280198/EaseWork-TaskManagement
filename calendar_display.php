@@ -12,7 +12,8 @@
     }
     mysqli_free_result($result);
 
-    mysqli_close($con);
+    /*mysqli_close($con);*/
     echo json_encode($alldata);
+    mysqli_close($con);
 ?>
 ?>

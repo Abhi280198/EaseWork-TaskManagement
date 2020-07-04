@@ -182,7 +182,7 @@
 <!-- form design part start -->
 	<div class="form-container" >
 		<form class="signup" action="register.php" name="myform" method="POST">
-			<h2 style="color:#fff;">Sign In</h2>
+			<h1 style="color:#fff;">Sign Up</h1>
 
 			<i class="fa fa-user " aria-hidden="true"></i>
 			<input type="text" id="register-fname" name="first_name" placeholder="First Name"><br><span id="fname" style="color: red"></span><br>
@@ -209,7 +209,7 @@
 						x.className.replace("show","");}, 3000);
 				}
 			</script> -->
-			Already have account? <a href="login.php">&nbsp; Log In</a>
+			Already have account? <a href="login.php">&nbsp; Sign In</a>
 		</form>
 
 	</div>	

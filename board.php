@@ -4,30 +4,6 @@
     $uid=$_SESSION['UserID'];
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
-    $recentuser=$_SESSION['UserID'];
-
-    $recent="SELECT * from tblboard where Bid=$bid";
-    $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
-    if($Exe_recent->num_rows!=0)
-    {  
-        $row_recent=$Exe_recent->fetch_array();
-
-        $rbid=$row_recent['Bid'];
-        $rtid=$row_recent['Tid'];
-
-        $selectrecent="SELECT * from tblrecent where Bid=$rbid AND Uid=$recentuser";
-        $Exe_selectrecent=mysqli_query($con,$selectrecent)or die(mysqli_error($con));
-        if($Exe_selectrecent->num_rows>0)
-        {
-            $updaterecent= "UPDATE tblrecent set Date=now() where Bid=$rbid AND Uid=$recentuser";  
-            $Exe_updaterecent=mysqli_query($con,$updaterecent)or die(mysqli_error($con));
-        }
-        else
-        {
-            $recentInsert= "INSERT into tblrecent values(null,$rbid,$rtid,$recentuser,now(),1)";
-            $run_recentInsert = mysqli_query($con,$recentInsert);
-        }
-    }
     
     /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
@@ -636,6 +612,39 @@
                     </div>
                     <!-- End Description Input -->
 
+                    <!-- <hr style="border-top: 1px solid #bbb;"> -->
+
+                     <!-- Start Checklist Input --> 
+                    <!-- <div class="row" style="padding-left:50px;" >
+                      <div class="col-25">     
+                        <label class="w3-text-black"><b>Checklist</b></label>
+                      </div>
+                        <div class="col-75"  >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
+                            <button class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;">Add Item</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" style="padding-left:160px; padding-top: 10px;" >
+                             <ul class="list-unstyled list-todo" id="todo">
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" checked id="customCheck1">
+                                        <label class="custom-control-label" for="customCheck1">Wireframe the CRM application pages</label>
+                                        <a href="#">Remove</center></a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
+                                        <label class="custom-control-label" for="customCheck5">Research the success of CRM</label>
+                                        <a href="#">Remove</center></a>
+                                    </div>
+                                </li>
+                            </ul>
+                    </div>    -->                               
+                    <!--End Checklist Input -->
+
                     <?php
 
                         $selectdonemember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -753,59 +762,36 @@
 
     <!-- Start DATABASE BACKGROUND IMAGE CHANGE -->
     <?php
-       	$backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
-		$result_backgrounddata = mysqli_query($con,$backgrounddata);
-		if($result_backgrounddata->num_rows!=0)
-		{  
-			while($row_backgrounddata=$result_backgrounddata->fetch_array())  
-			{
-			    $bbackground=$row_backgrounddata['Background'];
+        $backgrounddata = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+        $result_backgrounddata = mysqli_query($con,$backgrounddata);
+        if($result_backgrounddata->num_rows!=0)
+       {  
+            while($row_backgrounddata=$result_backgrounddata->fetch_array())  
+            {
+                $bbackground=$row_backgrounddata['Background'];
 
-			    if($bbackground=="" || !file_exists("$bbackground"))
-			    {
-			        $bbackground="images/T7MH5H.jpg";
-			    }      
-	?>
-					<!--start whole page-->
-    				<div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
-	<?php
-       		}
-  		}
+                if($bbackground=="" || !file_exists("$bbackground"))
+                {
+                    $bbackground="images/T7MH5H.jpg";
+                }      
+
     ?>
-    
+    <!--start whole page-->
+    <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $bbackground; ?>); background-repeat: repeat;">
+
+     <?php 
+            }
+        }
+    ?>
     <!-- END DATABASE BACKGROUND IMAGE CHANGE -->
 
        <!-- Header -->
             <?php include_once('header1.php'); ?>
         <!--END Header -->
 
-        <?php
-
-	        $selectmlist="SELECT * from tblteammember where Bid=$bid";
-	    	$result_selectmlist= mysqli_query($con,$selectmlist);
-	        if($result_selectmlist->num_rows!=0)
-	       	{ 
-	       		while ($row_selectmlist=$result_selectmlist->fetch_array()) 
-	       		{
-	       		 	$tmuid=$row_selectmlist['Uid'];
-
-	       		 	if ($tmuid==$uid) 
-	       		 	{
-	    ?>
-				        <!-- Start container from second header -->
-				        <div class="mdk-header-layout__content" style="overflow-y: auto;">
-		<?php
-					}
-					else
-					{
-		?>
-						<!-- Start container from second header -->
-				        <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
-		<?php
-					}
-				}
-			}
-		?>
+        
+        <!-- Start container from second header -->
+        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
@@ -823,44 +809,18 @@
                         $bdescription=$row_board['BoardDescription'];
                         $bvisibilty=$row_board['Visibility']; 
 
-                        if ($btid==1) 
-                        {
-            ?>
-                            <!-- start second header content -->
-                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
-            <?php
-                        }
-                        else
-                        {
-            ?>
-                            <!-- start second header content -->
-                            <div class="w3-bar" style="background: rgb(120,120,120); "> 
-            <?php
-                        }
             ?>
 
-                    
+                    <!-- start second header content -->
+                    <div class="w3-bar" style="background: rgb(120,120,120); ">
                         <p></p>
                             <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                                 <center>
                                     <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                     <small style="color: white;">
-                                    	<?php
-                                    		if ($btid==1) 
-                                    		{
-                                    	?>
-                                    			<a href="individual_board.php?Uid=<?php echo $uid;?>">
-                                    	<?php
-                                    		}
-                                    		else
-                                    		{
-                                    	?>
-                                    			<a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                    	<?php
-                                    		}
-                                    	?>
-		                                            <strong><?php echo $tname; ?></strong>
-		                                        </a>
+                                        <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                            <strong><?php echo $tname; ?></strong>
+                                        </a>
                                     </small>
                                 </center>
                             </div>
@@ -1013,7 +973,7 @@
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->            
                             <a href="calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                             <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                            <a href="report.php" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                            <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                     </div>
                     <!-- End second Header Content -->
 
@@ -1025,36 +985,8 @@
 
             <br><br>
 
-        <?php
-            $trellodata = "SELECT * FROM tblboard Where Bid=$bid";  
-            $result_trellodata = mysqli_query($con,$trellodata);
-            if($result_trellodata->num_rows!=0)
-            {  
-                while($row_trelloboard=$result_trellodata->fetch_array())  
-                {
-                    $boardid=$row_trelloboard['Bid'];
-                    $btitle=$row_trelloboard['Btitle'];  
-                    $isactive=$row_trelloboard['IsActive'];
-
-                    if ($isactive==0)
-                    {
-        ?>
-                        <!-- start trello container after second header  -->
-                        <div class="trello-container" style="pointer-events: none;">
-        <?php
-                        
-                    }
-                    else
-                    {
-        ?>
-                        <!-- start trello container after second header  -->
-                        <div class="trello-container">
-        <?php
-                    }
-               }
-            } 
-        ?>
-            
+            <!-- start trello container after second header  -->
+            <div class="trello-container">
                 <div class="trello-board container-fluid page__container">
 
                     <!-- Start Todo list-->
