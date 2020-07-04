@@ -1012,8 +1012,36 @@
 
             <br><br>
 
-            <!-- start trello container after second header  -->
-            <div class="trello-container">
+        <?php
+            $trellodata = "SELECT * FROM tblboard Where Bid=$bid";  
+            $result_trellodata = mysqli_query($con,$trellodata);
+            if($result_trellodata->num_rows!=0)
+            {  
+                while($row_trelloboard=$result_trellodata->fetch_array())  
+                {
+                    $boardid=$row_trelloboard['Bid'];
+                    $btitle=$row_trelloboard['Btitle'];  
+                    $isactive=$row_trelloboard['IsActive'];
+
+                    if ($isactive==0)
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container" style="pointer-events: none;">
+        <?php
+                        
+                    }
+                    else
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container">
+        <?php
+                    }
+               }
+            } 
+        ?>
+            
                 <div class="trello-board container-fluid page__container">
 
                     <!-- Start Todo list-->
