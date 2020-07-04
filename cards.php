@@ -1,45 +1,126 @@
 <?php 
     include_once("DbConnection.php");
     $cardid=$_GET['Cardid']; 
-
+    $Bid=$_GET['Bid']; 
 
 /* delete card button*/
     if (isset($_REQUEST['deletecardspopup'])) 
     {
-        /*$uid=$_SESSION['UserID'];*/
+        $list=$_REQUEST['cardmove'];
         $delete_card = "DELETE FROM tblcard WHERE Cardid ='".$_GET['Cardid']."'";
         $Exe_delete_card=mysqli_query($con,$delete_card)or die(mysqli_error($con));
+        $delete_member = "DELETE FROM tblmembercard WHERE Cardid ='".$_GET['Cardid']."'";
+        $Exe_delete_cardmember=mysqli_query($con,$delete_member)or die(mysqli_error($con));
 
-        if (mysqli_query($con, $delete_card)) {
-                echo '<script type="text/javascript" id="error">alert("Card Updated successfully..");</script>';
-                header("location:cards.php?Cardid=$cardid");
+        if (mysqli_query($con,$delete_card)) 
+        {
+            if ($list==1||$list==2||$list==3) 
+            {
+                header("location:board.php?Bid=$Bid");
+            } 
+            if ($list==4||$list==5||$list==6||$list==7) 
+            {
+                header("location:Education_template.php?Bid=$Bid");
             }
-        /*header("location:index.php?Uid=$uid");*/
+            if ($list==8||$list==9||$list==10||$list==11) 
+            {
+                header("location:Personal_template.php?Bid=$Bid");
+            }   
+                
+        }
     } 
-    /* delete card button*/
+/* delete card button*/
 
-if (isset($_POST['carddetails'])){
-
+if (isset($_POST['carddetails']))
+{
+        $list=$_REQUEST['cardmove'];
+        $cn=$_REQUEST['cardtitle'];
     
-        echo $updatecard = "UPDATE tblcard SET CardName ='".$_REQUEST['cardtitle']."',Description='".$_REQUEST['carddescription']."',Label='".$_REQUEST['cardlabel']."',LabelColor='".$_REQUEST['cardlabelcolor']."', DueDate='".$_REQUEST['cardduedate']."', Listid='".$_REQUEST['cardmove']."' WHERE Cardid='$cardid'";
-        
+        $updatecard = "UPDATE tblcard SET CardName ='".$_REQUEST['cardtitle']."',Description='".$_REQUEST['carddescription']."',Label='".$_REQUEST['cardlabel']."',LabelColor='".$_REQUEST['cardlabelcolor']."', DueDate='".$_REQUEST['cardduedate']."', Listid='".$_REQUEST['cardmove']."' WHERE Cardid='$cardid'";
+
         $Exe_update=mysqli_query($con,$updatecard)or die(mysqli_error($con));
-        
-            if (mysqli_query($con, $updatecard)) {
-                echo '<script type="text/javascript" id="error">alert("Card Updated successfully..");</script>';
-                header("location:cards.php?Cardid=$cardid");
-            } else {
-                echo "Error updating record: ".mysqli_error($con);
-            }
+
+        if ($Exe_update) 
+        {
+                $updatemem= "UPDATE tblmembercard SET Uid='".$_REQUEST['upcardmember']."' WHERE Cardid='$cardid'";
+                $Exe_updatemem=mysqli_query($con,$updatemem)or die(mysqli_error($con));
+                
+                if ($Exe_updatemem) 
+                {
+
+                    $ser="SELECT * from tbluser where Uid='".$_REQUEST['upcardmember']."' ";
+                    $run_ser = mysqli_query($con,$ser);
+                    if($run_ser->num_rows!=0)
+                    {  
+                        while ($row_ser=$run_ser->fetch_array()) 
+                        {
+                            $usfirst=$row_ser['Fname'];
+                            $uslast=$row_ser['Lname'];
+                            $usemail=$row_ser['Email'];
+
+                            $subject = "Easework-Card Updated";
+                            $body = "Hi, $usfirst $uslast. The Card has been updated and You are added to the card- '$cn'. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                            $headers = "From: poojakusingh35@gmail.com";
+                            mail($usemail, $subject, $body, $headers);
+                        } 
+
+                        if ($list==1||$list==2||$list==3) 
+                            {
+                                header("location:board.php?Bid=$Bid");
+                            }
+                            if ($list==4||$list==5||$list==6||$list==7) 
+                            {
+                                header("location:Education_template.php?Bid=$Bid");
+                            }
+                            if ($list==8||$list==9||$list==10||$list==11) 
+                            {
+                                header("location:Personal_template.php?Bid=$Bid");
+                            }                          
+                    }
+                    else
+                    {
+                        if ($list==1||$list==2||$list==3) 
+                            {
+                                header("location:board.php?Bid=$Bid");
+                            }
+                            if ($list==4||$list==5||$list==6||$list==7) 
+                            {
+                                header("location:Education_template.php?Bid=$Bid");
+                            }
+                            if ($list==8||$list==9||$list==10||$list==11) 
+                            {
+                                header("location:Personal_template.php?Bid=$Bid");
+                            }           
+
+                    }
+
+                    
+                } 
+                else 
+                {
+                        echo "Error updating record: ".mysqli_error($con);
+                }
+        }
 }
 ?>
 
+<!-- Database for todo checklist -->
+<?php 
+    if(isset($_REQUEST['txtTodoChecklist']))
+    {
+        $insert_todo_cl = "INSERT into tblchecklist values(null,'".$_REQUEST['todochecklist']."','$cardid',1)";
+        $run_checklist = mysqli_query($con,$insert_todo_cl)or die(mysqli_error($con));
+        header("location:cards.php?Cardid=$cardid&Bid=$Bid");
+    }
+?>
+
+<!-- END Database for todo checklist -->
 
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-	<title>EaseWork- Profile</title>
+	<title>EaseWork-Card Details</title>
     <?php include_once('csslinks.php');?>
     <link type="text/css" href="assets/css/board.css" rel="stylesheet">
 </head>
@@ -76,17 +157,26 @@ if (isset($_POST['carddetails'])){
 
                     <!-- Fetch Details -->
                     <?php
-                        $card_query="select * from tblcard where Cardid='".$_GET['Cardid']."'";
+                        $card_query="select * from tblcard where Cardid='$cardid' ";
                         $Execute=mysqli_query($con,$card_query) or die(mysqli_error($con));
                         $fetch=mysqli_fetch_array($Execute);
 
-                            $cardid = $fetch['Cardid'];
+                            /*$cardid = $fetch['Cardid'];*/
                             $cardname = $fetch['CardName'];
                             $carddescription=$fetch['Description'];
                             $cardlabel = $fetch['Label'];
                             $cardlabelcolor = $fetch['LabelColor'];       
                             $cardduedate = $fetch['DueDate'];
                             $listid=$fetch['Listid'];
+                    ?>
+                    <?php
+                        $memberselected="select * from tblmembercard where Cardid='$cardid' ";
+                        $Execute_selected=mysqli_query($con,$memberselected) or die(mysqli_error($con));
+                        $fetch_selected=mysqli_fetch_array($Execute_selected);
+
+                            $mid = $fetch_selected['Mcardid'];
+                            $muid=$fetch_selected['Uid'];
+                            $mcid = $fetch_selected['Cardid'];
                     ?>
                     <!-- Fetch Details -->
                     
@@ -125,106 +215,56 @@ if (isset($_POST['carddetails'])){
                         <label class="w3-text-black"><b>Description</b></label>
                     </div>
                     <div class="col-75">
-                        <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;" placeholder="Description ...">
-                            <?php 
-                                    if(isset($carddescription))
-                                        echo $carddescription;
-                                    else 
-                                        echo " ";
-                                ?>
-                        </textarea>
+                        <textarea name="carddescription" id="description" rows="4" class="w3-input w3-border" style="width: 320px; background-color: white;"><?php if(isset($carddescription)){echo $carddescription;}?></textarea>
                     </div>
                 </div>
             <!-- End Description Input -->
             <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Checklist Input -->
-                    <div class="row" style="padding-left:50px;" >  
-                        <div class="col-25">  
-                            <label class="w3-text-black"><b>Checklist</b></label>
-                        </div>
-                        <div class="col-75">
-                            <div>
-                                <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="cardchecklist" id="myInput" type="text"
+                    <!-- Start Checklist Input --> 
+                    <div class="row" style="padding-left:50px;" >
+                      <div class="col-25">     
+                        <label class="w3-text-black"><b>Checklist</b></label>
+                      </div>
+                        <div class="col-75"  >
+                            <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
 
-                                >
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                            </div>
-
-                            <ul id="myUL">
-                               <!-- <li id="ul-container"></li>  -->
-                            </ul>
-
-                            <script>
-                                // Create a "close" button and append it to each list item
-                                var myNodelist = document.getElementsByTagName("LI");
-                                var i;
-                                for (i = 0; i < myNodelist.length; i++) 
-                                {
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    myNodelist[i].appendChild(span);
-                                }
-
-                                // Click on a close button to hide the current list item
-                                var close = document.getElementsByClassName("close");
-                                var i;
-                                for (i = 0; i < close.length; i++) 
-                                {
-                                    close[i].onclick = function() 
-                                    {
-                                        var div = this.parentElement;
-                                        div.style.display = "none";
-                                    }
-                                }
-
-                                // Add a "checked" symbol when clicking on a list item
-                                var list = document.querySelector('ul');
-                                list.addEventListener('click', function(ev)
-                                {
-                                    if (ev.target.tagName === 'LI') 
-                                    {
-                                        ev.target.classList.toggle('checked');
-                                    }
-                                }, false);
-
-                                // Create a new list item when clicking on the "Add" button
-                                function newElement() 
-                                {
-                                    var li = document.createElement("li");
-                                    var inputValue = document.getElementById("myInput").value;
-                                    var t = document.createTextNode(inputValue);
-                                    li.appendChild(t);
-                                    if (inputValue === '') 
-                                    {
-                                        alert("You must write something!");
-                                    } else {
-                                        document.getElementById("myUL").appendChild(li);
-                                    }
-                                    document.getElementById("myInput").value = "";
-
-                                    var span = document.createElement("SPAN");
-                                    var txt = document.createTextNode("\u00D7");
-                                    span.className = "close";
-                                    span.appendChild(txt);
-                                    li.appendChild(span);
-
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-                                }
-                            </script>
+                            <input type="submit" class="w3-button w3-black w3-round" style="float: right; margin-right: 30px; height: 40px;" name="txtTodoChecklist" value="Add Item">
 
                         </div>
                     </div>
+                    <br>
+
+                    <div class="row" style="padding-left:200px; padding-top: 10px;" >
+                         
+                        
+                               <?php 
+                                    $Todo_checklist = "SELECT * from tblchecklist where Cardid=$cardid";
+                                    $res_checklist = mysqli_query($con,$Todo_checklist);
+                                    if($res_checklist->num_rows !=0)
+                                    {  
+                                        while($row=$res_checklist->fetch_array())  
+                                        {
+                                            $ChecklistName=$row['ChecklistName'];
+                                            $ChecklistID=$row['Checklistid'];
+                                            
+                                ?>
+                                <ul class="list-unstyled list-todo" id="todo">
+                                    <li>
+                                        <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
+                                        <label class="w3-text-black" for="customCheck1">
+                                            <b><?php echo $ChecklistName?></b>
+                                        </label>
+                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
+                                    </li>
+                                </ul>
+                               <?php
+                                    }
+                                }
+                                ?>
+                        
+                             
+                    </div>                                  
                     <!--End Checklist Input -->
 
                     <hr style="border-top: 1px solid #bbb;">
@@ -235,12 +275,42 @@ if (isset($_POST['carddetails'])){
                             <label class="w3-text-black"><b>Members</b></label>
                         </div>
                         <div class="col-75">
-                            <select id="member" name="cardmember" style="width:320px; height: 45px;">
-                              <option value="todo">To Do</option>
-                              <option value="doing">Doing</option>
-                              <option value="done">Done</option>
-                            </select>
+                            <select id="country" name="upcardmember" style="width:320px; height: 45px;">
+                            <option value="0" selected>--Select--</option>
+                                    <?php        
+                                        $upmember = "SELECT * FROM tbluser Where IsActive=1 AND Uid IN (SELECT Uid FROM tblteammember Where Bid=$Bid)";  
+                                        $result_upmember  = mysqli_query($con,$upmember );
+                                        if($result_upmember ->num_rows!=0)
+                                        {  
+                                            while($row_upmember =$result_upmember ->fetch_array())  
+                                            {
+                                                $member=$row_upmember['Uid'];
+                                                $fname=$row_upmember['Fname'];
+                                                $lname=$row_upmember['Lname'];
 
+                                                $memberselected="select * from tblmembercard where Cardid='$cardid' ";
+                                                $Execute_selected=mysqli_query($con,$memberselected) or die(mysqli_error($con));
+                                                $fetch_selected=mysqli_fetch_array($Execute_selected);
+
+                                                $muid=$fetch_selected['Uid'];
+
+                                                if ($member==$muid) 
+                                                {
+                                    ?>
+                                                    <option selected="" value="<?php echo $member;?>">
+                                                        <?php echo $fname." ".$lname;?>
+                                                    </option>
+                                    <?php
+                                                }else
+                                                {
+                                    ?>
+                                                    <option value="<?php echo $member;?>"><?php echo $fname." ".$lname;?></option>
+                                    <?php  
+                                                }
+                                            }
+                                        }
+                                    ?>
+                            </select>
                         </div>
                     </div>
                     <!-- End Member List Input --> 
@@ -253,13 +323,7 @@ if (isset($_POST['carddetails'])){
                         <label class="w3-text-black"><b>Label Name</b></label>
                       </div>
                       <div class="col-75" >
-                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;"
-                        value=" <?php 
-                                    if(isset($cardlabel))
-                                        echo $cardlabel;
-                                    else 
-                                        echo " ";
-                                ?>">                                                
+                        <input class="w3-input w3-border" placeholder="Enter label name" name="cardlabel" type="text" style="width: 320px; height: 40px;" value="<?php if(isset($cardlabel)){echo $cardlabel;}?>">                                                
                       </div>
                     </div>
                     <!-- End Label Input -->
@@ -272,13 +336,7 @@ if (isset($_POST['carddetails'])){
                             <label class="w3-text-black"><b>Label Color</b></label>
                         </div>
                         <div class="col-75" >
-                            <input type="color" name="cardlabelcolor" style="width: 320px; height: 40px;"
-                            value=" <?php 
-                                    if(isset($cardlabelcolor))
-                                        echo $cardlabelcolor;
-                                    else 
-                                        echo " ";
-                                ?>">                      
+                            <input type="color" name="cardlabelcolor" value="<?php if(isset($cardlabelcolor)){echo $cardlabelcolor;}?>" style="width: 320px; height: 40px;">   
                         </div>
                     </div>
                     <!-- End Label color Input -->
@@ -291,13 +349,8 @@ if (isset($_POST['carddetails'])){
                         <label class="w3-text-black"><b>Due Date</b></label>
                       </div>
                       <div class="col-75">
-                        <input type="datetime" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border" 
-                        value="<?php 
-                                    if(isset($cardduedate))
-                                        echo $cardduedate;
-                                    else 
-                                        echo " ";
-                                ?>">
+                        <input type="date" id="birthdaytime" name="cardduedate" style="width:320px; height: 45px;" class="w3-input w3-border" 
+                        value="<?php if(isset($cardduedate)){echo $cardduedate;}?>">
                       </div>
                     </div>
                     <!-- End Due Date Input --> 
@@ -311,113 +364,72 @@ if (isset($_POST['carddetails'])){
                       </div>
                       <div class="col-75" >
                         <select id="move" name="cardmove" style="width:320px; height: 45px;">
-                            <?php
-                            if($listid == 1 || $listid ==2 || $listid == 3)
-                                {
-                                    ?>
-                          <option value="1" 
-                            <?php 
-                                        if($listid == 1)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                   
-                            ?>>To Do</option>
-                          <option value="2" 
-                            <?php 
-                                        if($listid == 2)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                  
-                            ?>>Doing</option>
-                          <option value="3" 
-                            <?php 
-                                        if($listid == 3)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                    
-                            ?>>Done</option>
-                            <?php
-                            }    
-                        ?>
-                            <?php
-                            if($listid == 4 || $listid ==5 || $listid == 6 || $listid ==7)
-                                {
-                                    ?>
-                          <option value="4" 
-                            <?php 
-                                        if($listid == 4)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                   
-                            ?>>Syllabus Remaining</option>
-                          <option value="5" 
-                            <?php 
-                                        if($listid == 5)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                  
-                            ?>>Syllabus to be covered today</option>
-                          <option value="6" 
-                            <?php 
-                                        if($listid == 6)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                    
-                            ?>>Syllabus Covered</option>
-                          <option value="7" 
-                            <?php 
-                                        if($listid == 7)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                    
-                            ?>>Assignments</option>
-                            <?php
-                            }    
-                        ?>
                         <?php
-                            if($listid == 8 || $listid ==9 || $listid == 10 || $listid ==11)
-                                {
-                                    ?>
-                          <option value="8" 
-                            <?php 
-                                        if($listid == 8)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                   
-                            ?>>Todo Before Trip</option>
-                          <option value="9" 
-                            <?php 
-                                        if($listid == 9)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                  
-                            ?>>Todo in Holiday</option>
-                          <option value="10" 
-                            <?php 
-                                        if($listid == 10)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                    
-                            ?>>To eat and drink</option>
-                          <option value="11" 
-                            <?php 
-                                        if($listid == 11)
-                                            echo "disabled";
-                                        else
-                                            echo "";
-                                    
-                            ?>>Done</option>
-                            <?php
+                            if($listid == 1)
+                            {
+                        ?>
+                                <option value="1" selected >To Do</option><option value="2">Doing</option><option value="3">Done</option>
+                        <?php
+                            }
+                            if($listid == 2)
+                            {
+                        ?>
+                                <option value="1" >To Do</option><option value="2" selected>Doing</option><option value="3" >Done</option>
+                        <?php
+                            }
+                            if($listid == 3)
+                            {
+                        ?>
+                                <option value="1" >To Do</option><option value="2" >Doing</option><option value="3" selected>Done</option>
+                        <?php
+                            }    
+                            if($listid == 4 )
+                            {
+                        ?>
+                                <option value="4" selected>Syllabus Remaining</option><option value="5" >Syllabus to be covered today</option><option value="6" >Syllabus Covered</option><option value="7" >Assignments</option>
+                        <?php
+                            }    
+                            if($listid == 5 )
+                            {
+                        ?>    
+                                <option value="4" >Syllabus Remaining</option><option value="5" selected>Syllabus to be covered today</option><option value="6" >Syllabus Covered</option><option value="7" >Assignments</option>
+                        <?php
+                            }    
+                            if($listid == 6 )
+                            {
+                        ?>
+                                <option value="4" >Syllabus Remaining</option><option value="5" >Syllabus to be covered today</option><option value="6" selected>Syllabus Covered</option><option value="7" >Assignments</option>
+                        <?php
+                            }    
+                            if($listid == 7 )
+                            {
+                        ?>
+                                <option value="4" >Syllabus Remaining</option><option value="5" >Syllabus to be covered today</option><option value="6" >Syllabus Covered</option><option value="7" selected>Assignments</option>
+                        <?php
+                            }    
+                            if($listid == 8)
+                            {
+                        ?>
+                                <option value="8" selected>Todo Before Trip</option><option value="9" >Todo in Holiday</option><option value="10" >To eat and drink</option><option value="11" >Done</option>
+                        <?php
+                            }    
+                            if($listid == 9)
+                            {
+                        ?>
+                                <option value="8" >Todo Before Trip</option><option value="9" selected >Todo in Holiday</option><option value="10" >To eat and drink</option><option value="11" >Done</option>
+                        <?php
+                            }    
+                            if($listid == 10)
+                            {
+                        ?>
+                                <option value="8" >Todo Before Trip</option><option value="9" >Todo in Holiday</option><option value="10" selected>To eat and drink</option><option value="11" >Done</option>
+                        <?php
+                            }    
+                            if($listid == 11)
+                            {
+                        ?>
+                                <option value="8" >Todo Before Trip</option><option value="9" >Todo in Holiday</option><option value="10" >To eat and drink</option><option value="11" selected >Done</option>
+                        <?php
                             }    
                         ?>
                          
@@ -433,47 +445,18 @@ if (isset($_POST['carddetails'])){
                         <center>
                             <button type="submit" name="carddetails" class="btn btn-success" style="width:150px;">Save</button>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button href="#" name="deletecardspopup" class="btn btn-danger"style="background-color: red; width:150px;"  >Delete</button>
+                            <button type="submit" name="deletecardspopup" class="btn btn-danger"style="background-color: red; width:150px;">Delete</button>
 
-                        <!-- Start card details popup fuction-->
-                            <!-- <script>
-                                function deleteopencard() {onclick="deleteopencard()"
-                                    document.getElementById("deletecard").style.display = "flex";
-                                }
-                                function deleteclosecard() {
-                                    document.getElementById("deletecard").style.display = "none";
-                                }
-                            </script> -->
-                            <!-- End card details popup fuction-->
                             <p></p>
                         </center>
                     </div>
                     <!-- End Button Input -->
-            
-                    <!-- start show menu delete popup -->
-    <!-- <div id="deletecard" class="modal">
-        <div class="modal-content" style="width: 50%; height: 250px;">
-            <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                <div>
-                    <h3><strong>Are you sure ?</strong></h3>
-                </div><br><br>
-                <center><div class="canclebtn">
-                    <button type="submit" name="deletecardspopup" class="btn cancel">Yes</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn cancel" onclick="deleteclosecard()" >No</button>
-                </div></center>
-            </form>
-        </div>
-    </div> -->
-    <!-- End show menu delete popup -->
+        
 
                                 </div>
                             </div>
                         </div>
 
-                    <!-- end card details to be displayed and update -->    
-                        <!-- <div class="text-right mb-5"> 
-                            <button type="submit" name="Save" class="btn btn-success" onclick="return profilevalidate();">Save</button>
-                        </div> -->
                     </div>
 
                     </form>
@@ -482,7 +465,7 @@ if (isset($_POST['carddetails'])){
                 </div>
                 <!-- // END drawer-layout__content -->
 
-                <?php include_once('sidebar1.php');?>
+                
             </div>
             <!-- // END drawer-layout -->
         </div>

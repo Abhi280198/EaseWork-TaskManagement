@@ -2,6 +2,32 @@
 include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
+    $senduser=$_SESSION['Firstname'];
+    $senduser1=$_SESSION['Lastname'];
+    $recentuser=$_SESSION['UserID'];
+
+    $recent="SELECT * from tblboard where Bid=$bid";
+    $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
+    if($Exe_recent->num_rows!=0)
+    {  
+        $row_recent=$Exe_recent->fetch_array();
+
+        $rbid=$row_recent['Bid'];
+        $rtid=$row_recent['Tid'];
+
+        $selectrecent="SELECT * from tblrecent where Bid=$rbid AND Uid=$recentuser";
+        $Exe_selectrecent=mysqli_query($con,$selectrecent)or die(mysqli_error($con));
+        if($Exe_selectrecent->num_rows>0)
+        {
+            $updaterecent= "UPDATE tblrecent set Date=now() where Bid=$rbid AND Uid=$recentuser";  
+            $Exe_updaterecent=mysqli_query($con,$updaterecent)or die(mysqli_error($con));
+        }
+        else
+        {
+            $recentInsert= "INSERT into tblrecent values(null,$rbid,$rtid,$recentuser,now(),1)";
+            $run_recentInsert = mysqli_query($con,$recentInsert);
+        }
+    }
 
     /*Start database add board description button(SHOW MENU)*/
     if (isset($_REQUEST['showdescriptioneducation'])) 
@@ -31,6 +57,8 @@ include_once("DbConnection.php");
     {
         $delete_board_education = "DELETE FROM tblboard WHERE Bid='$bid'";
         $Exe_delete_education_board=mysqli_query($con,$delete_board_education)or die(mysqli_error($con));
+        $delete_board_member = "DELETE FROM tblteammember WHERE Bid='$bid'";
+        $Exe_delete_board_member=mysqli_query($con,$delete_board_member)or die(mysqli_error($con));
         header("location:index.php?Uid=$uid");
     } 
     /*End database delete board button(SHOW MENU)*/
@@ -64,9 +92,32 @@ include_once("DbConnection.php");
                     $query1_sremain="INSERT into tblmembercard values(null,'$Syllabus1member','$syllabus1')";
                     $run_sremain = mysqli_query($con,$query1_sremain);
                     if($run_sremain)
-                    {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                    {   
+                        if ($Syllabus1member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus1member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
+
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus1title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
+
+                                header("location:Education_template.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -107,8 +158,31 @@ include_once("DbConnection.php");
                     $run_stoday = mysqli_query($con,$query2_stoday);
                     if($run_stoday)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        if ($Syllabus2member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus2member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
+
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus2title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
+
+                                header("location:Education_template.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -149,8 +223,31 @@ include_once("DbConnection.php");
                     $run_scover = mysqli_query($con,$query3_stoday);
                     if($run_scover)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        if ($Syllabus3member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus3member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
+
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus3title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
+
+                                header("location:Education_template.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -191,8 +288,31 @@ include_once("DbConnection.php");
                     $run_sassign = mysqli_query($con,$query4_stoday);
                     if($run_sassign)
                     {
-                        echo "Data Inserted Successfully..";
-                        header("location:Education_template.php?Bid=$bid");
+                        if ($Syllabus4member==0) 
+                        {
+                           header("location:Education_template.php?Bid=$bid");
+                        }
+                        else
+                        {
+                            $suser="SELECT tbluser.Email,tbluser.Fname,tbluser.Lname, tblboard.Btitle from tbluser,tblboard where tbluser.Uid=$Syllabus4member AND tblboard.Bid=$bid" ;
+                            $run_suser = mysqli_query($con,$suser);
+                            if($run_suser->num_rows!=0)
+                            {  
+                                $row_suser=$run_suser->fetch_array();
+
+                                $usfirst=$row_suser['Fname'];
+                                $uslast=$row_suser['Lname'];
+                                $usemail=$row_suser['Email'];
+                                $boname=$row_suser['Btitle'];
+
+                                $subject = "Easework";
+                                $body = "Hi, $usfirst $uslast. $senduser $senduser1 added you to a new card-$Syllabus4title on Board-$boname. Please Login to Check Your Activities : http://localhost/Task-Management/login.php";
+                                $headers = "From: poojakusingh35@gmail.com";
+                                mail($usemail, $subject, $body, $headers);
+
+                                header("location:Education_template.php?Bid=$bid");
+                            }
+                        }
                     }
                 }
             }
@@ -298,95 +418,6 @@ include_once("DbConnection.php");
                           </div>
                         </div>
                         <!-- End Description Input -->
-
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
 
                         <?php
 
@@ -530,95 +561,6 @@ include_once("DbConnection.php");
                         </div>
                         <!-- End Description Input -->
 
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
-
                         <?php
 
                             $select2boardmember = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -761,95 +703,6 @@ include_once("DbConnection.php");
                         </div>
                         <!-- End Description Input -->
 
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
-
                         <?php
 
                             $selectboardmember3 = " SELECT * FROM tblboard Where IsActive=1 AND Bid=$bid ";  
@@ -991,95 +844,6 @@ include_once("DbConnection.php");
                           </div>
                         </div>
                         <!-- End Description Input -->
-
-                        <hr style="border-top: 1px solid #bbb;">
-
-                        <!-- Start Checklist Input -->
-                        <div class="row" style="padding-left:50px;" >  
-                            <div class="col-25">  
-                                <label class="w3-text-black"><b>Checklist</b></label>
-                            </div>
-                            <div class="col-75">
-                                <div id="myDIV" class="header" style="" >
-                                    <input class="w3-input w3-border" style="width:250px; height: 40px; float: left;" name="Title" id="myInput" type="text">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span class="w3-button w3-black w3-round" onclick="newElement()" style="float: right; margin-right: 30px; width: 100px;">Add Item</span>
-                                </div>
-
-                                <ul id="myUL">
-                                   <!-- <li id="ul-container"></li>  -->
-                                </ul>
-
-                                <script>
-                                    // Create a "close" button and append it to each list item
-                                    var myNodelist = document.getElementsByTagName("LI");
-                                    var i;
-                                    for (i = 0; i < myNodelist.length; i++) 
-                                    {
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        myNodelist[i].appendChild(span);
-                                    }
-
-                                    // Click on a close button to hide the current list item
-                                    var close = document.getElementsByClassName("close");
-                                    var i;
-                                    for (i = 0; i < close.length; i++) 
-                                    {
-                                        close[i].onclick = function() 
-                                        {
-                                            var div = this.parentElement;
-                                            div.style.display = "none";
-                                        }
-                                    }
-
-                                    // Add a "checked" symbol when clicking on a list item
-                                    var list = document.querySelector('ul');
-                                    list.addEventListener('click', function(ev)
-                                    {
-                                        if (ev.target.tagName === 'LI') 
-                                        {
-                                            ev.target.classList.toggle('checked');
-                                        }
-                                    }, false);
-
-                                    // Create a new list item when clicking on the "Add" button
-                                    function newElement() 
-                                    {
-                                        var li = document.createElement("li");
-                                        var inputValue = document.getElementById("myInput").value;
-                                        var t = document.createTextNode(inputValue);
-                                        li.appendChild(t);
-                                        if (inputValue === '') 
-                                        {
-                                            alert("You must write something!");
-                                        } else {
-                                            document.getElementById("myUL").appendChild(li);
-                                        }
-                                        document.getElementById("myInput").value = "";
-
-                                        var span = document.createElement("SPAN");
-                                        var txt = document.createTextNode("\u00D7");
-                                        span.className = "close";
-                                        span.appendChild(txt);
-                                        li.appendChild(span);
-
-                                        for (i = 0; i < close.length; i++) 
-                                        {
-                                            close[i].onclick = function() 
-                                            {
-                                                var div = this.parentElement;
-                                                div.style.display = "none";
-                                            }
-                                        }
-                                    }
-                                </script>
-
-                            </div>
-                        </div>
-                        <!--End Checklist Input -->
 
                         <?php
 
@@ -1556,14 +1320,28 @@ include_once("DbConnection.php");
         }
         else
         {
+            $selectmlist="SELECT * from tblteammember where Bid=$bid AND Uid=$uid";
+            $result_selectmlist= mysqli_query($con,$selectmlist);
+            if($result_selectmlist->num_rows!=0)
+            { 
     ?>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------
                                             If Board Id is not 0 
 ---------------------------------------------------------------------------------------------------------------------------------------->
 
-             <!-- Start Board id is not 0 from second header -->
-            <div class="mdk-header-layout__content" style="overflow-y: auto;">
+                <!-- Start Board id is not 0 from second header -->
+                <div class="mdk-header-layout__content" style="overflow-y: auto;">
+<?php
+            }
+            else
+            {
+?>
+                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+            }
+?>
+
 
                 <!-- Start DATABASE IN SECOND HEADER -->
                 <?php
@@ -1590,9 +1368,22 @@ include_once("DbConnection.php");
                             <center>
                                 <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                 <small style="color: white;">
-                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                        <strong><?php echo $tname; ?></strong>
-                                    </a>
+                                    <?php
+                                        if ($btid==1) 
+                                        {
+                                    ?>
+                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                    <?php
+                                        }
+                                    ?>
+                                                <strong><?php echo $tname; ?></strong>
+                                            </a>
                                 </small>
                             </center>
                         </div>
@@ -1750,7 +1541,7 @@ include_once("DbConnection.php");
                     <div class="trello-board container-fluid page__container mt-5" >
 
                         <!-- Start Syllabus remaining list-->
-                        <div class="trello-board__tasks" data-toggle="dragula" data-dragula-containers='["#trello-tasks-1", "#trello-tasks-2", "#trello-tasks-3","#trello-tasks-4"]'>
+                        <div class="trello-board__tasks">
                             <div class="card bg-light border">
 
                                 <!-- Start list name-->
@@ -1778,12 +1569,7 @@ include_once("DbConnection.php");
                                     ?>
 
                                                 <!-- Start Syllabus remaining card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
+                                            <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong>
@@ -1799,25 +1585,10 @@ include_once("DbConnection.php");
                                                             ?>                                            
                                                         </p>
                                                         <br>
-                                                        <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                        ?>  
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
-                                                <p class="d-flex align-items-center mb-2">
-                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                        <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                </p>
-                                            <?php
-                                        }
-                                    ?>
+                                                        <p class="d-flex align-items-center mb-2">
+                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                        </p>
 
                                                         <?php
                                                             $selectrmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1905,12 +1676,7 @@ include_once("DbConnection.php");
 
 
                                         <!-- Start Syllabus to be covered today card 1-->
-<<<<<<< HEAD
-                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                            <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
-                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
+                                        <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                     <div class="p-3">
                                                         <p class="m-0 d-flex align-items-center">
                                                             <strong><?php echo $cardname;?></strong> 
@@ -1926,33 +1692,10 @@ include_once("DbConnection.php");
                                                             ?>                                             
                                                         </p>
                                                         <br>
-                                                        <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?><p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                                         <p class="d-flex align-items-center mb-2">
                                                             <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                             <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                         </p>
-<<<<<<< HEAD
-                                                    <?php
-                                        }
-                                    ?>
-                                                        <div class="media align-items-center" style="float: right;">
-                                                            <div class=" mr-2 avatar-group" >
-                                                                <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                    <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-=======
 
                                                        <?php
                                                             $selecttomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1982,7 +1725,6 @@ include_once("DbConnection.php");
                                                             }
                                                         ?>
 
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                     </div>
                                                 </div>
                                         <!-- End Syllabus to be covered today card 1-->
@@ -2042,12 +1784,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus covered card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -2063,25 +1800,10 @@ include_once("DbConnection.php");
                                                                     ?>                                              
                                                                 </p>
                                                                 <br>
-                                                                <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                    <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                        <?php
-                                        }
-                                        else{
-                                    ?>
-                                                <p class="d-flex align-items-center mb-2">
-                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                </p>
-                                            <?php
-                                        }
-                                    ?>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
+                                                                </p>
 
                                                         <?php
                                                             $selectcmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -2170,12 +1892,7 @@ include_once("DbConnection.php");
 
 
                                                 <!-- Start Syllabus Assignments card 1-->
-<<<<<<< HEAD
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal">
-                                                    <a href="cards.php?Cardid=<?php echo $cardid;?>">
-=======
-                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid; ?>';">
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
+                                                <div class="trello-board__tasks-item card shadow-none border" data-toggle="modal" data-target="#exampleModal" onclick="location.href='cards.php?Cardid=<?php echo $cardid;?>&Bid=<?php echo $bid;?>';">
                                                             <div class="p-3">
                                                                 <p class="m-0 d-flex align-items-center">
                                                                     <strong><?php echo $cardname;?></strong> 
@@ -2191,31 +1908,10 @@ include_once("DbConnection.php");
                                                                     ?>                                               
                                                                 </p>
                                                                 <br>
-                                                                <?php
-                                        if ($cardduedate<date("Y-m-d")) 
-                                        {
-                                    ?>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3">Due-Date</span>
-                                            </p>
-                                            <?php
-                                        }
-                                        else{
-                                    ?>
                                                                 <p class="d-flex align-items-center mb-2">
                                                                     <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
                                                                     <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
                                                                 </p>
-<<<<<<< HEAD
-                                                <?php
-                                        }
-                                    ?>
-                                                                <div class="media align-items-center" style="float: right;">
-                                                                    <div class=" mr-2 avatar-group" >
-                                                                        <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="Janell D.">
-                                                                            <img src="assets/images/256_rsz_1andy-lee-642320-unsplash.jpg" alt="Avatar" class="avatar-img rounded-circle">
-=======
 
                                                         <?php
                                                             $selectassmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -2239,7 +1935,6 @@ include_once("DbConnection.php");
                                                                             <div class="avatar avatar-xs" data-toggle="tooltip" data-placement="top" title="<?php echo $assfname." ".$asslname;?>">
                                                                                 <img src="images/profile/<?php echo $asspropic; ?>" alt="Avatar" class="avatar-img rounded-circle">
                                                                             </div>
->>>>>>> f3b46f0506d15801f2b4faacb5281cab7471aecb
                                                                         </div>
                                                                     </div>
                                                         <?php 

@@ -51,35 +51,6 @@
                     <!--Start Board section-->
                     <div class="container-fluid page__container">
 
-                        <!--Start Recent Activity section-->
-                        <!-- <div class="mb-3"><strong class="text-dark-gray">Recently Viewed</strong></div>
-                        <div class="stories-cards mb-4">
-                            <div class="card stories-card">
-                                <div class="stories-card__content d-flex align-items-center flex-wrap">
-                                    <div class="avatar avatar-lg mr-3">
-                                        <a href="#"><img src="assets/images/stories/256_rsz_clem-onojeghuo-193397-unsplash.jpg" alt="avatar" class="avatar-img rounded"></a>
-                                    </div>
-                                    <div >
-                                        <h5><a href="board.php" class="headings-color">Romantic Vacations</a></h5>
-                                        <small class="text-dark-gray">created last week</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card stories-card">
-                                <div class="stories-card__content d-flex align-items-center flex-wrap">
-                                    <div class="avatar avatar-lg mr-3">
-                                        <a href="#"><img src="assets/images/stories/256_rsz_clem-onojeghuo-193397-unsplash.jpg" alt="avatar" class="avatar-img rounded"></a>
-                                    </div>
-                                    <div >
-                                        <h5><a href="#" class="headings-color">Home Decoration</a></h5>
-                                        <small class="text-dark-gray">created 2 days ago </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!--End Recent Activity section-->
-
                         <br>
 
                         <!--Start Boards section-->
