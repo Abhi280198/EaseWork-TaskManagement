@@ -258,13 +258,13 @@ include_once("DbConnection.php");
 
             if($run_Syllabus4)
             {
-                if ($syllabus4) 
+                if($syllabus4) 
                 {
                     $query4_stoday="INSERT into tblmembercard values(null,'$Syllabus4member','$syllabus4')";
                     $run_sassign = mysqli_query($con,$query4_stoday);
                     if($run_sassign)
                     {
-                        if ($Syllabus4member==0) 
+                        if($Syllabus4member==0) 
                         {
                            header("location:Education_template.php?Bid=$bid");
                         }
@@ -292,7 +292,8 @@ include_once("DbConnection.php");
                     }
                 }
             }
-            else{
+            else
+            {
                 echo "error".mysqli_error($con);   
             }
         } 
@@ -1065,7 +1066,7 @@ include_once("DbConnection.php");
                                   
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                    <a href="report.php" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                 </div>
                 <!-- End second Header Content -->
 
@@ -1475,7 +1476,9 @@ include_once("DbConnection.php");
                                       
                         <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                         <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                        <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
+                        <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" 
+                        style="color: black;">Report</a>  
+                        <!-- <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>   -->
                     </div>
                     <!-- End second Header Content -->
 

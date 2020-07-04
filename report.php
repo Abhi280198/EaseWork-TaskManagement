@@ -3,7 +3,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
     
     <title>EaseWork- Teams</title>
@@ -55,82 +54,6 @@
                     <!--Start Board section-->
                     <div class="container-fluid page__container">
 
-                        <!--Start Recent Activity section-->
-                        <!-- <div class="mb-3"><strong class="text-dark-gray">Recently Viewed</strong></div>
-                        <div class="stories-cards mb-4">
-                            <div class="card stories-card">
-                                <div class="stories-card__content d-flex align-items-center flex-wrap">
-                                    <div class="avatar avatar-lg mr-3">
-                                        <a href="#"><img src="assets/images/stories/256_rsz_clem-onojeghuo-193397-unsplash.jpg" alt="avatar" class="avatar-img rounded"></a>
-                                    </div>
-                                    <div >
-                                        <h5><a href="Team_boards.php" class="headings-color">Wedding Planning</a></h5>
-                                        <small class="text-dark-gray">created last week</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card stories-card">
-                                <div class="stories-card__content d-flex align-items-center flex-wrap">
-                                    <div class="avatar avatar-lg mr-3">
-                                        <a href="Team_boards.php"><img src="assets/images/stories/256_rsz_clem-onojeghuo-193397-unsplash.jpg" alt="avatar" class="avatar-img rounded"></a>
-                                    </div>
-                                    <div >
-                                        <h5><a href="#" class="headings-color">Different Classes</a></h5>
-                                        <small class="text-dark-gray">created 2 days ago </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!--End Recent Activity section-->
-
-                    
-
-                        <!--Start counter section-->
-<!--                         <div class="row card-group-row">
-                            <div class="col-lg-3 col-md-6 card-group-row__col">
-                                <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
-                                    <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Current Target</div>
-                                        <div class="text-amount">$12,920</div>
-                                        <div class="text-stats text-success">31.5% <i class="material-icons">arrow_upward</i></div>
-                                    </div>
-                                    <div><i class="material-icons icon-muted icon-40pt ml-3">gps_fixed</i></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 card-group-row__col">
-                                <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
-                                    <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Earnings</div>
-                                        <div class="text-amount">$3,642</div>
-                                        <div class="text-stats text-success">51.5% <i class="material-icons">arrow_upward</i></div>
-                                    </div>
-                                    <div><i class="material-icons icon-muted icon-40pt ml-3">monetization_on</i></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-12 card-group-row__col">
-                                <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
-                                    <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Website Traffic</div>
-                                        <div class="text-amount">8,391</div>
-                                        <div class="text-stats text-danger">3.5% <i class="material-icons">arrow_downward</i></div>
-                                    </div>
-                                    <div><i class="material-icons icon-muted icon-40pt ml-3">perm_identity</i></div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-12 card-group-row__col">
-                                <div class="card card-group-row__card card-body card-body-x-lg flex-row align-items-center">
-                                    <div class="flex">
-                                        <div class="card-header__title text-muted mb-2">Website Traffic</div>
-                                        <div class="text-amount">8,391</div>
-                                        <div class="text-stats text-danger">3.5% <i class="material-icons">arrow_downward</i></div>
-                                    </div>
-                                    <div><i class="material-icons icon-muted icon-40pt ml-3">perm_identity</i></div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
- -->                        <!--End counter section-->
 
                         <!-- Table Data -->
                         <div class="card" style="margin-right: 130px; margin-left: 130px;">
@@ -160,25 +83,51 @@
                                             $res=mysqli_query($con,$select);
                                             if($res->num_rows!=0)
                                             {
+                                                $srno=1;
                                                 while($fetch_user=$res->fetch_array()) 
                                                 {
                                                     $fetch_uid=$fetch_user['Uid'];
                                                     /*while($fetch_user=mysqli_fetch_array($Execute_select_Data)>0) */
                                                     /*while($row=$res->fetch_array())  */
-                                                    $srno=1;
                                                     $cardData1="SELECT count(Bid) AS 'cnt1' FROM tblcard c,tblmembercard mc 
                                                     WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid";
                                                     $card_Data1=mysqli_query($con,$cardData1);
                                                     $fetch_cnt1=$card_Data1->fetch_array();
 
-                                                    $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
-                                                    WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND isActive=1";
+                                                    $select_data="SELECT * from tblboard WHERE Bid=$bid";
+                                                    $board_data=mysqli_query($con,$select_data);  
+                                                    $fetch_row=$res->fetch_array();
+                                                    if($fetch_row['Tempid']==NULL)
+                                                    {
+                                                        $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
+                                                        WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND Listid=3";
+                                                    }
+                                                    elseif($fetch_row['Tempid']==1) 
+                                                    {
+                                                        $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
+                                                        WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND Listid=6";
+                                                    }
+                                                    elseif($fetch_row['Tempid']==2) 
+                                                    {
+                                                        $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
+                                                        WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND Listid=11";
+                                                    }
+
                                                     $card_Data2=mysqli_query($con,$cardData2);
                                                     $fetch_cnt2=$card_Data2->fetch_array();             
 
-                                                    $total=$fetch_cnt1['cnt1'];                                  
+                                                    $total=$fetch_cnt1['cnt1'];  
                                                     $completed=$fetch_cnt2['cnt2'];
-                                                    $per=$completed*100/$total;
+                                                    $per=0;
+                                                    
+                                                    if($total==0)
+                                                    {
+                                                        $per=0;
+                                                    }
+                                                    else
+                                                    {
+                                                        $per=$completed*100/$total;
+                                                    }
 
                                                     ?>
                                                         <tr class="selected">
@@ -200,10 +149,31 @@
                                                             <td><?php echo $fetch_cnt2['cnt2']; ?></td>
                                                             <td>
                                                                 <div class="progress" style="height: 6px;">
-                                                                    <div class="progress-bar" role="progressbar" style="width: <?php echo $per; ?>%;" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar" role="progressbar" style="width: 
+                                                                    <?php 
+                                                                    if($per==0)
+                                                                    {
+                                                                        echo 0;
+                                                                    }
+                                                                    elseif($per>0)
+                                                                    {
+                                                                        echo $per;
+                                                                    } 
+                                                                    ?>%;" aria-valuenow="61" aria-valuemin="0" aria-valuemax="100"></div>
                                                                 </div>
                                                             </td>
-                                                            <td><?php echo $per; ?></td>
+                                                            <td>
+                                                            <?php 
+                                                            if($per==0)
+                                                            {
+                                                                echo 0;
+                                                            }
+                                                            elseif($per>0)
+                                                            {
+                                                                echo $per;
+                                                            } 
+                                                            ?>
+                                                            </td>
                                                         </tr>
                                                     <?php
                                                     $srno++;
@@ -224,56 +194,210 @@
                         <!-- Table Data -->
 
 
-                        <!-- Pie Chart -->
-                        <div id="piechart"></div>
-                        <!-- <div class="caard" style="margin-left: 130px; margin-right: 130px;">
-                            <div class="card-header card-header-large bg-white d-flex align-items-center">
-                                <h5 class="mr-sm-2" for="inlineFormFilterBy">No.of Task</h5>
-                            </div>
-                                    <div class="card-body d-flex align-items-center justify-content-center" style="height: 210px;">
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <div class="chart" style="height: calc(210px - 1.25rem * 2);">
-                                                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-                                                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                                                            <div style="position:absolute;width:200%;height:200%;left:0; top:0">
-                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <canvas id="locationDoughnutChart" data-chart-legend="#locationDoughnutChartLegend" width="152" height="180" class="chartjs-render-monitor" style="display: block; width: 152px; height: 180px;">
-                                                        <span style="font-size: 1rem;" class="text-muted"><strong>Location</strong> doughnut chart goes here.</span>
-                                                    </canvas>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <div id="locationDoughnutChartLegend" class="chart-legend chart-legend--vertical">
-                                                    <span>
-                                                        <i class="chart-legend-indicator" style="background-color: #75d34a"></i>
-                                                        United Statessss
-                                                    </span>
-                                                    <span class="chart-legend-item">
-                                                        <i class="chart-legend-indicator" style="background-color: #ee405a"></i>
-                                                        United Kingdom
-                                                    </span>
-                                                    <span class="chart-legend-item">
-                                                        <i class="chart-legend-indicator" style="background-color: #3099ff"></i>
-                                                        Germany
-                                                    </span>
-                                                    <span class="chart-legend-item"><i class="chart-legend-indicator" style="background-color: #939fad"></i>
-                                                        India
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                        </div> -->
-                        <!-- Pie Chart -->
+                        
+                        <!-- start piechart -->
+                        <?php
+                            $bid=$_GET['Bid'];
+                            $select_data="SELECT * from tblboard WHERE Bid=$bid";
+                            $board_data=mysqli_query($con,$select_data);  
+                            $fetch_row=$res->fetch_array();
+
+                            if($fetch_row['Tempid']==NULL)
+                            {
+                                ?>
+                                    <center><div id="piechart"></div></center>
+                                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                    <script type="text/javascript">
+                                        // Load google charts
+                                        google.charts.load('current', {'packages':['corechart']});
+                                        google.charts.setOnLoadCallback(drawChart);
+
+                                        // Draw the chart and set the chart values
+                                        function drawChart() 
+                                        {
+
+                                          var data = google.visualization.arrayToDataTable([
+                                            <?php
+                                                $bid=$_GET['Bid'];
+                                                $card_data="SELECT COUNT(Listid) AS count,Listid from tblcard where Bid=$bid GROUP BY Listid";
+                                                $res=mysqli_query($con,$card_data);  
+                                                $GLOBALS['$todo']=0;
+                                                $GLOBALS['$doing']=0;
+                                                $GLOBALS['$done']=0;
+                                                
+                                                while($fetch_row=$res->fetch_array()) 
+                                                {
+                                                    if($fetch_row['Listid']==1)
+                                                    {
+                                                        $GLOBALS['$todo'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==2)
+                                                    {
+                                                        $GLOBALS['$doing'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==3)
+                                                    {
+                                                        $GLOBALS['$done'] = $fetch_row['count'];
+                                                    }
+                                                }
+                                            ?>
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Todo',<?php echo $GLOBALS['$todo']; ?>],
+                                                    ['Doing',<?php echo $GLOBALS['$doing']; ?>],
+                                                    ['Done', <?php echo $GLOBALS['$done']; ?>]
+
+                                            ]);
+
+                                          // Optional; add a title and set the width and height of the chart
+                                          var options = {'title':'Number of cards allocated to each list', 'width':980, 'height':400};
+
+                                          // Display the chart inside the <div> element with id="piechart"
+                                          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                          chart.draw(data, options);
+                                        }
+                                    </script>
+                                <?php
+                            }
+                            elseif($fetch_row['Tempid']==1)
+                            {
+                                ?>
+                                    <center><div id="piechart"></div></center>
+                                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                    <script type="text/javascript">
+                                        // Load google charts
+                                        google.charts.load('current', {'packages':['corechart']});
+                                        google.charts.setOnLoadCallback(drawChart);
+
+                                        // Draw the chart and set the chart values
+                                        function drawChart() 
+                                        {
+
+                                          var data = google.visualization.arrayToDataTable([
+                                            <?php
+                                                $bid=$_GET['Bid'];
+                                                $card_data="SELECT COUNT(Listid) AS count,Listid from tblcard where Bid=$bid GROUP BY Listid";
+                                                $res=mysqli_query($con,$card_data);  
+
+                                                $GLOBALS['$srem']=0;
+                                                $GLOBALS['$stoday']=0;
+                                                $GLOBALS['$scovered']=0;
+                                                $GLOBALS['$ass']=0;
+
+                                                while($fetch_row=$res->fetch_array()) 
+                                                {
+                                                    if($fetch_row['Listid']==4)
+                                                    {
+                                                        $GLOBALS['$srem'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==5)
+                                                    {
+                                                        $GLOBALS['$stoday'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==6)
+                                                    {
+                                                        $GLOBALS['$scovered'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==7)
+                                                    {
+                                                        $GLOBALS['$ass'] = $fetch_row['count'];
+                                                    }
+                                                }
+                                            ?>  
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Syllabus Remaining',<?php echo $GLOBALS['$srem']; ?>],
+                                                    ['Doing',<?php echo $GLOBALS['$stoday']; ?>],
+                                                    ['Done', <?php echo $GLOBALS['$scovered']; ?>],
+                                                    ['Done', <?php echo $GLOBALS['$ass']; ?>]
+                                                
+                                            ]);
+                                          <?php
+                                            if($GLOBALS['$srem']==0 && $GLOBALS['$stoday']==0 && 
+                                            $GLOBALS['$scovered']==0 && $GLOBALS['$ass']==0)
+                                            {
+                                            ?>
+                                                var options = {'title':'Error', 'width':980, 'height':400};      
+                                            <?php            
+                                            }
+                                            else
+                                            {
+                                            ?>
+                                                // Optional; add a title and set the width and height of the chart
+                                            var options = {'title':'Number of cards allocated to each list', 'width':980, 'height':400};
+                                            <?php
+                                            }
+                                            ?>
+
+                                          // Display the chart inside the <div> element with id="piechart"
+                                          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                          chart.draw(data, options);
+                                        }
+                                    </script>
+                                <?php
+                            }
+                            elseif($fetch_row['Tempid']==2)
+                            {
+                                ?>
+                                    <center><div id="piechart"></div></center>
+                                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                                    <script type="text/javascript">
+                                        // Load google charts
+                                        google.charts.load('current', {'packages':['corechart']});
+                                        google.charts.setOnLoadCallback(drawChart);
+
+                                        // Draw the chart and set the chart values
+                                        function drawChart() 
+                                        {
+
+                                          var data = google.visualization.arrayToDataTable([
+                                            <?php
+                                                $bid=$_GET['Bid'];
+                                                $card_data="SELECT COUNT(Listid) AS count,Listid from tblcard where Bid=$bid GROUP BY Listid";
+                                                $res=mysqli_query($con,$card_data);  
+                                                
+                                                $GLOBALS['$btrip']=0;
+                                                $GLOBALS['$atvac']=0;
+                                                $GLOBALS['$eat']=0;
+                                                $GLOBALS['$donevac']=0;
+
+                                                while($fetch_row=$res->fetch_array()) 
+                                                {
+                                                    if($fetch_row['Listid']==8)
+                                                    {
+                                                        $GLOBALS['$btrip'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==9)
+                                                    {
+                                                        $GLOBALS['$atvac'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==10)
+                                                    {
+                                                        $GLOBALS['$eat'] = $fetch_row['count'];
+                                                    }
+                                                    if($fetch_row['Listid']==11)
+                                                    {
+                                                        $GLOBALS['$donevac'] = $fetch_row['count'];
+                                                    }
+                                                }
+                                            ?>
+                                                    ['Task', 'Hours per Day'],
+                                                    ['Todo',<?php echo $GLOBALS['$btrip']; ?>],
+                                                    ['Doing',<?php echo $GLOBALS['$atvac']; ?>],
+                                                    ['Done', <?php echo $GLOBALS['$eat']; ?>],
+                                                    ['Done', <?php echo $GLOBALS['$donevac']; ?>]
+                                            ]);
+
+                                          // Optional; add a title and set the width and height of the chart
+                                          var options = {'title':'Number of cards allocated to each list', 'width':980, 'height':400};
+
+                                          // Display the chart inside the <div> element with id="piechart"
+                                          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                          chart.draw(data, options);
+                                        }
+                                    </script>
+                                <?php
+                            }
+                        ?>
+                        <!-- end piechart -->
                     
 
                         
