@@ -1,5 +1,6 @@
 <?php include_once("DbConnection.php");
     $bid=$_GET['Bid'];
+    $uid=$_SESSION['UserID'];
     /*$listid =$_SESSION["Listid"];*/
     /*$cardid=$_GET['Cardid'];*/
 
@@ -60,7 +61,7 @@
             $trip_card_duedate = $_REQUEST['beforetripduedate'];
             /*$todolistid=$_FETCH['Listid'];*/
             
-                $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1)";
+                $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1,25)";
                 $run_trip = mysqli_query($con,$trip_query);
 
                 if($run_trip)
@@ -91,7 +92,7 @@
             $holiday_card_labelcolor = $_REQUEST['holidaycardlabelcolor'];
             $holiday_card_duedate = $_REQUEST['holidaycardduedate'];
 
-            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1)";
+            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1,50)";
             $run_holiday = mysqli_query($con,$holiday_query);
 
             if($run_holiday)
@@ -122,7 +123,7 @@
             $eat_card_labelcolor = $_REQUEST['eatcardlabelcolor'];
             $eat_card_duedate = $_REQUEST['eatcardduedate'];
 
-            $done_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1,75)";
             $run_done = mysqli_query($con,$done_query);
 
             if($run_done)
@@ -154,7 +155,7 @@
             $personal_card_labelcolor = $_REQUEST['personalcardlabelcolor'];
             $personal_card_duedate = $_REQUEST['personalcardduedate'];
 
-            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1,100)";
             $run_done = mysqli_query($con,$done_query);
 
             if($run_done)
@@ -1438,7 +1439,7 @@
                     </div>
                                   
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
         </div>
 
@@ -1876,7 +1877,7 @@
                     ?> 
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->             
                 <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                 <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
 
             </div>

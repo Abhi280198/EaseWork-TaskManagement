@@ -59,7 +59,7 @@
             $todo_card_duedate = $_REQUEST['todocardduedate'];
             $todo_card_member = $_REQUEST['todocardmember'];
                 
-            $todo_query="insert into tblcard values(null,'$todo_card_title','$todo_card_label','$todo_card_labelcolor','$todo_card_duedate',now(),'$todo_card_description',1,'$bid',1)";
+            $todo_query="insert into tblcard values(null,'$todo_card_title','$todo_card_label','$todo_card_labelcolor','$todo_card_duedate',now(),'$todo_card_description',1,'$bid',1,33.33)";
             $run_todo = mysqli_query($con,$todo_query);
             $todo1= mysqli_insert_id($con);
 
@@ -101,7 +101,7 @@
             $doing_card_duedate = $_REQUEST['doingcardduedate'];
             $doing_card_member = $_REQUEST['doingmember'];
 
-            $doing_query="insert into tblcard values(null,'$doing_card_title','$doing_card_label','$doing_card_labelcolor','$doing_card_duedate',now(),'$doing_card_description',2,'$bid',1)";
+            $doing_query="insert into tblcard values(null,'$doing_card_title','$doing_card_label','$doing_card_labelcolor','$doing_card_duedate',now(),'$doing_card_description',2,'$bid',1,77)";
             $run_doing = mysqli_query($con,$doing_query);
             $doing1= mysqli_insert_id($con);
 
@@ -143,7 +143,7 @@
             $done_card_duedate = $_REQUEST['donecardduedate'];
             $done_card_member = $_REQUEST['donecardmember'];
 
-            $done_query="insert into tblcard values(null,'$done_card_title','$done_card_label','$done_card_labelcolor','$done_card_duedate',now(),'$done_card_description',3,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$done_card_title','$done_card_label','$done_card_labelcolor','$done_card_duedate',now(),'$done_card_description',3,'$bid',1,100)";
             $run_done = mysqli_query($con,$done_query);
             $done1= mysqli_insert_id($con);
 
@@ -1134,7 +1134,7 @@
                     ?> 
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->            
                             <a href="calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                            <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                             <a href="report.php" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                     </div>
                     <!-- End second Header Content -->
