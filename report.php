@@ -96,8 +96,8 @@
 
                                                     $select_data="SELECT * from tblboard WHERE Bid=$bid";
                                                     $board_data=mysqli_query($con,$select_data);  
-                                                    $fetch_row=$res->fetch_array();
-                                                    if($fetch_row['Tempid']==NULL)
+                                                    $fetch_row=$board_data->fetch_array();
+                                                    if($fetch_row['Tempid']==null)
                                                     {
                                                         $cardData2="SELECT count(Bid) AS 'cnt2' FROM tblcard c,tblmembercard mc 
                                                         WHERE c.Bid=$bid AND c.Cardid=mc.Cardid AND mc.Uid=$fetch_uid AND Listid=3";
@@ -135,7 +135,14 @@
                                                             <td>
                                                                 <div class="media align-items-center">
                                                                     <div class="avatar avatar-xs mr-2">
-                                                                        <img src="images/profile/<?php echo $fetch_user['ProfilePic']; ?>" alt="Avatar" class= "avatar-img rounded-circle">
+                                                                    <?php
+                                                                     $pro=$fetch_user['ProfilePic'];
+                                                                        if($pro=="" || !file_exists("images/profile/$pro"))
+                                                                        {
+                                                                            $pro="No.png";
+                                                                        }  
+                                                                    ?>
+                                                                        <img src="images/profile/<?php echo $pro; ?>" alt="Avatar" class= "avatar-img rounded-circle">
                                                                     </div>
                                                                     <div class="media-body"> 
                                                                         <span class="js-lists-values-employee-name">
@@ -200,7 +207,7 @@
                             $bid=$_GET['Bid'];
                             $select_data="SELECT * from tblboard WHERE Bid=$bid";
                             $board_data=mysqli_query($con,$select_data);  
-                            $fetch_row=$res->fetch_array();
+                            $fetch_row=$board_data->fetch_array();
 
                             if($fetch_row['Tempid']==NULL)
                             {

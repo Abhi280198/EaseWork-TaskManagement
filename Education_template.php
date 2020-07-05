@@ -1359,11 +1359,21 @@ include_once("DbConnection.php");
                             $tname=$row_education_boarddata['Tname'];
                             $bdescription=$row_education_boarddata['BoardDescription'];
                             $bvisibilty=$row_education_boarddata['Visibility']; 
-
+                            if ($btid==1) 
+                        {
                 ?>
-                    
-                    <!-- start second header content -->
-                    <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
+                <?php
+                        }
+                        else
+                        {
+                ?>
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); "> 
+                <?php
+                        }
+                ?>
                         <p></p>
                         <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                             <center>
@@ -1526,15 +1536,9 @@ include_once("DbConnection.php");
                         ?>
                                       
                         <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-<<<<<<< HEAD
                         <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                         <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" 
                         style="color: black;">Report</a>  
-                        <!-- <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>   -->
-=======
-                        <a href="gantt_chart.php?Bid=<?php echo $bid?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                        <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
->>>>>>> cd08eabc80b2084aff3926fec12d1b3722714d52
                     </div>
                     <!-- End second Header Content -->
 
@@ -1544,8 +1548,35 @@ include_once("DbConnection.php");
                 ?>
                 <!-- End DATABASE IN SECOND HEADER -->
 
-                <!-- start trello container after second header  -->
-                <div class="trello-container">
+        <?php
+            $trellodata = "SELECT * FROM tblboard Where Bid=$bid";  
+            $result_trellodata = mysqli_query($con,$trellodata);
+            if($result_trellodata->num_rows!=0)
+            {  
+                while($row_trelloboard=$result_trellodata->fetch_array())  
+                {
+                    $boardid=$row_trelloboard['Bid'];
+                    $btitle=$row_trelloboard['Btitle'];  
+                    $isactive=$row_trelloboard['IsActive'];
+
+                    if ($isactive==0)
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container" style="pointer-events: none;">
+        <?php
+                        
+                    }
+                    else
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container">
+        <?php
+                    }
+               }
+            } 
+        ?>
                     <div class="trello-board container-fluid page__container mt-5" >
 
                         <!-- Start Syllabus remaining list-->

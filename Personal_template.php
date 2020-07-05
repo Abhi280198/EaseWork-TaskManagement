@@ -1,10 +1,6 @@
 <?php include_once("DbConnection.php");
     $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
-<<<<<<< HEAD
-    /*$listid =$_SESSION["Listid"];*/
-    /*$cardid=$_GET['Cardid'];*/
-=======
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
     $recentuser=$_SESSION['UserID'];
@@ -31,7 +27,6 @@
             $run_recentInsert = mysqli_query($con,$recentInsert);
         }
     }
->>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
 /*Start database complete board button (SHOW MENU)*/
     if (isset($_REQUEST['completebutton'])) 
@@ -87,14 +82,9 @@
             $trip_card_duedate = $_REQUEST['beforetripduedate'];
             $trip_card_member = $_REQUEST['beforetripcardmember'];
             
-<<<<<<< HEAD
-                $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1,25)";
-                $run_trip = mysqli_query($con,$trip_query);
-=======
             $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1)";
             $run_trip = mysqli_query($con,$trip_query);
             $trip1= mysqli_insert_id($con);
->>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
             if($run_trip)
             {
@@ -157,7 +147,7 @@
             $holiday_card_duedate = $_REQUEST['holidaycardduedate'];
             $holiday_card_member = $_REQUEST['holidaycardmember'];
 
-            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1,50)";
+            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1)";
             $run_holiday = mysqli_query($con,$holiday_query);
             $holiday1= mysqli_insert_id($con);
 
@@ -222,14 +212,9 @@
             $eat_card_duedate = $_REQUEST['eatcardduedate'];
             $eat_card_member = $_REQUEST['eatcardmember'];
 
-<<<<<<< HEAD
-            $done_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1,75)";
-            $run_done = mysqli_query($con,$done_query);
-=======
             $eat_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1)";
             $run_eat = mysqli_query($con,$eat_query);
             $eat1= mysqli_insert_id($con);
->>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
 
             if($run_eat)
             {
@@ -293,7 +278,7 @@
             $personal_card_duedate = $_REQUEST['personalcardduedate'];
             $personal_card_member = $_REQUEST['personaldonecardmember'];
 
-            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1,100)";
+            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1)";
             $run_done = mysqli_query($con,$done_query);
             $done1= mysqli_insert_id($con);
 
@@ -1101,7 +1086,7 @@
                     </div>
                                   
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                    <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
         </div>
 
@@ -1367,11 +1352,21 @@
                         $tname=$row_board['Tname'];
                         $bdescription=$row_board['BoardDescription'];
                         $bvisibilty=$row_board['Visibility']; 
-
+                        if ($btid==1) 
+                        {
             ?>
-
-                <!-- start second header content -->
-                <div class="w3-bar" style="background: rgba(120,120,120,0.4); ">
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
+            <?php
+                        }
+                        else
+                        {
+            ?>
+                            <!-- start second header content -->
+                            <div class="w3-bar" style="background: rgb(120,120,120); "> 
+            <?php
+                        }
+            ?>
                     <p></p>
                     
                     <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
@@ -1539,24 +1534,13 @@
                             </select>
                         </div>
                     </div>
-<<<<<<< HEAD
-                </div>
-            <?php
-                        }   
-                    ?> 
-                    <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->             
-                <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                <a href="gantt_chart.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
-=======
                 <?php
                             }   
                         ?> 
                         <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->             
                     <a href="Calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
                     <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
-                    <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
->>>>>>> 80ed58f1715d89c7de07e3ef612a871c69e2d0cb
+                    <a href="report.php?Bid=<?php echo $bid;?>" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
 
                 </div>
                 <!-- End second Header Content -->
@@ -1566,9 +1550,35 @@
             ?>
            <!-- END DATABASE IN SECOND HEADER -->
 
-            
-            <!-- start trello container after second header  -->
-            <div class="trello-container"><br>
+        <?php
+            $trellodata = "SELECT * FROM tblboard Where Bid=$bid";  
+            $result_trellodata = mysqli_query($con,$trellodata);
+            if($result_trellodata->num_rows!=0)
+            {  
+                while($row_trelloboard=$result_trellodata->fetch_array())  
+                {
+                    $boardid=$row_trelloboard['Bid'];
+                    $btitle=$row_trelloboard['Btitle'];  
+                    $isactive=$row_trelloboard['IsActive'];
+
+                    if ($isactive==0)
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container" style="pointer-events: none;">
+        <?php
+                        
+                    }
+                    else
+                    {
+        ?>
+                        <!-- start trello container after second header  -->
+                        <div class="trello-container">
+        <?php
+                    }
+               }
+            } 
+        ?>
                 <div class="trello-board container-fluid page__container mt-5">
                 
                     <!-- Start Todo before trip list-->
