@@ -1,11 +1,17 @@
 <?php
-require "database.php";
+require_once "DbConnection.php";
+
+
 
 $id = $_POST['id'];
-$sqlDelete = "DELETE from table_events WHERE id=".$id;
 
-mysqli_query($conn, $sqlDelete);
-echo mysqli_affected_rows($conn);
+$sqlDelete = "DELETE from tblcalendar WHERE Calendarid=".$id;
+// echo "<script>alert('check data >>>>>>>>>>>>>>>>>>>>>>','".$sqlDelete."');</script>";
 
-mysqli_close($conn);
+mysqli_query($con, $sqlDelete);
+echo mysqli_affected_rows($con);
+
+mysqli_close($con);
+
+
 ?>

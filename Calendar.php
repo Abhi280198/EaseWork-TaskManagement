@@ -1,87 +1,139 @@
 <?php 
     include_once("DbConnection.php");
+
+    $sqlQuery = "select Calendarid, CalendarTitle, CalendarStart, CalendarEnd from tblcalendar";
+
+    $alldata = array(); 
+
+    $result = mysqli_query($con, $sqlQuery);
+
+    if(mysqli_num_rows($result)>0)
+    {
+        while($row=$result->fetch_array()){
+          echo "<script>console.log('Debug Objects: " . $row["CalendarTitle"] . "' );</script>";
+             $alldata[] = array(
+              'id'   => $row["Calendarid"],
+              'title'   => $row["CalendarTitle"],
+              'start'   => $row["CalendarStart"],
+              'end'   => $row["CalendarEnd"]
+             );
+        }
+    } 
+
+   
+    mysqli_free_result($result);
+    mysqli_close($con);
+    $events= json_encode($alldata);
+    echo "<script>console.log('Debug Objects: " . $events . "' );</script>";
+    // $events = $req->fetch_all();
 ?>
 <!DOCTYPE html>
 <html>
 
   <head>
     <title>EaseWork- Daily Planner</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="assets/vendor/fullcalendar/fullcalendar.min.css" />
+    <!-- <link rel="stylesheet" href="assets/vendor/fullcalendar/bootstrap.css" /> -->
+    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="assets/vendor/jquery-ui.min.js"></script>
+    <script src="assets/vendor/moment.min.js"></script>
+    <script src="assets/vendor/fullcalendar/fullcalendar.min.js"></script>
     <script>
-
+        
       $(document).ready(function() 
       {
-        var calendar = $('#calendar').fullCalendar({
-          editable:true,
+        
+          var calendar = $('#calendar').fullCalendar({
+        editable: true,
+        events: <?php echo $events;?>,
 
-          header:{
-            left:'prev,next today',
-            center:'title',
-            right:'month,agendaWeek,agendaDay'
-          },
-          event: 'calendar_display.php',
-          selectable:true,
-          selectHelper:true,
-
-          select: function(start, end, allDay)
-          {
-            var title = prompt("Enter Event Title");
-            if(title)
-            {
-              var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-              var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-              $.ajax({
-                url:"calendar_insert.php",
-                type:"POST",
-                data:{title:title, start:start, end:end},
-                success:function()
-                {
-                  calendar.fullCalendar('refetchEvents');
-                  alert("Added Successfully");
-                }
-              })
+        displayEventTime: false,
+        eventRender: function (event, element, view) {
+            if (event.allDay === 'true') {
+                event.allDay = true;
+            } else {
+                event.allDay = false;
             }
-          },
+        },
+        selectable: true,
+        selectHelper: true,
 
-         /* eventResize:function(event)
-          {
-            var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-            var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-            var title = event.title;
-            var id = event.id;
-            $.ajax({
-              url:"calendar_update.php",
-              type:"POST",
-              data:{title:title, start:start, end:end, id:id},
-              success:function(){
-               calendar.fullCalendar('refetchEvents');
-               alert('Event Update');
-              }
-            })
-          },
 
-          eventClick:function(event)
-          {
-            if(confirm("Are you sure you want to remove it?"))
-            {
-              var id = event.id;
-              $.ajax({
-                url:"calendar_delete.php",
-                type:"POST",
-                data:{id:id},
-                success:function()
-                {
-                  calendar.fullCalendar('refetchEvents');
-                  alert("Event Removed");
-                }
-              })
+
+          select: function (start, end, allDay) {
+            var check = $.fullCalendar.formatDate(start,'Y-MM-DD');
+            var today = $.fullCalendar.formatDate(moment(),'Y-MM-DD');
+            if(check < today){
+              alert("You can't select previous date");
             }
-          },*/
+            else{
+              var title = prompt('Event Title:');
+              if (title) {
+                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+
+                $.ajax({
+                    url: 'calendar_insert.php',
+                    data: 'title=' + title + '&start=' + start + '&end=' + end,
+                    type: "POST",
+                    success: function (data) {
+                        alert("Added Successfully");
+                    }
+                });
+                calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay
+                        },
+                true
+                        );
+            }
+            calendar.fullCalendar('unselect');
+            }
+         
+        },
+
+          editable: true,
+        eventDrop: function (event, delta) {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                    $.ajax({
+                        url: 'calendar_update.php',
+                        data: 'title=' + event.title + '&start=' + start + '&end=' + end + '&id=' + event.id,
+                        type: "POST",
+                        success: function (response) {
+                          console.log(">>>>>>>>>>>>>>>>>>",response);
+                            alert("Updated Successfully");
+                        }
+                    });
+                },
+
+
+          eventClick: function (event) {
+            var deleteMsg = confirm("Do you really want to delete?");
+            if (deleteMsg) {
+                $.ajax({
+                    type: "POST",
+                    url: "calendar_delete.php",
+                    data: "id=" + event.id,
+                    success: function (response) {
+                      // console.log(">>>>>>>>>>>>>>>>>>",response);
+                      console.log(">>>>>>>>>>>>>>>>>>",response,response > 0);
+                        if(response > 0) {
+
+                            $('#calendar').fullCalendar('removeEvents', event.id);
+                            alert("Deleted Successfully");
+                        }
+                    }
+
+                });
+            }
+        }
+
+
+
 
        });
       });
