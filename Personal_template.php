@@ -465,29 +465,6 @@
                         ?>    
                     <hr style="border-top: 1px solid #bbb;">
 
-                    <!-- Start Label Input --> 
-                    <!-- <div class="row" style="padding-left:50px;" >
-                      <div class="col-25">     
-                        <label class="w3-text-black"><b>Labels</b></label>
-                      </div>
-                      <div class="col-75" >
-                        <select style="width:320px; height: 45px;">
-                          <option class="p-3 mb-2 bg-primary text-white">High Priority</option>
-                          <option class="p-3 mb-2 bg-secondary text-white">Solved</option>
-                          <option class="p-3 mb-2 bg-success text-white">Need Hep</option>
-                          <option class="p-3 mb-2 bg-danger text-white">Completed</option>
-                          <option class="p-3 mb-2 bg-warning text-dark">Warning</option>
-                        </select>
-                        <!--<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
-                            <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
-                            <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
-                            <div class="p-3 mb-2 bg-info text-white">.bg-info</div>
-                            <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
-                            <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
-                            <div class="p-3 mb-2 bg-white text-dark">.bg-white</div> -->                                                    
-                      <!-- </div>
-                    </div>  -->
-
                     <div class="row" style="padding-left:50px;" >
                       <div class="col-25">     
                         <label class="w3-text-black"><b>Label Name</b></label>
@@ -973,13 +950,13 @@
     if ($bid==0) 
     {
 ?>
-        <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/blog-img78.jpg); background-repeat: repeat;">
+        <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/blog-img78.jpg); background-repeat: repeat; background-size: contain;">
 
 <?php  
     }
     else
     {
-        $backgroundimage = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+        $backgroundimage = "SELECT * FROM tblboard Where Bid=$bid";  
         $result_backgroundimage = mysqli_query($con,$backgroundimage);
         if($result_backgroundimage->num_rows!=0)
        {  
@@ -995,7 +972,7 @@
 ?>
 
                 <!--start whole page-->
-                <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $pbackground; ?>); background-repeat: repeat;">
+                <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $pbackground; ?>); background-repeat: repeat; background-size: contain;">
 
 <?php 
             }
@@ -1331,15 +1308,32 @@
             }
             else
             {
+                $selecttlist="SELECT * from tblboard where Bid=$bid";
+                $result_selecttlist= mysqli_query($con,$selecttlist);
+                if($result_selecttlist->num_rows!=0)
+                { 
+                    $rowf= $result_selecttlist->fetch_array();
+                    $btid=$rowf['Tid'];
+
+                    if ($btid==1) 
+                    {
 ?>
-                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+                        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 <?php
+                    }
+                    else
+                    {
+?>
+                        <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+                    }
+                }
             }
 ?>
 
             <!-- Start DATABASE IN SECOND HEADER -->
             <?php
-                $boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
+                $boarddata = "SELECT *, tblboard.IsActive as active FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid ";  
                 $result_data = mysqli_query($con,$boarddata);
                 if($result_data->num_rows!=0)
                 {  
@@ -1348,48 +1342,65 @@
                         $boardid=$row_board['Bid'];
                         $btitle=$row_board['Btitle'];  
                         $btid=$row_board['Tid'];
-                        $isactive=$row_board['IsActive'];
+                        $isactive=$row_board['active'];
                         $tname=$row_board['Tname'];
                         $bdescription=$row_board['BoardDescription'];
                         $bvisibilty=$row_board['Visibility']; 
-                        if ($btid==1) 
-                        {
-            ?>
-                            <!-- start second header content -->
-                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
-            <?php
-                        }
-                        else
-                        {
+                        
             ?>
                             <!-- start second header content -->
                             <div class="w3-bar" style="background: rgb(120,120,120); "> 
-            <?php
-                        }
-            ?>
+            
                     <p></p>
                     
                     <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                         <center>
                             <h5 style="color: white;"><?php echo $btitle; ?></h5>
                             <small style="color: white;">
-                                <strong>
-                                    <?php
-                                        if ($btid==1) 
-                                        {
-                                    ?>
-                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
-                                    <?php
-                                        }
-                                        else
-                                        {
-                                    ?>
-                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                    <?php
-                                        }
-                                    ?>
-                                                <?php echo $tname; ?>
-                                            </a>
+                                <?php
+                                            if ($btid==1) 
+                                            {
+                                                if ($isactive==0) 
+                                                {
+                                        ?>
+                                                    <strong><?php echo $tname; ?> 
+                                                        <a href="Complete.php?Uid=<?php echo $uid;?>">
+                                                            <span style="color: orange;">(COMPLETED BOARD)</span>
+                                                        </a>
+                                                    </strong>
+                                        <?php
+                                                }
+                                                else
+                                                {
+                                        ?>
+                                                     <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                                        <strong><?php echo $tname; ?></strong>
+                                                    </a>
+                                        <?php
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if ($isactive==0) 
+                                                {                                                
+                                        ?>
+                                                    <strong><?php echo $tname; ?> 
+                                                        <a href="Complete.php?Uid=<?php echo $uid;?>">
+                                                            <span style="color: orange;">(COMPLETED BOARD)</span>
+                                                        </a>
+                                                    </strong>
+                                        <?php
+                                                }
+                                                else
+                                                {
+                                        ?>
+                                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                                        <strong><?php echo $tname; ?></strong>
+                                                    </a>    
+                                        <?php
+                                                }
+                                            }
+                                        ?>
                                 </strong>
                             </small>
                         </center>
@@ -1442,19 +1453,32 @@
 
                                     <div>
                                         <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                                        <button class="w3-button w3-black w3-round" name="completebutton" type="submit"style="float: left; width: 140px;">Complete Board</button>
-                                        <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
-                                        <!-- Start card details popup fuction-->
-                                <script>
-                                    function deleteopen() {
-                                        document.getElementById("deleteboard").style.display = "flex";
-                                    }
-                                    function deleteclose() {
-                                        document.getElementById("deleteboard").style.display = "none";
-                                    }
-                                </script>
-                                <!-- End card details popup fuction-->
-                            </form>
+                                        <?php
+                                            if ($isactive==1) 
+                                            {
+                                        ?>
+                                                <button type="submit" name="completebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="deleteopen()">Delete Board</button>
+                                        <?php
+                                            }
+                                            else
+                                            {
+                                        ?>
+                                                <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style=" margin-right: 270px; width: 250px;" onclick="deleteopen()">Delete Board</button>
+                                        <?php
+                                            }
+                                        ?>
+                                            <!-- Start card details popup fuction-->
+                                            <script>
+                                                function deleteopen() {
+                                                    document.getElementById("deleteboard").style.display = "flex";
+                                                }
+                                                function deleteclose() {
+                                                    document.getElementById("deleteboard").style.display = "none";
+                                                }
+                                            </script>
+                                            <!-- End card details popup fuction-->
+                                        </form>
                                     </div>
 
                                 </div></center>
@@ -1467,40 +1491,19 @@
                         <div class="w3-dropdown-click w3-right">
                             <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
                                 <?php
-                                        if ($bvisibilty == "Public") 
-                                        {
-                                    ?>
-                                            <option value="Private" >Private</option>
-                                            <option value="Team">Team</option>
-                                            <option value="Public" selected>Public</option>
-                                        <?php
+                                    if ($btid == 1) 
+                                    {
+                                ?>
+                                        <option value="Private" selected >Private</option>
+                                <?php
                                     }
-                                        if ($bvisibilty == "Private") 
-                                        {
-                                    ?>
-                                            <option value="Private" selected>Private</option>
-                                            <option value="Team">Team</option>
-                                            <option value="Public">Public</option>
-                                    <?php
-                                        }
-                                        if ($bvisibilty == "Team") 
-                                        {
-                                    ?>
-                                            <option value="Private" >Private</option>
-                                            <option value="Team" selected>Team</option>
-                                            <option value="Public">Public</option>
-                                    <?php
-                                        }
-                                        else
-                                        {
-                                    ?>
-                                        <option value="visibility" selected disabled >Visibility</option>
-                                        <option value="Private" >Private</option>
-                                            <option value="Team">Team</option>
-                                            <option value="Public">Public</option>
-                                    <?php
-                                        }
-                                    ?>
+                                    else
+                                    {
+                                ?>
+                                        <option value="Team" selected >Team</option>
+                                <?php
+                                    }
+                                ?>
                             </select>
                         </div>
                     </div>
@@ -1629,10 +1632,36 @@
                                                 ?>       
                                             </p>
                                             <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
-                                            </p>
+                                            <?php
+                                                if ($cardduedate!="0000-00-00") 
+                                                {
+                                                    $today=date("Y-m-d");
+                                                    $diff = strtotime($cardduedate) - strtotime($today);
+                                                    $days = floor($diff/ (60*60*24));
+
+                                            ?>
+                                                    <p class="d-flex align-items-center mb-2">
+                                                        <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                        <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                            <?php
+                                                if ($days<0) 
+                                                {
+                                            ?>
+                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                            <?php
+                                                }
+                                                else
+                                                {
+                                            ?>
+                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                            <?php
+                                                }
+                                            ?>
+                                                    </p>
+                                            <?php   
+                                                }
+                                            ?>
                                              <?php
                                                 $selecttomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
                                                 $result_tomem = mysqli_query($con,$selecttomem);
@@ -1736,10 +1765,36 @@
                                                 ?>                                                  
                                             </p>
                                             <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
-                                            </p>
+                                            <?php
+                                                if ($cardduedate!="0000-00-00") 
+                                                {
+                                                    $today=date("Y-m-d");
+                                                    $diff = strtotime($cardduedate) - strtotime($today);
+                                                    $days = floor($diff/ (60*60*24));
+
+                                            ?>
+                                                    <p class="d-flex align-items-center mb-2">
+                                                        <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                        <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                            <?php
+                                                if ($days<0) 
+                                                {
+                                            ?>
+                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                            <?php
+                                                }
+                                                else
+                                                {
+                                            ?>
+                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                            <?php
+                                                }
+                                            ?>
+                                                    </p>
+                                            <?php   
+                                                }
+                                            ?>
                                             <?php
                                                 $selecthomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
                                                 $result_homem = mysqli_query($con,$selecthomem);
@@ -1840,10 +1895,36 @@
                                                 ?>                                                    
                                             </p>
                                             <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
-                                            </p>
+                                            <?php
+                                                if ($cardduedate!="0000-00-00") 
+                                                {
+                                                    $today=date("Y-m-d");
+                                                    $diff = strtotime($cardduedate) - strtotime($today);
+                                                    $days = floor($diff/ (60*60*24));
+
+                                            ?>
+                                                    <p class="d-flex align-items-center mb-2">
+                                                        <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                        <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                            <?php
+                                                if ($days<0) 
+                                                {
+                                            ?>
+                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                            <?php
+                                                }
+                                                else
+                                                {
+                                            ?>
+                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                            <?php
+                                                }
+                                            ?>
+                                                    </p>
+                                            <?php   
+                                                }
+                                            ?>
 
                                             <?php
                                                 $selecteattmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1947,10 +2028,36 @@
                                                 ?>                                                    
                                             </p>
                                             <br>
-                                            <p class="d-flex align-items-center mb-2">
-                                                <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
-                                            </p>
+                                            <?php
+                                                if ($cardduedate!="0000-00-00") 
+                                                {
+                                                    $today=date("Y-m-d");
+                                                    $diff = strtotime($cardduedate) - strtotime($today);
+                                                    $days = floor($diff/ (60*60*24));
+
+                                            ?>
+                                                    <p class="d-flex align-items-center mb-2">
+                                                        <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                        <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                            <?php
+                                                if ($days<0) 
+                                                {
+                                            ?>
+                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                            <?php
+                                                }
+                                                else
+                                                {
+                                            ?>
+                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                            <?php
+                                                }
+                                            ?>
+                                                    </p>
+                                            <?php   
+                                                }
+                                            ?>
 
                                             <?php
                                                 $selectdoneemem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  

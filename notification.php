@@ -71,6 +71,7 @@
                                                 {
                                                     $boardname=$fetch_boardTeam['Btitle'];
                                                     $teamname=$fetch_boardTeam['Tname'];
+                                                    $tempid=$fetch_boardTeam['Tempid'];
 
                     ?>
 
@@ -94,7 +95,26 @@
                                             </div>
                                             <div class="col-auto d-flex align-items-center">
                                                 <!-- <i class="material-icons icon-muted icon-20pt mr-2">account_circle</i> -->
-                                                <a href="board.php?Bid=<?php echo $not_bid;?>" class="text-body"><?php echo $boardname; ?></a>
+                                            <?php
+                                                if ($tempid==1) 
+                                                {
+                                            ?>
+                                                    <a href="Education_template.php?Bid=<?php echo $not_bid;?>" class="text-body"><?php echo $boardname; ?></a>
+                                            <?php
+                                                }
+                                                else if($tempid==2)
+                                                {
+                                            ?>
+                                                    <a href="Personal_template.php?Bid=<?php echo $not_bid;?>" class="text-body"><?php echo $boardname; ?></a>
+                                            <?php
+                                                }
+                                                else
+                                                {
+                                            ?>
+                                                    <a href="board.php?Bid=<?php echo $not_bid;?>" class="text-body"><?php echo $boardname; ?></a>  
+                                            <?php
+                                                }
+                                            ?>
                                             </div>
                                             <div class="col-auto d-flex align-items-center" style="min-width: 140px;">
                                                 <a href="Team_boards.php?Tid=<?php echo $not_tid;?>" class="text-dark-gray"><?php echo $teamname; ?></a>

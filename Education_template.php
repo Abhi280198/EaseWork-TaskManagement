@@ -1,11 +1,11 @@
 <?php
 include_once("DbConnection.php");
-    $bid=$_GET['Bid'];
     $uid=$_SESSION['UserID'];
     $senduser=$_SESSION['Firstname'];
     $senduser1=$_SESSION['Lastname'];
     $recentuser=$_SESSION['UserID'];
-
+    
+    $bid=$_GET['Bid'];
     $recent="SELECT * from tblboard where Bid=$bid";
     $Exe_recent=mysqli_query($con,$recent)or die(mysqli_error($con));
     if($Exe_recent->num_rows!=0)
@@ -81,7 +81,7 @@ include_once("DbConnection.php");
             $Syllabus1duedate = $_REQUEST['SyllabusRemainingduedate'];
             $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
 
-            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1,25)";
+            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
             $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
             $syllabus1= mysqli_insert_id($con);
 
@@ -146,7 +146,7 @@ include_once("DbConnection.php");
             $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
             $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
 
-            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1,50)";
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1)";
             $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
             $syllabus2= mysqli_insert_id($con);
 
@@ -211,7 +211,7 @@ include_once("DbConnection.php");
             $Syllabus3duedate = $_REQUEST['SyllabusCoveredduedate'];
             $Syllabus3member = $_REQUEST['SyllabusCoveredMember'];
 
-            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1,75)";
+            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1)";
             $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
             $syllabus3= mysqli_insert_id($con);
 
@@ -276,7 +276,7 @@ include_once("DbConnection.php");
             $Syllabus4duedate = $_REQUEST['SyllabusAssignmentduedate'];
             $Syllabus4member = $_REQUEST['SyllabusAssignmentMember'];
 
-            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1,100)";
+            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1)";
             $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
             $syllabus4= mysqli_insert_id($con);
 
@@ -358,9 +358,7 @@ include_once("DbConnection.php");
                     <div>
                         <label><b>Description :</b></label>
                         <br>
-                        <textarea name="educationdescription" id="description" rows="7" style="width: 100%;" placeholder="Description ...">
-                            
-                        </textarea>
+                        <textarea name="educationdescription" id="description" rows="7" style="width: 100%;" placeholder="Description ..."></textarea>
                     </div><br>
                     <div class="canclebtn">
                         <button type="submit" name="showdescriptioneducation" class="btn cancel">Add</button>
@@ -968,12 +966,12 @@ include_once("DbConnection.php");
         if ($bid==0) 
         {
     ?>
-            <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/backgrounddefault.jpg); background-repeat: repeat;">
+            <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(images/backgrounddefault.jpg); background-repeat: repeat; background-size: contain;">
     <?php  
         }
         else
         {
-            $backeducation = "SELECT * FROM tblboard Where Bid=$bid AND IsActive=1";  
+            $backeducation = "SELECT * FROM tblboard Where Bid=$bid";  
             $result_backeducation = mysqli_query($con,$backeducation);
             if($result_backeducation->num_rows!=0)
             {  
@@ -987,7 +985,7 @@ include_once("DbConnection.php");
                     }      
 
     ?>
-                        <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $educationbackground; ?>); background-repeat: repeat;">
+                        <div class="mdk-header-layout js-mdk-header-layout" style="background-image: url(<?php echo $educationbackground; ?>); background-repeat: repeat; background-size: contain;">
     <?php
                 }
             }
@@ -1337,16 +1335,33 @@ include_once("DbConnection.php");
             }
             else
             {
+                $selecttlist="SELECT * from tblboard where Bid=$bid";
+                $result_selecttlist= mysqli_query($con,$selecttlist);
+                if($result_selecttlist->num_rows!=0)
+                { 
+                    $rowf= $result_selecttlist->fetch_array();
+                    $btid=$rowf['Tid'];
+
+                    if ($btid==1) 
+                    {
 ?>
-                <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+                        <div class="mdk-header-layout__content" style="overflow-y: auto;">
 <?php
+                    }
+                    else
+                    {
+?>
+                        <div class="mdk-header-layout__content" style="overflow-y: auto; pointer-events: none;">
+<?php
+                    }
+                }
             }
 ?>
 
 
                 <!-- Start DATABASE IN SECOND HEADER -->
                 <?php
-                    $education_boarddata = "SELECT * FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid AND tblboard.IsActive=1";  
+                    $education_boarddata = "SELECT *, tblboard.IsActive as active FROM tblboard, tblteam Where Bid=$bid AND tblboard.Tid=tblteam.Tid";  
                     $result_education_boarddata = mysqli_query($con,$education_boarddata);
                     if($result_education_boarddata->num_rows!=0)
                     {  
@@ -1355,46 +1370,63 @@ include_once("DbConnection.php");
                             $boardid=$row_education_boarddata['Bid'];
                             $btitle=$row_education_boarddata['Btitle'];  
                             $btid=$row_education_boarddata['Tid'];
-                            $isactive=$row_education_boarddata['IsActive'];
+                            $isactive=$row_education_boarddata['active'];
                             $tname=$row_education_boarddata['Tname'];
                             $bdescription=$row_education_boarddata['BoardDescription'];
                             $bvisibilty=$row_education_boarddata['Visibility']; 
-                            if ($btid==1) 
-                        {
-                ?>
-                            <!-- start second header content -->
-                            <div class="w3-bar" style="background: rgb(120,120,120); margin-top: 60px;">         
-                <?php
-                        }
-                        else
-                        {
                 ?>
                             <!-- start second header content -->
                             <div class="w3-bar" style="background: rgb(120,120,120); "> 
-                <?php
-                        }
-                ?>
+               
                         <p></p>
                         <div style="float: left; margin-left: 20px; margin-bottom: 10px;">
                             <center>
                                 <h5 style="color: white;"><?php echo $btitle; ?></h5>
                                 <small style="color: white;">
                                     <?php
-                                        if ($btid==1) 
-                                        {
-                                    ?>
-                                            <a href="individual_board.php?Uid=<?php echo $uid;?>">
-                                    <?php
-                                        }
-                                        else
-                                        {
-                                    ?>
-                                            <a href="Team_boards.php?Tid=<?php echo $btid;?>">
-                                    <?php
-                                        }
-                                    ?>
-                                                <strong><?php echo $tname; ?></strong>
-                                            </a>
+                                            if ($btid==1) 
+                                            {
+                                                if ($isactive==0) 
+                                                {
+                                        ?>
+                                                    <strong><?php echo $tname; ?> 
+                                                        <a href="Complete.php?Uid=<?php echo $uid;?>">
+                                                            <span style="color: orange;">(COMPLETED BOARD)</span>
+                                                        </a>
+                                                    </strong>
+                                        <?php
+                                                }
+                                                else
+                                                {
+                                        ?>
+                                                     <a href="individual_board.php?Uid=<?php echo $uid;?>">
+                                                        <strong><?php echo $tname; ?></strong>
+                                                    </a>
+                                        <?php
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if ($isactive==0) 
+                                                {                                                
+                                        ?>
+                                                    <strong><?php echo $tname; ?> 
+                                                        <a href="Complete.php?Uid=<?php echo $uid;?>">
+                                                            <span style="color: orange;">(COMPLETED BOARD)</span>
+                                                        </a>
+                                                    </strong>
+                                        <?php
+                                                }
+                                                else
+                                                {
+                                        ?>
+                                                    <a href="Team_boards.php?Tid=<?php echo $btid;?>">
+                                                        <strong><?php echo $tname; ?></strong>
+                                                    </a>    
+                                        <?php
+                                                }
+                                            }
+                                        ?>
                                 </small>
                             </center>
                         </div>
@@ -1438,22 +1470,35 @@ include_once("DbConnection.php");
                                             <label style="float: left;">Wanna Close Board ?</label><br><br>
                                         </div>
                                         <!--START VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
-                                                    <div>
-                                                        <form method="POST" enctype="multipart/form-data" action="" class="form-container">
-                                                            <button type="submit" name="educationcompletebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
-                                                            <button type="button" name="educationdeletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="Educationdeleteopen()">Delete Board</button>
-                                                        <!-- Start card details popup fuction-->
-                                                        <script>
-                                                            function Educationdeleteopen() {
-                                                              document.getElementById("Educationdeleteboard").style.display = "flex";
-                                                            }
-                                                            function Educationdeleteclose() {
-                                                              document.getElementById("Educationdeleteboard").style.display = "none";
-                                                            }
-                                                        </script>
-                                                        <!-- End card details popup fuction-->
-                                                        </form>
-                                                    </div>
+                                            <div>
+                                                <form method="POST" enctype="multipart/form-data" action="" class="form-container">
+                                                <?php
+                                                    if ($isactive==1) 
+                                                    {
+                                                ?>
+                                                        <button type="submit" name="educationcompletebutton" class="w3-button w3-black w3-round" style="float: left; width: 140px;">Complete Board</button>
+                                                        <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style="float: right; margin-right: 270px; width: 140px;" onclick="Educationdeleteopen()">Delete Board</button>
+                                                <?php
+                                                    }
+                                                    else
+                                                    {
+                                                ?>
+                                                        <button type="button" name="deletebutton" class="w3-button w3-black w3-round" style=" margin-right: 270px; width: 250px;" onclick="Educationdeleteopen()">Delete Board</button>
+                                                <?php
+                                                    }
+                                                ?>
+                                                    <!-- Start card details popup fuction-->
+                                                    <script>
+                                                        function Educationdeleteopen() {
+                                                          document.getElementById("Educationdeleteboard").style.display = "flex";
+                                                        }
+                                                        function Educationdeleteclose() {
+                                                          document.getElementById("Educationdeleteboard").style.display = "none";
+                                                        }
+                                                    </script>
+                                                    <!-- End card details popup fuction-->
+                                                </form>
+                                            </div>
                                         <!--END VIEW DATABASE FOR COMPLETE AND DELETE BUTTON AT THE TOP OF THE PAGE (SHOW MENU) -->
 
                                     </div></center>
@@ -1465,41 +1510,20 @@ include_once("DbConnection.php");
                         <div class="dropdown w3-right">
                             <div class="w3-dropdown-click w3-right">
                                 <select class="w3-button " id="country" name="country" style="height: 35px; width: 110px;">
-                                <?php
-                                    if ($bvisibilty="Private") 
-                                    {
-                                ?>
-                                        <option value="Private" selected disabled >Private</option>
-                                        <option value="Team" >Team</option>
-                                        <option value="Public">Public</option>
-                                <?php   
-                                    }
-                                    else if ($bvisibilty="Team") 
-                                    {
-                                ?>
-                                        <option value="Team" selected disabled >Team</option>
-                                        <option value="Private" >Private</option>
-                                        <option value="Public">Public</option>
-                                <?php
-                                    }
-                                    else if ($bvisibilty="Public") 
-                                    {
-                                ?>
-                                        <option value="Public" selected disabled >Public</option>
-                                        <option value="Private" >Private</option>
-                                        <option value="Team">Team</option>
-                                <?php
-                                    }
-                                    else
-                                    {
-                                ?>      
-                                        <option value="Visibility" selected disabled >Visibility</option>
-                                        <option value="Private" >Private</option>
-                                        <option value="Team">Team</option>
-                                        <option value="Public">Public</option>
-                                <?php
-                                    }
-                                ?>
+                                    <?php
+                                        if ($btid == 1) 
+                                        {
+                                    ?>
+                                            <option value="Private" selected >Private</option>
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                            <option value="Team" selected >Team</option>
+                                    <?php
+                                        }
+                                    ?>                                
                                 </select>
                             </div>
                         </div>
@@ -1624,10 +1648,36 @@ include_once("DbConnection.php");
                                                             ?>                                            
                                                         </p>
                                                         <br>
-                                                        <p class="d-flex align-items-center mb-2">
-                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                        </p>
+                                                       <?php
+                                                            if ($cardduedate!="0000-00-00") 
+                                                            {
+                                                                $today=date("Y-m-d");
+                                                                $diff = strtotime($cardduedate) - strtotime($today);
+                                                                $days = floor($diff/ (60*60*24));
+
+                                                        ?>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                                        <?php
+                                                                if ($days<0) 
+                                                                {
+                                                        ?>
+                                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                                        <?php
+                                                                }
+                                                                else
+                                                                {
+                                                        ?>
+                                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                                        <?php
+                                                                }
+                                                        ?>
+                                                                </p>
+                                                        <?php   
+                                                            }
+                                                        ?>
 
                                                         <?php
                                                             $selectrmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1731,10 +1781,37 @@ include_once("DbConnection.php");
                                                             ?>                                             
                                                         </p>
                                                         <br>
-                                                        <p class="d-flex align-items-center mb-2">
-                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                            <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                        </p>
+                                                        <?php
+                                                            if ($cardduedate!="0000-00-00") 
+                                                            {
+                                                                $today=date("Y-m-d");
+                                                                $diff = strtotime($cardduedate) - strtotime($today);
+                                                                $days = floor($diff/ (60*60*24));
+
+                                                        ?>
+                                                                <p class="d-flex align-items-center mb-2">
+                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                    <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                
+                                                        <?php
+                                                                if ($days<0) 
+                                                                {
+                                                        ?>
+                                                                    <small style="color: red;">DUEDATE EXPIRED</small>
+                                                        <?php
+                                                                }
+                                                                else
+                                                                {
+                                                        ?>
+                                                                    <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                                        <?php
+                                                                }
+                                                        ?>
+                                                                </p>
+                                                        <?php   
+                                                            }
+                                                        ?>
+                                            
 
                                                        <?php
                                                             $selecttomem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1839,10 +1916,36 @@ include_once("DbConnection.php");
                                                                     ?>                                              
                                                                 </p>
                                                                 <br>
-                                                                <p class="d-flex align-items-center mb-2">
-                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                                </p>
+                                                                <?php
+                                                                    if ($cardduedate!="0000-00-00") 
+                                                                    {
+                                                                        $today=date("Y-m-d");
+                                                                        $diff = strtotime($cardduedate) - strtotime($today);
+                                                                        $days = floor($diff/ (60*60*24));
+
+                                                                ?>
+                                                                        <p class="d-flex align-items-center mb-2">
+                                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                            <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                        
+                                                                <?php
+                                                                        if ($days<0) 
+                                                                        {
+                                                                ?>
+                                                                            <small style="color: red;">DUEDATE EXPIRED</small>
+                                                                <?php
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                ?>
+                                                                            <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                                                <?php
+                                                                        }
+                                                                ?>
+                                                                        </p>
+                                                                <?php   
+                                                                    }
+                                                                ?>
 
                                                         <?php
                                                             $selectcmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  
@@ -1947,10 +2050,36 @@ include_once("DbConnection.php");
                                                                     ?>                                               
                                                                 </p>
                                                                 <br>
-                                                                <p class="d-flex align-items-center mb-2">
-                                                                    <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
-                                                                    <span class="text-muted mr-3"><?php echo $cardduedate;?></span>
-                                                                </p>
+                                                                <?php
+                                                                    if ($cardduedate!="0000-00-00") 
+                                                                    {
+                                                                        $today=date("Y-m-d");
+                                                                        $diff = strtotime($cardduedate) - strtotime($today);
+                                                                        $days = floor($diff/ (60*60*24));
+
+                                                                ?>
+                                                                        <p class="d-flex align-items-center mb-2">
+                                                                            <i class="material-icons icon-16pt mr-2 text-muted">folder_open</i>
+                                                                            <span class="text-muted mr-3"><?php echo $cardduedate; ?></span>
+                                                                        
+                                                                <?php
+                                                                        if ($days<0) 
+                                                                        {
+                                                                ?>
+                                                                            <small style="color: red;">DUEDATE EXPIRED</small>
+                                                                <?php
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                ?>
+                                                                            <span style="color:Green;"><?php echo $days." Days Left"; ?></span>  
+                                                                <?php
+                                                                        }
+                                                                ?>
+                                                                        </p>
+                                                                <?php   
+                                                                    }
+                                                                ?>
 
                                                         <?php
                                                             $selectassmem = "SELECT * FROM tbluser WHERE Uid IN (SELECT Uid from tblmembercard WHERE Cardid='$cardid')";  

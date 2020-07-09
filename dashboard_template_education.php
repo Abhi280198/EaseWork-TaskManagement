@@ -83,8 +83,7 @@ div.gallery img {
 
         ?>
             <script type="text/javascript">
-                alert("Data inserted successfully");
-                window.location.href = 'Education_template.php';
+                alert("Board Created successfully");
             </script>
 
         <?php

@@ -69,27 +69,72 @@
                                         $btitle=$row['Btitle'];  
                                         $background=$row['Background'];
                                         $isactive=$row['IsActive']; 
+                                        $tempid=$row['Tempid'];
 
                                         if($background=="" || !file_exists("$background"))
                                         {
                                             $background="images/backgrounddefault.jpg";
                                         }                   
+
+                                        if ($tempid==1) 
+                                        {
                             ?>
-
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="<?php echo $background; ?>" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0"><a href="board.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a></h4>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="Education_template.php?Bid=<?php echo $bid; ?>">
+                                                                    <?php echo $btitle; ?>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>             
+                            <?php
+                                        }
+                                        else if ($tempid==2) 
+                                        {
+                            ?>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="Personal_template.php?Bid=<?php echo $bid; ?>">
+                                                                    <?php echo $btitle; ?>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            <?php 
+                            <?php
+                                        }else
+                                        {
+                            ?>
+                                             <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="board.php?Bid=<?php echo $bid; ?>">
+                                                                    <?php echo $btitle; ?>
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                            <?php
+                                        }
                                     }
-                                }else{
+                                }else
+                                {
                             ?>
                                 <h4 class="card-title m-0">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -126,6 +171,7 @@
                                         $background=$row['Background'];
                                         $isactive=$row['IsActive'];
                                         $boardtid=$row['Tid']; 
+                                        $tempid=$row['Tempid'];
 
                                         if($background=="" || !file_exists("$background"))
                                         {
@@ -137,26 +183,73 @@
                                         $teamrow=mysqli_fetch_array($teamresult);  
 
                                         $teamid=$teamrow['Tid'];
-                                        $teamName=$teamrow['Tname'];              
+                                        $teamName=$teamrow['Tname'];
+
+
+                                        if ($tempid==1) 
+                                        {
                             ?>
-
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="card stories-card-popular">
-                                        <img src="<?php echo $background; ?>" alt="" class="card-img">
-                                        <div class="stories-card-popular__content">
-                                            <div class="stories-card-popular__title card-body">
-                                                <h4 class="card-title m-0">
-                                                    <a href="board.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a>
-                                                </h4>
-                                                <small class="card-title m-0" style="color: white;"><?php echo $teamName; ?></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <?php 
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="Education_template.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a>
+                                                            </h4>
+                                                            <small class="card-title m-0" style="color: white;">
+                                                                <?php echo $teamName; ?>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                            <?php
+                                        }
+                                        elseif ($tempid==2) 
+                                        {
+                            ?>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="Personal_template.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a>
+                                                            </h4>
+                                                            <small class="card-title m-0" style="color: white;">
+                                                                <?php echo $teamName; ?>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                            <?php  
+                                        }
+                                        else
+                                        {
+                            ?>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="card stories-card-popular">
+                                                    <img src="<?php echo $background; ?>" alt="" class="card-img">
+                                                    <div class="stories-card-popular__content">
+                                                        <div class="stories-card-popular__title card-body">
+                                                            <h4 class="card-title m-0">
+                                                                <a href="board.php?Bid=<?php echo $bid; ?>"><?php echo $btitle; ?></a>
+                                                            </h4>
+                                                            <small class="card-title m-0" style="color: white;">
+                                                                <?php echo $teamName; ?>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                            <?php
+                                        }              
                                     }
-                                }else{
+                                }
+                                else
+                                {
                             ?>
                                     <h4 class="card-title m-0">
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

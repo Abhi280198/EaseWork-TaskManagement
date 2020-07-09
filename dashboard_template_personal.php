@@ -212,8 +212,7 @@ div.gallery img {
 
                     ?>
                                 <script type="text/javascript">
-                                    alert("Data inserted successfully");
-                                    window.location.href = 'Personal_template.php';
+                                    alert("Board Created successfully");
                                 </script>
 
                     <?php

@@ -48,7 +48,7 @@
                         if(isset($_SESSION['UserID']))
                         {
                      ?>
-                            <a href="Education_template.php?Uid=<?php echo $_SESSION['UserID']; ?>" style="float: right;" class="btn btn-small btn-dark-gray text-small border-radius-4 lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">View Template <i class="fas fa-long-arrow-alt-right margin-5px-left text-deep-pink text-medium position-relative top-2" aria-hidden="true"></i></a>
+                            <a href="Education_template.php?Bid=0" style="float: right;" class="btn btn-small btn-dark-gray text-small border-radius-4 lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">View Template <i class="fas fa-long-arrow-alt-right margin-5px-left text-deep-pink text-medium position-relative top-2" aria-hidden="true"></i></a>
                     <?php
                         }
                         else

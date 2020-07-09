@@ -85,7 +85,7 @@
                                     <tbody class="list" id="staff">
 
                                     <?php
-                                        $select_detailboard="SELECT *from tblboard where Bid IN (SELECT Bid from tblteammember WHERE Uid=$Uid)";
+                                        $select_detailboard="SELECT *from tblboard where Tid=$Tid AND Bid IN (SELECT Bid from tblteammember WHERE Uid=$Uid)";
                                         $result_detailboard=mysqli_query($con,$select_detailboard) or die(mysqli_error($con));
                                         if($result_detailboard->num_rows!=0)
                                         {  
