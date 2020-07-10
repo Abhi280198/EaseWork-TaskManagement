@@ -211,7 +211,7 @@
             $done_card_duedate = $_REQUEST['donecardduedate'];
             $done_card_member = $_REQUEST['donecardmember'];
 
-            $done_query="insert into tblcard values(null,'$done_card_title','$done_card_label','$done_card_labelcolor','$done_card_duedate',now(),'$done_card_description',3,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$done_card_title','$done_card_label','$done_card_labelcolor','$done_card_duedate',now(),'$done_card_description',3,'$bid',1,100)";
             $run_done = mysqli_query($con,$done_query);
             $done1= mysqli_insert_id($con);
 
@@ -1025,7 +1025,7 @@
                     ?> 
                     <!--END DATABASE FOR CHECKING THIS IS INDIVIDUAL BOARD OR TEAM BOARD..IF INDIVIDUAL THEN MEMBER LIST CAN'T BE SHOWN -->            
                             <a href="calendar.php" class="w3-bar-item w3-button w3-right" style="color: black;">Calendar</a>
-                            <a href="#" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
+                            <a href="gantt_chart.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" style="color: black;">Gantt</a>
                             <a href="report.php?Bid=<?php echo $bid; ?>" class="w3-bar-item w3-button w3-right" style="color: black;">Report</a>  
                     </div>
                     <!-- End second Header Content -->

@@ -1,7 +1,44 @@
 <?php 
+
+ob_start();
+
     include_once("DbConnection.php");
     $cardid=$_GET['Cardid']; 
     $Bid=$_GET['Bid']; 
+
+
+    $total_items="SELECT COUNT(tblchecklist.Checklistid) AS count 
+                  FROM tblchecklist INNER JOIN tblcard 
+                  ON tblcard.Cardid=tblchecklist.Cardid 
+                  WHERE tblcard.Cardid=$cardid AND tblcard.Bid=$Bid";
+    $total_items_query=mysqli_query($con,$total_items) or die(mysqli_connect($con));
+
+        if($total_items_query->num_rows>0)
+        {
+            $rows=mysqli_fetch_assoc($total_items_query); 
+
+            $total_no_of_checklist=$rows['count'];
+
+    $no_checked_list="SELECT COUNT(tblChecklist.Checklistid) AS checkedcount
+                      FROM tblchecklist INNER JOIN tblcard 
+                      ON tblcard.Cardid=tblchecklist.Cardid 
+                      WHERE tblcard.Cardid=$cardid AND tblchecklist.IsActive=0 AND tblcard.Bid=$Bid";
+
+    $no_checked_list_query=mysqli_query($con,$no_checked_list) or die(mysqli_connect($con));
+
+    $rows_no_checked_list=mysqli_fetch_assoc($no_checked_list_query); 
+
+    $no_of_checked_checklist=$rows_no_checked_list['checkedcount'];
+                            
+    $percentage=round(($no_of_checked_checklist/$total_no_of_checklist)*100);
+                
+    if ($percentage>0) 
+    {
+        $Update_percentage="UPDATE tblcard SET Percentage='$percentage' WHERE Cardid=".$cardid;
+        $check=mysqli_query($con,$Update_percentage) or die(mysqli_connect($con));
+    }
+        }
+
 
 /* delete card button*/
     if (isset($_REQUEST['deletecardspopup'])) 
@@ -114,6 +151,8 @@ if (isset($_POST['carddetails']))
     }
 ?>
 
+
+
 <!-- END Database for todo checklist -->
 
 
@@ -123,6 +162,22 @@ if (isset($_POST['carddetails']))
 	<title>EaseWork-Card Details</title>
     <?php include_once('csslinks.php');?>
     <link type="text/css" href="assets/css/board.css" rel="stylesheet">
+
+<style>
+table {
+  border-collapse: collapse;
+  width: 300%;
+}
+
+th, td {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {background-color:#f5f5f5;}
+</style>
+    
 </head>
 
 <body class="layout-default">
@@ -133,7 +188,7 @@ if (isset($_POST['carddetails']))
     <div class="mdk-header-layout js-mdk-header-layout">
     <!-- Header -->
 
-        <?php include_once('header1.php');?>
+        <?php //include_once('header1.php');?>
         <!-- // END Header -->
 
         <!-- Header Layout Content -->
@@ -226,6 +281,7 @@ if (isset($_POST['carddetails']))
                       <div class="col-25">     
                         <label class="w3-text-black"><b>Checklist</b></label>
                       </div>
+                      <!-- ADD ITEM LABEL AND BUTTON -->
                         <div class="col-75"  >
                             <input class="w3-input w3-border" placeholder="Enter label name" name="todochecklist" type="text" style="width: 260px; height: 40px; float: left;">
 
@@ -238,7 +294,9 @@ if (isset($_POST['carddetails']))
                     <div class="row" style="padding-left:200px; padding-top: 10px;" >
                          
                         
-                               <?php 
+                               
+                                <ul class="list-unstyled list-todo" id="todo">
+                                    <?php 
                                     $Todo_checklist = "SELECT * from tblchecklist where Cardid=$cardid";
                                     $res_checklist = mysqli_query($con,$Todo_checklist);
                                     if($res_checklist->num_rows !=0)
@@ -247,24 +305,62 @@ if (isset($_POST['carddetails']))
                                         {
                                             $ChecklistName=$row['ChecklistName'];
                                             $ChecklistID=$row['Checklistid'];
-                                            
+                                            $ChecklistIsActive=$row['IsActive'];
                                 ?>
-                                <ul class="list-unstyled list-todo" id="todo">
                                     <li>
-                                        <input type="checkbox" id="customCheck1" name="checkupdate" value="<?php echo $ChecklistID; ?>">
-                                        <label class="w3-text-black" for="customCheck1">
-                                            <b><?php echo $ChecklistName?></b>
-                                        </label>
-                                        <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">Remove</center></a>
+                                        <table>
+                                            <tr><th>  
+                                                <input type="checkbox" id="customCheck1" name="checkupdate[]" value="<?php echo $ChecklistID; ?>" 
+
+                                                <?php if($ChecklistIsActive == 0)
+                                                {
+                                                ?>
+                                                        checked
+                                                <?php 
+                                                }
+                                                ?> >
+                                                <label class="w3-text-black" for="customCheck1">
+                                                    <b><?php echo $ChecklistName?></b>
+                                                </label>
+                                            </th>
+                                            <th>
+                                                <td style="text-align:right;">
+                                                    <a href="ChecklistDelete.php?Cardid=<?php echo $cardid?>&Bid=<?php echo $Bid;?>&Checklistid=<?php echo $ChecklistID;?>">✘</center></a>
+                                                </td>
+                                            </th>
+                                        </table>
                                     </li>
-                                </ul>
-                               <?php
+                                    <?php
                                     }
                                 }
                                 ?>
-                        
-                             
-                    </div>                                  
+                                                <input type="submit" class="w3-button w3-red w3-round" style="float: right; margin-right: 30px; height: 40px;" name="checklist" value="Save Checklist">
+                                </ul>
+
+                    </div>   
+
+                    <!-- Update Check List -->
+
+                    <?php
+                        if(isset($_POST['checklist']))
+                        {
+
+                            $Update= "UPDATE tblchecklist SET IsActive=1 WHERE Cardid=".$cardid;
+                            mysqli_query($con,$Update) or die(mysqli_connect($con));
+
+                            foreach($_REQUEST['checkupdate'] as $selected) 
+                            {
+                                $UpdateCard= "UPDATE tblchecklist SET IsActive=0 WHERE ChecklistID=".$selected;
+                                mysqli_query($con,$UpdateCard)or die(mysqli_error($con));
+
+                            }
+                                header("location:?Cardid=$cardid&Bid=$Bid");
+                                ob_end_flush();
+                        }
+                    ?>
+
+                        <!-- Update Check List -->
+                               
                     <!--End Checklist Input -->
 
                     <hr style="border-top: 1px solid #bbb;">
