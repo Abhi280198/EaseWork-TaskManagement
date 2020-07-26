@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2020 at 01:40 PM
+-- Generation Time: Jul 26, 2020 at 08:02 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -31,7 +31,7 @@ CREATE TABLE `tblboard` (
   `Bid` int(11) NOT NULL,
   `Btitle` varchar(100) NOT NULL,
   `Tid` int(11) NOT NULL,
-  `Visibility` varchar(50) NOT NULL,
+  `Visibility` varchar(50) DEFAULT NULL,
   `Uid` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Tempid` int(11) DEFAULT NULL,
@@ -55,7 +55,11 @@ INSERT INTO `tblboard` (`Bid`, `Btitle`, `Tid`, `Visibility`, `Uid`, `Date`, `Te
 (54, 'Assignments', 1, 'Private', 30, '2020-07-08', 1, 'Assignments given in class', 'images/backgrounddefault.jpg', 1),
 (55, 'school Website', 51, 'Team', 30, '2020-07-08', 1, NULL, 'images/backgrounddefault.jpg', 0),
 (56, 'family vacation - puri', 1, 'Private', 30, '2020-07-08', 2, NULL, 'images/blog-img78.jpg', 1),
-(57, 'birthday party', 51, 'Team', 30, '2020-07-08', 2, NULL, 'images/blog-img78.jpg', 0);
+(57, 'birthday party', 51, 'Team', 30, '2020-07-08', 2, NULL, 'images/blog-img78.jpg', 0),
+(58, 'Manali tour', 52, 'Team', 31, '2020-07-26', 2, NULL, 'images/blog-img78.jpg', 1),
+(59, 'book fair', 52, NULL, 31, '2020-07-26', 1, NULL, 'images/backgrounddefault.jpg', 1),
+(60, 'first board', 53, NULL, 31, '2020-07-26', NULL, 'demo description', '', 1),
+(61, 'Education', 53, NULL, 31, '2020-07-26', 1, NULL, 'images/backgrounddefault.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +86,8 @@ INSERT INTO `tblcalendar` (`Calendarid`, `CalendarTitle`, `CalendarStart`, `Cale
 (3, 'abcd', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
 (4, 'new task', '2020-06-03 00:00:00', '2020-06-04 00:00:00', 1, 20),
 (5, 'new event', '2020-06-17 00:00:00', '2020-06-18 00:00:00', 1, 27),
-(6, 'meeting', '2020-07-09 00:00:00', '2020-07-10 00:00:00', 1, 30);
+(7, 'meeting for manali trip', '2020-07-29 00:00:00', '2020-07-30 00:00:00', 1, 31),
+(8, 'meeting today', '2020-07-28 00:00:00', '2020-07-29 00:00:00', 1, 31);
 
 -- --------------------------------------------------------
 
@@ -118,9 +123,9 @@ INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `
 (93, 'syllabus 3 remain', '', '#000000', '0000-00-00', '2020-06-30', '', 6, 25, 1, 0),
 (94, 'assign', '', '#000000', '0000-00-00', '2020-06-30', '', 7, 25, 1, 0),
 (95, 'assignment', '', '#000000', '0000-00-00', '2020-06-30', '', 7, 25, 1, 0),
-(96, 'todo1', 'new', '#ff0000', '2020-06-18', '2020-06-30', '', 1, 22, 1, 0),
+(96, 'todo1', 'new', '#ff0000', '2020-07-04', '2020-06-30', '', 1, 22, 1, 0),
 (97, 'todoo', '', '#000000', '0000-00-00', '2020-06-30', '', 1, 22, 1, 0),
-(102, 'doinggg', '', '#000000', '2021-07-23', '2020-06-30', '', 2, 22, 1, 0),
+(102, 'doinggg', '', '#000000', '2020-10-23', '2020-06-30', '', 2, 22, 1, 100),
 (103, 'doneeee', '', '#000000', '0000-00-00', '2020-06-30', '', 3, 22, 1, 0),
 (104, 'done', '', '#000000', '0000-00-00', '2020-06-30', '', 3, 22, 1, 0),
 (106, 'before trip', '', '#000000', '0000-00-00', '2020-06-30', '', 8, 27, 1, 0),
@@ -132,8 +137,8 @@ INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `
 (112, 'work', '', '#000000', '0000-00-00', '2020-06-30', '', 11, 27, 1, 0),
 (113, 'work done', '', '#000000', '0000-00-00', '2020-06-30', '', 11, 27, 1, 0),
 (114, 'Database', 'important', '#f10404', '0000-00-00', '2020-07-08', 'Designing database', 2, 53, 1, 0),
-(115, 'Flow design', '', '#000000', '2020-07-24', '2020-07-08', 'Decide the flow of website', 3, 53, 1, 0),
-(116, 'Real estate name', 'Suggestion', '#fad000', '2020-07-11', '2020-07-08', 'suggest name', 1, 53, 1, 0),
+(115, 'Flow design', '', '#000000', '2020-07-30', '2020-07-08', 'Decide the flow of website', 3, 53, 1, 0),
+(116, 'Real estate name', 'Suggestion', '#fad000', '2020-08-08', '2020-07-08', 'suggest name', 1, 53, 1, 50),
 (117, 'wall hanging', '', '#000000', '2020-07-10', '2020-07-08', '', 3, 52, 1, 0),
 (118, 'furniture', 'important', '#f51414', '2020-07-31', '2020-07-08', '', 2, 52, 1, 0),
 (119, 'start newspaper', '', '#000000', '2020-07-15', '2020-07-08', '', 1, 52, 1, 0),
@@ -146,7 +151,10 @@ INSERT INTO `tblcard` (`Cardid`, `CardName`, `Label`, `LabelColor`, `DueDate`, `
 (127, 'Completed', '', '#af0808', '0000-00-00', '2020-07-08', '', 6, 55, 1, 0),
 (128, 'first assignmnt', '', '#000000', '2020-07-24', '2020-07-08', '', 7, 55, 1, 0),
 (129, 'new', '', '#000000', '2020-07-30', '2020-07-08', '', 8, 56, 1, 0),
-(130, 'newwwww', '', '#000000', '2020-08-07', '2020-07-08', '', 8, 57, 1, 0);
+(130, 'newwwww', '', '#000000', '2020-08-07', '2020-07-08', '', 8, 57, 1, 0),
+(131, 'book tickets', 'urgent', '#d80e0e', '2020-08-07', '2020-07-26', 'from pune to manali', 8, 58, 1, 0),
+(132, 'buy clothes', 'money needed', '#b3c819', '0000-00-00', '2020-07-26', '', 9, 58, 1, 0),
+(133, 'task 1', 'important', '#e71d1d', '2020-08-08', '2020-07-26', '', 2, 60, 1, 100);
 
 -- --------------------------------------------------------
 
@@ -172,7 +180,11 @@ INSERT INTO `tblchecklist` (`Checklistid`, `ChecklistName`, `Cardid`, `IsActive`
 (19, 'mirror', 117, 1),
 (20, 'lights', 117, 1),
 (22, 'chairs', 118, 1),
-(23, 'Dining Table', 118, 1);
+(23, 'Dining Table', 118, 1),
+(27, 'sweet home', 116, 0),
+(28, 'gharana', 116, 1),
+(29, 'new books', 102, 1),
+(30, 'checklist todo', 133, 0);
 
 -- --------------------------------------------------------
 
@@ -298,7 +310,10 @@ INSERT INTO `tblmembercard` (`Mcardid`, `Uid`, `Cardid`) VALUES
 (103, 30, 127),
 (104, 30, 128),
 (105, 0, 129),
-(106, 30, 130);
+(106, 30, 130),
+(107, 31, 131),
+(108, 31, 132),
+(109, 31, 133);
 
 -- --------------------------------------------------------
 
@@ -346,9 +361,14 @@ INSERT INTO `tblnotification` (`Notificationid`, `NotificationEmail`, `Bid`, `Ti
 (25, 'abhilashakumari9797@gmail.com', 50, 50, 0, '14:07:04', '2020-07-07'),
 (26, 'poojakusingh40@gmail.com', 43, 49, 0, '14:08:15', '2020-07-07'),
 (27, 'abhilashakumari9797@gmail.com', 53, 51, 0, '22:43:01', '2020-07-08'),
-(28, 'poojakusingh40@gmail.com', 53, 51, 1, '22:43:35', '2020-07-08'),
+(28, 'poojakusingh40@gmail.com', 53, 51, 0, '22:43:35', '2020-07-08'),
 (29, 'abhilashakumari9797@gmail.com', 55, 51, 0, '23:27:43', '2020-07-08'),
-(30, 'abhilashakumari9797@gmail.com', 57, 51, 0, '23:51:53', '2020-07-08');
+(30, 'abhilashakumari9797@gmail.com', 57, 51, 0, '23:51:53', '2020-07-08'),
+(31, 'abhi1234@gmail.com', 58, 52, 0, '10:25:07', '2020-07-26'),
+(32, 'poojakusingh40@gmail.com', 58, 52, 1, '10:40:40', '2020-07-26'),
+(33, 'abhi1234@gmail.com', 59, 52, 0, '10:52:11', '2020-07-26'),
+(34, 'abhi1234@gmail.com', 60, 53, 0, '11:08:04', '2020-07-26'),
+(35, 'puja1234@gmail.com', 60, 53, 1, '11:16:21', '2020-07-26');
 
 -- --------------------------------------------------------
 
@@ -370,7 +390,7 @@ CREATE TABLE `tblrecent` (
 --
 
 INSERT INTO `tblrecent` (`Rid`, `Bid`, `Tid`, `Uid`, `Date`, `IsActive`) VALUES
-(7, 22, 42, 27, '2020-07-06', 1),
+(7, 22, 42, 27, '2020-07-26', 1),
 (8, 25, 42, 27, '2020-07-06', 1),
 (9, 27, 42, 27, '2020-07-06', 1),
 (10, 29, 1, 26, '2020-07-03', 1),
@@ -404,12 +424,15 @@ INSERT INTO `tblrecent` (`Rid`, `Bid`, `Tid`, `Uid`, `Date`, `IsActive`) VALUES
 (38, 42, 49, 27, '2020-07-07', 1),
 (39, 40, 49, 27, '2020-07-07', 1),
 (40, 43, 49, 27, '2020-07-07', 1),
-(41, 53, 51, 30, '2020-07-09', 1),
+(41, 53, 51, 30, '2020-07-26', 1),
 (42, 52, 1, 30, '2020-07-08', 1),
 (43, 54, 1, 30, '2020-07-08', 1),
 (44, 55, 51, 30, '2020-07-09', 1),
 (45, 56, 1, 30, '2020-07-08', 1),
-(46, 57, 51, 30, '2020-07-09', 1);
+(46, 57, 51, 30, '2020-07-09', 1),
+(47, 58, 52, 31, '2020-07-26', 1),
+(48, 59, 52, 31, '2020-07-26', 1),
+(49, 60, 53, 31, '2020-07-26', 1);
 
 -- --------------------------------------------------------
 
@@ -436,7 +459,9 @@ INSERT INTO `tblteam` (`Tid`, `Tname`, `Ttype`, `TeamDescription`, `Uid`, `Date`
 (1, 'No Team', 'others', 'For individual Boards', 1, '2020-06-01', 1, NULL),
 (42, 'team notification', 'Others', 'abcd', 27, '2020-06-26', 1, 'about-img9.jpg'),
 (43, 'team check', 'Marketing', 'new team ', 26, '2020-06-28', 1, NULL),
-(51, 'Developers', 'Education', 'Different Websites', 30, '2020-07-08', 1, 'contact-img2.jpg');
+(51, 'Developers', 'Education', 'Different Websites', 30, '2020-07-08', 1, 'contact-img2.jpg'),
+(52, 'team traveller', 'Personal', 'travelling team', 31, '2020-07-26', 1, 'blog-img54.jpg'),
+(53, 'team one', 'Others', 'demo ', 31, '2020-07-26', 1, '');
 
 -- --------------------------------------------------------
 
@@ -472,7 +497,14 @@ INSERT INTO `tblteammember` (`Tmid`, `Tid`, `Uid`, `Email`, `Bid`, `Date`, `IsAc
 (71, 51, 30, 'abhilashakumari9797@gmail.com', 53, '2020-07-08', 1),
 (72, 51, 27, 'poojakusingh40@gmail.com', 53, '2020-07-08', 1),
 (73, 51, 30, 'abhilashakumari9797@gmail.com', 55, '2020-07-08', 1),
-(74, 51, 30, 'abhilashakumari9797@gmail.com', 57, '2020-07-08', 1);
+(74, 51, 30, 'abhilashakumari9797@gmail.com', 57, '2020-07-08', 1),
+(75, 52, 31, 'abhi1234@gmail.com', NULL, '2020-07-26', 1),
+(76, 52, 31, 'abhi1234@gmail.com', 58, '2020-07-26', 1),
+(77, 52, 27, 'poojakusingh40@gmail.com', 58, '2020-07-26', 1),
+(78, 52, 31, 'abhi1234@gmail.com', 59, '2020-07-26', 1),
+(79, 53, 31, 'abhi1234@gmail.com', NULL, '2020-07-26', 1),
+(80, 53, 31, 'abhi1234@gmail.com', 60, '2020-07-26', 1),
+(81, 53, NULL, 'puja1234@gmail.com', 60, '2020-07-26', 0);
 
 -- --------------------------------------------------------
 
@@ -521,7 +553,9 @@ INSERT INTO `tbluser` (`Uid`, `Fname`, `Lname`, `Email`, `Password`, `Mobile`, `
 (26, 'Jigneshkumar', 'Mahadik', 'jigneshmahadik777@gmail.com', 'jignesh', 9967543621, '2020-06-25', 1, 'avtar-15.jpg', '40f77517b570558baf1f2dd1de2a8f'),
 (27, 'Abhilasha', 'Kumari', 'poojakusingh40@gmail.com', 'pujasingh', 7684905419, '2020-06-26', 1, 'avtar-14.jpg', '8ac545db3046f5e19985388adb9104'),
 (28, 'Riya', 'Jain', 'riya.jain9497@gmail.com', 'riya jain', 9876543219, '2020-06-29', 1, NULL, '22ecf09288bd00e68a3504ddfd0c36'),
-(30, 'Abhilasha', 'Kumari', 'abhilashakumari9797@gmail.com', 'Pujasingh', 7684905416, '2020-07-08', 1, 'avtar-08.jpg', 'b60f929d29a0fc5824a04b254215f3');
+(30, 'Abhilasha', 'Kumari', 'abhilashakumari9797@gmail.com', 'abhilasha1234', 7684905416, '2020-07-08', 1, 'avtar-08.jpg', 'b60f929d29a0fc5824a04b254215f3'),
+(31, 'Abhishek', 'Kumar', 'abhi1234@gmail.com', 'abhi1234', 9988776655, '2020-07-26', 1, NULL, '6f7e2dc38380d9ae5e535247231f7d'),
+(32, 'Abhilasha', 'Kumari', 'abhilasha9797@gmail.com', 'abhi1234', 5566778899, '2020-07-26', 1, NULL, '72a89491fa4ad832e8bbfc4b17f177');
 
 --
 -- Indexes for dumped tables
@@ -613,25 +647,25 @@ ALTER TABLE `tbluser`
 -- AUTO_INCREMENT for table `tblboard`
 --
 ALTER TABLE `tblboard`
-  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `Bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `tblcalendar`
 --
 ALTER TABLE `tblcalendar`
-  MODIFY `Calendarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Calendarid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tblcard`
 --
 ALTER TABLE `tblcard`
-  MODIFY `Cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `Cardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `tblchecklist`
 --
 ALTER TABLE `tblchecklist`
-  MODIFY `Checklistid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `Checklistid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tblcontact`
@@ -649,31 +683,31 @@ ALTER TABLE `tbllist`
 -- AUTO_INCREMENT for table `tblmembercard`
 --
 ALTER TABLE `tblmembercard`
-  MODIFY `Mcardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `Mcardid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `tblnotification`
 --
 ALTER TABLE `tblnotification`
-  MODIFY `Notificationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `Notificationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `tblrecent`
 --
 ALTER TABLE `tblrecent`
-  MODIFY `Rid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `Rid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `tblteam`
 --
 ALTER TABLE `tblteam`
-  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `Tid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `tblteammember`
 --
 ALTER TABLE `tblteammember`
-  MODIFY `Tmid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `Tmid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `tbltemplate`
@@ -685,7 +719,7 @@ ALTER TABLE `tbltemplate`
 -- AUTO_INCREMENT for table `tbluser`
 --
 ALTER TABLE `tbluser`
-  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `Uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
