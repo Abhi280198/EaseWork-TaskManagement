@@ -116,13 +116,13 @@ div.gallery img {
             ?>
             </select>
             <br><br>
-            <label for="title"><b>Visibility:</b></label>
+            <!-- <label for="title"><b>Visibility:</b></label>
             <select name = "Visibility-dropdown">
                 <option value = "Private" selected>Private</option>
                 <option value = "Team">Team</option>
                 <option value = "Public">Public</option>
             </select>
-            <br><br>
+            <br><br> -->
 
             <div  class="my-3">
                                      <a href="#" style="display:block;text-align: right;" onclick="showBgPopover()" ><b>Add Background image</b></a> 
@@ -202,10 +202,9 @@ div.gallery img {
 
                             $BoardName = $_REQUEST['btitle'];
                             $BoardTeamType = $_REQUEST['dropdown'];
-                            $BoardVisbility = $_REQUEST['Visibility-dropdown'];
                             $BoardBackground = "images/blog-img78.jpg";
 
-                            $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),2,null,'$BoardBackground',1)";
+                            $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType',null,'".$_SESSION['UserID']."',now(),2,null,'$BoardBackground',1)";
                             $run_board = mysqli_query($con,$board_query);
 
                             if($run_board){

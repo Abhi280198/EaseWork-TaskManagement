@@ -122,11 +122,10 @@ div.gallery img {
 
         $BoardName = $_REQUEST['Boardname'];
         $BoardTeamType = $_REQUEST['Boarddropdown'];
-        $BoardVisbility = $_REQUEST['BoardVisbility'];
         $BoardBackground = $_REQUEST['boardBackground'];
         /*$UserID=$_SESSION['UserID'];*/
 
-        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),null,null,'$BoardBackground',1)";
+        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType',null,'".$_SESSION['UserID']."',now(),null,null,'$BoardBackground',1)";
         $run_board = mysqli_query($con,$board_query);
 
         if($run_board){
@@ -224,14 +223,14 @@ div.gallery img {
                                          </select>
                                     </div>
                                      
-                                    <div class="my-3">
+                                   <!--  <div class="my-3">
                                         <label for="title"><b>Visibility:</b></label>
                                         <select name = "BoardVisbility">
                                             <option value = "Private" selected>Private</option>
                                             <option value = "Team">Team</option>
                                             <option value = "Public">Public</option>
                                          </select>
-                                    </div>
+                                    </div> -->
                                     <div class="my-3">
                                      <a href="Template_dashboard.php" style="display:block;text-align: right;" ><b>Start with template</b></a>
                                     </div>                                   

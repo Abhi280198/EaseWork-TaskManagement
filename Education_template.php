@@ -81,7 +81,7 @@ include_once("DbConnection.php");
             $Syllabus1duedate = $_REQUEST['SyllabusRemainingduedate'];
             $Syllabus1member = $_REQUEST['SyllabusRemainingMember'];
 
-            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1)";
+            $Syllabus1_query="INSERT into tblcard values(null,'$Syllabus1title','$Syllabus1label','$Syllabus1labelcolor','$Syllabus1duedate',now(),'$Syllabus1description',4,'$bid',1,0)";
             $run_Syllabus1 = mysqli_query($con,$Syllabus1_query);
             $syllabus1= mysqli_insert_id($con);
 
@@ -146,7 +146,7 @@ include_once("DbConnection.php");
             $Syllabus2duedate = $_REQUEST['SyllabusTodayduedate'];
             $Syllabus2member = $_REQUEST['SyllabusTodayMember'];
 
-            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1)";
+            $Syllabus2_query="INSERT into tblcard values(null,'$Syllabus2title','$Syllabus2label','$Syllabus2labelcolor','$Syllabus2duedate',now(),'$Syllabus2description',5,'$bid',1,0)";
             $run_Syllabus2 = mysqli_query($con,$Syllabus2_query);
             $syllabus2= mysqli_insert_id($con);
 
@@ -211,7 +211,7 @@ include_once("DbConnection.php");
             $Syllabus3duedate = $_REQUEST['SyllabusCoveredduedate'];
             $Syllabus3member = $_REQUEST['SyllabusCoveredMember'];
 
-            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1)";
+            $Syllabus3_query="INSERT into tblcard values(null,'$Syllabus3title','$Syllabus3label','$Syllabus3labelcolor','$Syllabus3duedate',now(),'$Syllabus3description',6,'$bid',1,0)";
             $run_Syllabus3 = mysqli_query($con,$Syllabus3_query);
             $syllabus3= mysqli_insert_id($con);
 
@@ -276,7 +276,7 @@ include_once("DbConnection.php");
             $Syllabus4duedate = $_REQUEST['SyllabusAssignmentduedate'];
             $Syllabus4member = $_REQUEST['SyllabusAssignmentMember'];
 
-            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1)";
+            $Syllabus4_query="INSERT into tblcard values(null,'$Syllabus4title','$Syllabus4label','$Syllabus4labelcolor','$Syllabus4duedate',now(),'$Syllabus4description',7,'$bid',1,0)";
             $run_Syllabus4 = mysqli_query($con,$Syllabus4_query);
             $syllabus4= mysqli_insert_id($con);
 

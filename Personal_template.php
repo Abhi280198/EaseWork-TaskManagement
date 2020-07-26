@@ -82,7 +82,7 @@
             $trip_card_duedate = $_REQUEST['beforetripduedate'];
             $trip_card_member = $_REQUEST['beforetripcardmember'];
             
-            $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1)";
+            $trip_query="insert into tblcard values(null,'$trip_card_title','$trip_card_label','$trip_card_labelcolor','$trip_card_duedate',now(),'$trip_card_description',8,'$bid',1,0)";
             $run_trip = mysqli_query($con,$trip_query);
             $trip1= mysqli_insert_id($con);
 
@@ -147,7 +147,7 @@
             $holiday_card_duedate = $_REQUEST['holidaycardduedate'];
             $holiday_card_member = $_REQUEST['holidaycardmember'];
 
-            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1)";
+            $holiday_query="insert into tblcard values(null,'$holiday_card_title','$holiday_card_label','$holiday_card_labelcolor','$holiday_card_duedate',now(),'$holiday_card_description',9,'$bid',1,0)";
             $run_holiday = mysqli_query($con,$holiday_query);
             $holiday1= mysqli_insert_id($con);
 
@@ -212,7 +212,7 @@
             $eat_card_duedate = $_REQUEST['eatcardduedate'];
             $eat_card_member = $_REQUEST['eatcardmember'];
 
-            $eat_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1)";
+            $eat_query="insert into tblcard values(null,'$eat_card_title','$eat_card_label','$eat_card_labelcolor','$eat_card_duedate',now(),'$eat_card_description',10,'$bid',1,0)";
             $run_eat = mysqli_query($con,$eat_query);
             $eat1= mysqli_insert_id($con);
 
@@ -278,7 +278,7 @@
             $personal_card_duedate = $_REQUEST['personalcardduedate'];
             $personal_card_member = $_REQUEST['personaldonecardmember'];
 
-            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1)";
+            $done_query="insert into tblcard values(null,'$personal_card_title','$personal_card_label','$personal_card_labelcolor','$personal_card_duedate',now(),'$personal_card_description',11,'$bid',1,0)";
             $run_done = mysqli_query($con,$done_query);
             $done1= mysqli_insert_id($con);
 

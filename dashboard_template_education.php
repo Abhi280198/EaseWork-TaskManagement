@@ -73,10 +73,9 @@ div.gallery img {
 
         $BoardName = $_REQUEST['title'];
         $BoardTeamType = $_REQUEST['Team-dropdown'];
-        $BoardVisbility = $_REQUEST['Visibility-dropdown'];
         $BoardBackground = "images/backgrounddefault.jpg";
 
-        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType','$BoardVisbility','".$_SESSION['UserID']."',now(),1,null,'$BoardBackground',1)";
+        $board_query="insert into tblboard values(null,'$BoardName','$BoardTeamType',null,'".$_SESSION['UserID']."',now(),1,null,'$BoardBackground',1)";
         $run_board = mysqli_query($con,$board_query);
 
         if($run_board){
@@ -144,13 +143,13 @@ div.gallery img {
                 }
             ?>
             </select>
-            <br><br>
+            <!-- <br><br>
             <label for="title"><b>Visibility:</b></label>
             <select name = "Visibility-dropdown">
                 <option value = "Private" selected>Private</option>
                 <option value = "Team">Team</option>
                 <option value = "Public">Public</option>
-            </select>
+            </select> -->
             <br><br>
 
             <div  class="my-3">
